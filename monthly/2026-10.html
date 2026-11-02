@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="format-detection" content="telephone=no">
+<title>量子信息速递 · 2026 年 10 月</title>
+<style>
+:root{
+  --ink:#1d1d1f; --ink2:#3c3c43; --muted:#86868b; --line:#e6e6eb;
+  --bg:#f6f6f8; --card:#ffffff;
+  --purple:#7f0585; --purple-soft:#f7ecf8;
+  --teal:#176b73; --teal-soft:#eaf4f4;
+  --gold:#a8741a; --gold-soft:#fdf3e0;
+  --radius:14px;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;padding:0 0 72px;background:var(--bg);color:var(--ink);
+  font:16px/1.8 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+       "Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+
+/* ---- 头部 ---- */
+/* 头部通栏直角：圆角会在下方左右两角留出缺口（底色透出来），
+   与下面内容区的直角卡片放在一起显得没对齐，所以这里是矩形。 */
+.hero{
+  background:linear-gradient(135deg,var(--purple) 0%,#5c1a86 58%,var(--teal) 100%);
+  color:#fff;padding:40px 28px 34px;margin-bottom:26px;
+  border-radius:0;
+}
+.hero .inner{max-width:1280px;margin:0 auto}
+.hero .kicker{
+  font-size:12px;letter-spacing:3px;text-transform:uppercase;opacity:.72;
+  margin:0 0 10px;font-weight:600;
+}
+.hero h1{margin:0 0 10px;font-size:27px;line-height:1.35;font-weight:700;letter-spacing:.4px}
+.hero .meta{margin:0;font-size:13.5px;opacity:.86;line-height:1.9}
+.hero .meta b{font-weight:600;opacity:1}
+
+/* ---- 版块切换 ---- */
+/* 当前所在版块用「实心紫底 + 内阴影」强调：实心底色在一排白胶囊里最抓眼，
+   和内阴影一起构成轻微的「按下去」感，和头部渐变同色系。
+   不用边框颜色是因为边框在浅色背景上对比度不足，远看分不出来。 */
+.tabs{
+  display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;
+}
+.tabs a{
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  box-shadow:var(--shadow);padding:8px 20px;text-decoration:none;
+  font-size:14px;font-weight:700;color:var(--ink2);
+  transition:border-color .15s,color .15s,background .15s,box-shadow .15s;
+}
+.tabs a:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-soft)}
+.tabs a.active{
+  background:var(--purple);border-color:var(--purple);color:#fff;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.22),0 2px 8px rgba(127,5,133,.28);
+}
+.tabs a.active:hover{background:#6d0472;color:#fff}
+
+/* ---- 序言 ---- */
+.preface{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;margin:0 0 22px;box-shadow:var(--shadow);
+}
+.preface .h{
+  font-size:12.5px;font-weight:700;letter-spacing:2px;color:var(--purple);
+  margin:0 0 8px;
+}
+.preface p{margin:0;font-size:14px;line-height:1.85;color:var(--ink2)}
+
+/* ---- 阅读导航 ---- */
+.nav{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 20px 12px;margin:0 0 30px;box-shadow:var(--shadow);
+}
+.nav .h{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1.5px;margin:0 0 12px}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.nav a{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 13px;border-radius:999px;background:#f2f2f5;
+  color:var(--ink2);text-decoration:none;font-size:13.5px;
+  transition:background .16s,color .16s;
+}
+.nav a:hover{background:var(--purple-soft);color:var(--purple)}
+.nav a i{
+  font-style:normal;font-size:11.5px;font-weight:700;color:var(--purple);
+  background:#fff;border-radius:999px;padding:0 7px;line-height:18px;min-width:20px;text-align:center;
+}
+
+/* ---- 期刊分节 ---- */
+.section{margin:0 0 40px}
+.section > h2{
+  display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  font-size:19px;font-weight:700;margin:0 0 4px;padding:0 0 0 13px;
+  border-left:4px solid var(--purple);line-height:1.5;
+}
+.section > h2 .abbr{
+  font-size:12px;font-weight:600;color:var(--muted);
+  letter-spacing:.6px;text-transform:uppercase;
+}
+.section > h2 .cnt{
+  font-size:12.5px;font-weight:600;color:var(--purple);
+  background:var(--purple-soft);border-radius:999px;padding:2px 10px;
+}
+.section > .lede{
+  margin:0 0 18px 15px;font-size:13px;color:var(--muted);line-height:1.7;
+}
+
+/* ---- 条目容器：宽屏双栏 ---- */
+.entries{
+  column-count:2;
+  column-gap:22px;
+}
+.entry{
+  break-inside:avoid;
+  -webkit-column-break-inside:avoid;
+  page-break-inside:avoid;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 22px;margin:0 0 16px;box-shadow:var(--shadow);position:relative;
+}
+.entry .no{
+  font-size:11.5px;font-weight:700;color:var(--muted);
+  letter-spacing:1.2px;margin:0 0 6px;font-variant-numeric:tabular-nums;
+}
+.entry h3{
+  margin:0 0 10px;font-size:17.5px;line-height:1.55;font-weight:700;color:var(--ink);
+}
+.entry h3 .en{
+  display:block;margin-top:6px;font-size:13px;font-weight:400;
+  color:var(--muted);line-height:1.6;font-family:Georgia,"Times New Roman",serif;
+}
+.tags{margin:0 0 12px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{
+  display:inline-block;font-size:11.5px;font-weight:600;line-height:1;
+  padding:5px 9px;border-radius:6px;
+  background:var(--gold-soft);color:var(--gold);border:1px solid #f0e0c0;
+}
+.tag.ky{background:var(--purple-soft);color:var(--purple);border-color:#eddcf0}
+.tag.jc{background:var(--teal-soft);color:var(--teal);border-color:#cfe6e6}
+.tag.cover{background:#fdecec;color:#a32626;border-color:#f3cccc}
+
+.entry .teaser{
+  margin:0 0 12px;padding:11px 14px;border-radius:9px;
+  background:linear-gradient(180deg,#fafafc,#f5f5f8);
+  border-left:3px solid var(--teal);
+  font-size:14.5px;line-height:1.85;color:var(--ink2);
+}
+.entry .body{
+  margin:0;font-size:15px;line-height:1.9;color:var(--ink2);
+  text-align:justify;text-justify:inter-ideograph;
+}
+.entry .body + .body{margin-top:10px}
+
+.entry details{
+  margin:14px 0 0;border-top:1px dashed var(--line);padding-top:12px;
+}
+.entry details summary{
+  cursor:pointer;font-size:12.5px;font-weight:600;color:var(--muted);
+  letter-spacing:.6px;list-style:none;outline:none;user-select:none;
+}
+.entry details summary::-webkit-details-marker{display:none}
+.entry details summary::before{content:"▸ ";color:var(--purple)}
+.entry details[open] summary::before{content:"▾ "}
+.entry details summary:hover{color:var(--purple)}
+.entry details .en-abs{
+  margin:10px 0 0;font-size:13.5px;line-height:1.85;color:#4a4a52;
+  font-family:Georgia,"Times New Roman",serif;text-align:justify;
+}
+
+.entry .src{
+  margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);
+  font-size:12.8px;line-height:1.85;color:var(--muted);
+}
+.entry .src .au{color:var(--ink2)}
+.entry .src .cite{
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:12.2px;color:var(--ink2);
+}
+.entry .src a{
+  color:var(--purple);text-decoration:none;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:12.2px;word-break:break-all;
+}
+.entry .src a:hover{text-decoration:underline}
+
+/* ---- 空状态 / 页脚 ---- */
+.empty{
+  background:var(--card);border:1px dashed var(--line);border-radius:var(--radius);
+  padding:40px 20px;text-align:center;color:var(--muted);font-size:14.5px;
+}
+
+/* ---- 首页卡片链接 ---- */
+.cardlink{
+  display:block;position:relative;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:16px 18px;margin:0 0 10px;
+  text-decoration:none;transition:border-color .15s,transform .15s;
+}
+.cardlink:hover{border-color:var(--purple);transform:translateY(-1px)}
+.cardlink .cl-t{display:block;font-size:16px;font-weight:700;color:var(--ink);letter-spacing:.2px}
+.cardlink .cl-s{display:block;margin-top:5px;font-size:13px;color:var(--muted)}
+.cardlink .cl-b{
+  position:absolute;right:16px;top:16px;
+  background:var(--purple-soft);color:var(--purple);
+  font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;
+}
+/* ---- 首页年份块 ---- */
+.years{margin:0}
+.yearblock{margin:0 0 34px}
+.yhead{
+  display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+  border-bottom:2px solid var(--purple);padding:0 0 10px;margin:0 0 16px;
+}
+.yhead h2{
+  margin:0;font-size:44px;font-weight:800;letter-spacing:-1.5px;
+  color:var(--purple);line-height:1;font-variant-numeric:tabular-nums;
+}
+.ysum{font-size:13.5px;color:var(--muted);font-weight:600}
+.mlist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+@media (min-width:760px){ .mlist{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1180px){ .mlist{grid-template-columns:repeat(3,1fr)} }
+.mlist li{display:flex;align-items:stretch;gap:8px}
+.mrow{
+  flex:1;display:flex;align-items:center;gap:14px;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:13px 16px;text-decoration:none;
+  transition:border-color .15s,transform .15s;
+}
+.mrow:hover{border-color:var(--purple);transform:translateY(-1px)}
+.mnum{
+  font-size:26px;font-weight:800;color:var(--purple);opacity:.32;
+  font-variant-numeric:tabular-nums;line-height:1;min-width:42px;
+}
+.mtxt b{display:block;font-size:15.5px;color:var(--ink);font-weight:700}
+.mtxt i{display:block;margin-top:3px;font-size:12.5px;color:var(--muted);font-style:normal}
+.mextra{display:flex;flex-direction:column;gap:6px;justify-content:center}
+.mini{
+  font-size:11.5px;font-weight:700;color:var(--teal);text-decoration:none;
+  background:var(--teal-soft);border:1px solid #cfe6e6;border-radius:6px;
+  padding:4px 9px;white-space:nowrap;
+}
+.mini:hover{background:var(--teal);color:#fff}
+.biglink{
+  display:block;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:16px 18px;margin:0 0 10px;text-decoration:none;
+  font-size:16px;font-weight:700;color:var(--ink);
+}
+.biglink:hover{border-color:var(--purple)}
+.biglink span{display:block;margin-top:5px;font-size:13px;font-weight:400;color:var(--muted)}
+
+footer{
+  margin-top:52px;padding:22px 0 0;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;line-height:1.9;
+}
+footer b{color:var(--ink2);font-weight:600}
+
+.back{
+  display:inline-block;margin:0 0 16px;padding:7px 15px;
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  color:var(--purple);text-decoration:none;font-size:13px;font-weight:600;
+}
+.back:hover{border-color:var(--purple);background:var(--purple-soft)}
+
+.totop{
+  position:fixed;right:20px;bottom:22px;width:42px;height:42px;border-radius:50%;
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--purple);text-decoration:none;font-size:17px;opacity:.9;
+}
+.totop:hover{opacity:1}
+
+@media (max-width:560px){
+  .hero{padding:30px 18px 26px;border-radius:0}
+  .hero h1{font-size:22px}
+  .entry{padding:16px 16px}
+  .entry h3{font-size:16.5px}
+  .entry .body{font-size:14.5px;line-height:1.85}
+  .wrap{padding:0 14px}
+  .entries{column-count:1}
+}
+
+@media print{
+  body{background:#fff}
+  .hero{background:none;color:#000;border-bottom:2px solid #000;padding:0 0 16px}
+  .hero .kicker,.hero .meta{opacity:1;color:#444}
+  .nav,.totop{display:none}
+  .entry,.preface{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+  .entry details{display:block}
+  .entry details > summary{display:none}
+  .entry details .en-abs{display:block}
+}
+</style>
+</head>
+<body>
+<header class="hero"><div class="inner">
+<p class="kicker">Monthly Archive · 2026-10</p>
+<h1>量子信息速递 · 2026 年 10 月</h1>
+<p class="meta"><div>共 <b>8</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-11-02</div><div>生成于 2026-11-03 07:01</div></p>
+</div></header>
+<div class="wrap">
+<nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-03.html">日报</a><a href="../monthly/index.html" class="active" aria-current="page">月报</a><a href="../topic/index.html">专题</a></nav>
+<a class="back" href="../index.html">← 返回索引</a>
+<div class="preface"><p class="h">序 言</p><p>本刊按 APS、Nature、Science 三大系列的目标期刊检索量子信息与量子技术领域的新发表工作，经学科筛选后按期刊汇总。每一条给出中英文标题、作者、卷页与中文摘要，点击 DOI 可直达原文。中文标题、导读与摘要译文均由模型生成，速度优先、难免有疏漏，欢迎指出。</p></div>
+<nav class="nav"><p class="h">阅读导航</p><ul><li><a href="#j-prl">Phys. Rev. Lett.<i>3</i></a></li><li><a href="#j-prxquantum">PRX Quantum<i>3</i></a></li><li><a href="#j-nature">Nature<i>1</i></a></li><li><a href="#j-ncomms">Nat. Commun.<i>1</i></a></li></ul></nav>
+<section class="section" id="j-prl">
+<h2>Physical Review Letters<span class="abbr">Phys. Rev. Lett.</span><span class="cnt">3 篇</span></h2>
+<p class="lede">Physical Review Letters 量子信息科学与技术分区</p>
+<h3 style="font-size:13px;font-weight:600;color:var(--muted);letter-spacing:1px;margin:26px 0 12px">2026-10-30（周五）· 2 篇</h3>
+<div class="entry">
+<p class="no">No. 01</p><h3>利用逻辑量子比特实现稀有事件量子传感<span class="en">Rare-Event Quantum Sensing Using Logical Qubits</span></h3>
+<p class="tags"><span class="tag">★ 编辑推荐</span></p>
+<p class="teaser">提出借助量子纠错的综合测量非线性处理，以高阶关联区分稀有信号与噪声，并在马尔可夫噪声下展示出优于常规方案的探测灵敏度。</p>
+<p class="body">我们提出一种利用量子纠错（QEC）在噪声环境中探测稀有信号的新协议。该协议的关键特征是通过不同的高阶关联来区分信号与噪声，这由 QEC 中综合测量期间发生的非线性处理实现。在该方案中，QEC 有两个作用。第一，它以记录一个约化的、随机的逻辑相位 ϕ_L = O(ε^3) 为代价，牺牲部分信号 ε。第二，它纠正物理噪声并延长用于信号采集的（逻辑）相干时间。对于在局域马尔可夫噪声存在下随机时刻发生的稀有信号，我们明确证明了该方法相比更常规的传感策略具有更高的灵敏度。</p><details><summary>Abstract (English)</summary><div class="en-abs">We present a novel protocol to detect rare signals in a noisy environment using quantum error correction (QEC). The key feature of our protocol is the discrimination between signal and noise through distinct higher-order correlations, realized by the nonlinear processing that occurs during syndrome extraction in QEC. In this scheme, QEC has two effects. First, it sacrifices part of the signal ε by recording a reduced, stochastic, logical phase ϕ L = O ( ε 3 ) . Second, it corrects the physical noise and extends the (logical) coherence time for signal acquisition. For rare signals occurring at random times in the presence of local Markovian noise, we explicitly demonstrate an improved sensitivity of our approach over more conventional sensing strategies.</div></details>
+<p class="src"><span class="au">Robert Ott, Torsten V. Zache, Soonwon Choi, Adam M. Kaufman, and Hannes Pichler</span><br><span class="cite">Phys. Rev. Lett. 137, 180802 (2026)</span><br><a href="https://doi.org/10.1103/q4lp-htgw" target="_blank" rel="noopener">10.1103/q4lp-htgw</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 02</p><h3>利用毫米波实现超导量子比特读出<span class="en">Millimeter Wave Readout of a Superconducting Qubit</span></h3>
+<p class="tags"><span class="tag">★ Physics 精选</span></p>
+<p class="teaser">在失谐比超过10的毫米波腔与transmon体系中，利用大失谐抑制驱动引起的共振跃迁，无需量子极限放大器即以超过100个光子读出，保真度高于99%。</p>
+<p class="body">毫米波正逐渐成为连接和增强里德堡原子、光机械和超导量子比特等不同量子平台的使能技术。在本文中，我们探索毫米波光子与传统 transmon 量子比特之间的相互作用，特别是用于量子比特读出。我们研究一个电路量子电动力学系统，它由频率为 ω_r = 2π × 34.7 GHz 的毫米波腔和频率为 ω_q = 2π × 3.1 GHz 的 transmon 量子比特组成，耦合速率为 g = 2π × 1.3 GHz。在腔与量子比特之间如此大的失谐（ω_r/ω_q &gt; 10）下，我们能够抑制驱动引起的非期望共振态跃迁，从而实现用于量子比特读出的强驱动。即使驱动光子数超过100，我们也测得没有共振态跃迁，并用超过100个光子读出量子比特态，在没有量子极限放大器辅助的情况下实现大于99%的测量保真度。</p><details><summary>Abstract (English)</summary><div class="en-abs">Millimeter waves are emerging as an enabling technology for connecting and enhancing different quantum platforms such as Rydberg atoms, optomechanics, and superconducting qubits. In this Letter, we explore the interaction between millimeter wave photons and conventional transmon qubits, specifically for qubit readout. We study a circuit quantum electrodynamic system consisting of a millimeter wave cavity at ω r = 2 π × 34.7 GHz and a transmon qubit at ω q = 2 π × 3.1 GHz coupled at rate g = 2 π × 1.3 GHz . With such a large detuning between cavity and qubit, ω r / ω q &gt; 10 , we are able to suppress drive induced unwanted resonant state transitions, enabling strong drives for qubit readout. We measure no resonant state transitions even when driving with more than 100 photons and read out the qubit state with more than 100 photons to achieve a measurement fidelity greater than 99% without the aid of a quantum limited amplifier.</div></details>
+<p class="src"><span class="au">Akash V. Dixit, Zachary L. Parrott, Dennis Chunikhin, Trevyn F. Q. Larson, Bradley D. Hauer, and John D. Teufel</span><br><span class="cite">Phys. Rev. Lett. 137, 180803 (2026)</span><br><a href="https://doi.org/10.1103/c84y-ggqs" target="_blank" rel="noopener">10.1103/c84y-ggqs</a></p>
+</div>
+<h3 style="font-size:13px;font-weight:600;color:var(--muted);letter-spacing:1px;margin:26px 0 12px">2026-10-28（周三）· 1 篇</h3>
+<div class="entry">
+<p class="no">No. 03</p><h3>超越量子比特极限的超导量子三态链路<span class="en">Superconducting Qutrit Link beyond the Qubit Limit</span></h3>
+<p class="tags"><span class="tag">★ 编辑推荐</span><span class="tag jc">量子纠缠</span></p>
+<p class="teaser">利用频率与带宽匹配的微波通道和跃迁选择性操作，实现任意量子三态态传输，并超越经典基准及量子比特信道极限，展示高维通信资源。</p>
+<p class="body">超导微波链路已实现量子比特之间的确定性态传输和远程纠缠，但确定性链路迄今只具有有效二维的传输希尔伯特空间。在这里，我们展示了一个连接两个独立封装节点、由微波通道相连的超导量子三态链路。每个节点结合了一个 transmon 量子三态、一个传输谐振器和一个可调 Purcell 滤波接口，使两个远程微波光子接口在频率和带宽上都能匹配。我们实现了两种跃迁选择性的光子介导操作，在同一通道的不同时间模式中传输 |e⟩ 和 |f⟩ 量子三态分量。我们对任意量子三态态传输进行了层析表征，得到平均传输态保真度为 83.68%，量子三态过程保真度为 77.12%，超过了经典量子三态传输基准，也超过了用有效量子比特信道传输任意量子三态所能达到的最佳平均保真度。利用部分传输操作，我们重建了一个远程双量子三态态，其负度为 0.730，层析推断的密集编码容量为 2.273 比特，层析推断的 Collins-Gisin-Linden-Massar-Popescu (CGLMP) 参数 I_3 = 2.332，均超出相应的量子比特或局域界限。这些结果展示了一条超导微波链路，将 transmon 的固有三级结构用作真正的高维通信资源。</p><details><summary>Abstract (English)</summary><div class="en-abs">Superconducting microwave links have enabled deterministic state transfer and remote entanglement between qubits, but deterministic links have so far operated with an effectively two-dimensional transmitted Hilbert space. Here we demonstrate a superconducting qutrit link between two independently packaged nodes connected by a microwave channel. Each node combines a transmon qutrit, a transmission resonator, and a tunable Purcell-filter interface, allowing the two remote microwave-photon interfaces to be matched in both frequency and bandwidth. We implement two transition-selective photon-mediated operations that transfer the | e ⟩ and | f ⟩ qutrit components in distinct temporal modes of the same channel. We tomographically characterize arbitrary qutrit-state transfer, obtaining a mean transferred-state fidelity of 83.68% and a qutrit process fidelity of 77.12%, exceeding both the classical qutrit-transfer benchmark and the best possible average fidelity of an effective qubit channel used to transmit an arbitrary qutrit. Using partial-transfer operations, we reconstruct a remote two-qutrit state with negativity 0.730, a tomography-inferred dense-coding capacity of 2.273 bits, and a tomography-inferred Collins-Gisin-Linden-Massar-Popescu (CGLMP) parameter I 3 = 2.332 , all beyond the corresponding qubit or local bounds. These results demonstrate a superconducting microwave link that uses the native three-level structure of transmons as a genuine high-dimensional communication resource.</div></details>
+<p class="src"><span class="au">Xiang Li, Zheng-Yang Mei, Yang He, Si-Lu Zhao, Yan-Jun Liu, Xiao-Hui Song, Kai Xu, Zhong-Cheng Xiang, Dong-Ning Zheng, and Heng Fan</span><br><span class="cite">Phys. Rev. Lett. 137, 180801 (2026)</span><br><a href="https://doi.org/10.1103/6866-9gsl" target="_blank" rel="noopener">10.1103/6866-9gsl</a></p>
+</div>
+</section>
+<section class="section" id="j-prxquantum">
+<h2>PRX Quantum<span class="abbr">PRX Quantum</span><span class="cnt">3 篇</span></h2>
+<p class="lede">PRX Quantum 全刊（专注量子信息科学与技术）</p>
+<h3 style="font-size:13px;font-weight:600;color:var(--muted);letter-spacing:1px;margin:26px 0 12px">2026-10-30（周五）· 1 篇</h3>
+<div class="entry">
+<p class="no">No. 04</p><h3>在光晶格中构建任意相干原子重排<span class="en">Constructing Arbitrary Coherent Rearrangements in Optical Lattices</span></h3>
+
+<p class="teaser">借助光超晶格与离散线性光学的类比，用Clements方案由双阱阵列中的隧穿和相位移动构造任意N维单粒子幺正变换，实现可扩展的全连接原子重排。</p>
+<p class="body">对光晶格中超冷原子运动自由度的相干控制，为利用有质量粒子实现可编程量子动力学提供了一条有前景的途径。我们提出并分析了一种实现超冷原子相干重排的方案，它对应于单粒子运动态上的任意幺正变换。利用光超晶格中的动力学与离散线性光学之间的类比，我们采用 Clements 方案，从双阱阵列中的隧穿和相位移动系统地构造任意全局 N 维单粒子幺正变换。隧穿被全局控制，而局域操作则通过位点分辨的势移动实现。我们数值研究了该方案对强度噪声和寻址串扰的敏感性。我们确定了由这种幺正构造所支持的关键子程序，包括离散傅里叶变换和非原生哈密顿量的实现。将该方案推广到二维，可实现全对全的原子重排，其电路深度随原子数亚线性增长，为原子重排提供了一种高密度、高度可扩展的方法。另见 1 幅图。</p><details><summary>Abstract (English)</summary><div class="en-abs">Coherent control of motional degrees of freedom of ultracold atoms in optical lattices offers a promising route toward programmable quantum dynamics with massive particles. We propose and analyze a scheme for implementing coherent rearrangement of ultracold atoms, corresponding to arbitrary unitary transformations on single-particle motional states. Exploiting an analogy between dynamics in optical superlattices and discrete linear optics, we employ the Clements scheme to systematically construct any global N -dimensional single-particle unitary from tunneling and phase shifts in arrays of double wells. Tunneling is controlled globally, while local operations are achieved through site-resolved potential shifts. We numerically investigate the susceptibility of the scheme to intensity noise and addressing crosstalk. We identify key subroutines enabled by this unitary construction, including the discrete Fourier transform and the implementation of non-native Hamiltonians. Extending the scheme to two dimensions enables all-to-all atomic rearrangement with a circuit depth that scales sublinearly with the atom number, providing a high-density and highly scalable approach to atom rearrangement. See 1 more figures</div></details>
+<p class="src"><span class="au">Alexander Roth, Liyang Qiu, Timon Hilker, Titus Franz, and Philipp M. Preiss</span><br><span class="cite">PRX Quantum 7, 043021 (2026)</span><br><a href="https://doi.org/10.1103/jsr3-2r5t" target="_blank" rel="noopener">10.1103/jsr3-2r5t</a></p>
+</div>
+<h3 style="font-size:13px;font-weight:600;color:var(--muted);letter-spacing:1px;margin:26px 0 12px">2026-10-29（周四）· 1 篇</h3>
+<div class="entry">
+<p class="no">No. 05</p><h3>超导GKP量子比特的逻辑门与读出建模<span class="en">Modeling Logical Gates and Readout of Superconducting Gottesman-Kitaev-Preskill Qubits</span></h3>
+
+<p class="teaser">针对GKP比特理论噪声模型与实际超导器件条件的脱节，用随机位移信道近似损耗与退相位，分析Clifford门误差扩散并改进解码器，同时提升零差读出效率。</p>
+<p class="body">Gottesman-Kitaev-Preskill (GKP) 码是实现容错量子计算的一条激动人心的途径，因为高斯资源和 GKP 泡利本征态制备足以实现通用量子计算。然而，GKP 量子比特在理论上设计用来纠正的噪声模型——均匀随机位移误差——与实际超导器件中影响 GKP 量子比特的条件之间存在脱节：真实噪声信道、逻辑门和低效测量。在这项工作中，我们从三个方面弥合这一差距。首先，我们用随机位移信道近似损耗和退相位对近似 GKP 码态的影响，并证明该近似与数值结果吻合良好。其次，我们分析 GKP Clifford 门的误差扩散性质，并描述在实现每个门之后修改解码器如何能将门的不保真度降低多个数量级。最后，我们考虑零差测量低效对逻辑态读出的影响，并分析一种利用量子轨迹理论提高测量效率的方案。另见14幅图。</p><details><summary>Abstract (English)</summary><div class="en-abs">The Gottesman-Kitaev-Preskill (GKP) code is an exciting route to fault-tolerant quantum computing since Gaussian resources and GKP Pauli-eigenstate preparation are sufficient to achieve universal quantum computing. However, there is a disconnect between the noise model that GKP qubits are in theory designed to correct—uniform random displacement errors—and the conditions that affect GKP qubits in superconducting devices in practice: realistic noise channels, logical gates, and inefficient measurements. In this work we bridge this gap in three ways. First, we approximate the effect loss and dephasing on approximate GKP codestates using a random displacement channel, and show that this approximation matches well with numerics. Second, we analyze the error-spreading properties of GKP Clifford gates and describe how a modification in the decoder following the implementation of each gate can reduce the gate infidelity by multiple orders of magnitude. Finally, we consider the effect of homodyne measurement inefficiencies on logical state readout and analyze a scheme to improve the measurement efficiency using the theory of quantum trajectories. See 14 more figures</div></details>
+<p class="src"><span class="au">Mackenzie H. Shaw, Andrew C. Doherty, and Arne L. Grimsmo</span><br><span class="cite">PRX Quantum 7, 043020 (2026)</span><br><a href="https://doi.org/10.1103/k1tk-wh93" target="_blank" rel="noopener">10.1103/k1tk-wh93</a></p>
+</div>
+<h3 style="font-size:13px;font-weight:600;color:var(--muted);letter-spacing:1px;margin:26px 0 12px">2026-10-28（周三）· 1 篇</h3>
+<div class="entry">
+<p class="no">No. 06</p><h3>利用里德堡阻塞在光镊中快速制备单原子<span class="en">Fast Single-Atom Preparation in Optical Tweezers via Rydberg Blockade</span></h3>
+
+<p class="teaser">利用光镊内里德堡阻塞与自电离，在微秒尺度选择性移除多占据光镊中的多余原子，将多原子概率降至1%，比光辅助碰撞快两个数量级。</p>
+<p class="body">持续补充的光镊阵列将为中性原子量子比特解锁无限深度的量子电路。限制这类系统循环时间的一个关键瓶颈，是从最初装载了多个原子的光镊中移除原子。在光辅助碰撞的传统技术中，缓慢的碰撞动力学将移除多余原子的时间尺度限制在几毫秒。在这里，我们提出并演示了一种方案，利用光镊内里德堡阻塞和自电离，在微秒时间尺度上从多占据光镊中选择性地一次移除一个原子。我们在 171Yb 的两种互补机制中演示了该协议。从基态进行双光子里德堡激发时，我们在 64.8 μs 内将多原子概率降至 1%，同时在 58.2(2)% 的光镊中保留单原子；这与相同实验条件下光辅助碰撞所达到的填充分数相当，但速度快了两个数量级以上。从亚稳态 3P0 进行单光子激发时，降低的单原子损失使填充分数提高到 74.8(3)%，代价是制备 3P0 态原子所需的额外时间开销。最终填充分数受到一种尚未解释的两体损失机制的限制；如果该问题得到解决，就有可能实现快速、准确定性的装载。</p><details><summary>Abstract (English)</summary><div class="en-abs">Continuously replenished optical tweezer arrays will unlock unlimited-depth quantum circuits with neutral atom qubits. A key bottleneck limiting the cycle time of these systems is removing atoms from tweezers initially loaded with more than one atom. In the conventional technique of light-assisted collisions, slow collisional dynamics limit the timescale for removing excess atoms to several milliseconds. Here, we propose and demonstrate a scheme for selectively removing one atom at a time from multiply occupied tweezers on a microsecond timescale, using intra-tweezer Rydberg blockade and autoionization. We demonstrate the protocol in Yb 171 in two complementary regimes. With two-photon Rydberg excitation from the ground state, we reduce the multi-atom probability to 1% in 64.8 μ s , while retaining single atoms in 58.2 ( 2 ) % of the tweezers, which is comparable to the filling fraction achieved with light-assisted collisions under the same experimental conditions, but over two orders of magnitude faster. With single-photon excitation from the metastable state P 0 3 , reduced single-atom loss enables a higher filling fraction of 74.8 ( 3 ) % , at the cost of additional temporal overhead to prepare the atoms in P 0 3 . The final filling fraction is limited by an unexplained two-body loss mechanism, which, if solved, could enable fast, quasi-deterministic loading.</div></details>
+<p class="src"><span class="au">Yiyi Li, Vernon M. Hughes, Michael Peper, Yicheng Bao, Chenyuan Li, Sanzhar Bissenali, and Jeff D. Thompson</span><br><span class="cite">PRX Quantum 7, 043019 (2026)</span><br><a href="https://doi.org/10.1103/8t3p-x6s7" target="_blank" rel="noopener">10.1103/8t3p-x6s7</a></p>
+</div>
+</section>
+<section class="section" id="j-nature">
+<h2>Nature<span class="abbr">Nature</span><span class="cnt">1 篇</span></h2>
+<p class="lede">Nature 正刊中的量子信息与量子技术论文</p>
+<h3 style="font-size:13px;font-weight:600;color:var(--muted);letter-spacing:1px;margin:26px 0 12px">2026-10-28（周三）· 1 篇</h3>
+<div class="entry">
+<p class="no">No. 07</p><h3>基于三线态卡宾的单分子自旋—光子接口<span class="en">A single-molecule spin–photon interface</span></h3>
+<p class="tags"><span class="tag cover">★ 封面文章</span></p>
+<p class="teaser">将三线态基态卡宾分子嵌入结构匹配的主晶格，在4.5 K下实现窄零声子线、超过一小时的谱稳定性和毫秒级自旋相干，展示单分子可寻址的自旋—光子接口。</p>
+<p class="body">将长寿命自旋量子比特与光子连接起来的光学接口，是量子网络和分布式量子信息处理的核心需求。目前，固态原子缺陷因其固有的自旋与光学相干性而成为领先候选者。在这些进展的基础上，合成定制的分子系统代表了该领域的一次根本性变革，它利用精确的原子控制和一致的自下而上组装。然而，一个同时满足稳健自旋—光子接口各项要求——即明亮荧光、高谱稳定性和长基态自旋寿命的结合——的分子平台，尚未在单分子层面实现。在这里，我们展示了一种嵌入结构匹配主晶格中的三线态基态卡宾分子，可作为具有单分子可寻址性的稳健自旋—光子接口。该系统表现出窄零声子线、超过一小时的谱稳定性、自旋选择性光学跃迁和单分子光探测磁共振。相干控制产生毫秒尺度的动力学解耦相干时间，并在 4.5 K 温度下具有数十毫秒的自旋弛豫。这些结果确立了分子量子比特作为单发射体量子光学可行平台的地位，同时保留了自下而上化学设计和可加工材料的优势。一种位于定制晶体中的三线态卡宾分子提供了稳定的单分子自旋—光子接口，具有毫秒级相干性，推动了用于量子网络的化学工程分子量子比特。</p><details><summary>Abstract (English)</summary><div class="en-abs">Optical interfaces that connect long-lived spin qubits to photons are a central requirement for quantum networking and distributed quantum information processing. At present, solid-state atomic defects are leading candidates because of their inherent spin and optical coherence1,2. Building on these advancements, synthetically tailored molecular systems represent a fundamental change in the field, using precise atomic control and consistent bottom-up assembly3,4. However, a molecular platform that concurrently satisfies the demands of a robust spin–photon interface—namely, the combination of bright fluorescence, high spectral stability and long ground-state spin lifetimes—has yet to be realized at the single-molecule level. Here we show that a triplet ground-state carbene molecule, embedded within a structurally matched host crystal, functions as a robust spin–photon interface with single-molecule addressability. The system exhibits narrow ZPLs, spectral stability over more than an hour, spin-selective optical transitions and single-molecule optically detected magnetic resonance. Coherent control yields millisecond-scale dynamical-decoupling coherence and tens-of-milliseconds spin relaxation at a temperature of 4.5 K. These results establish molecular qubits as a viable platform for single-emitter quantum optics5,6 while preserving the advantages of bottom-up chemical design7 and processable materials8–10. A triplet carbene molecule in a tailored crystal provides a stable single-molecule spin–photon interface with millisecond coherence, advancing chemically engineered molecular qubits for quantum networking.</div></details>
+<p class="src"><span class="au">Simon Roggors, Thomas Unden, Anna Aubele, Paul Mentzel, Gregor Bayer, Alon Salhov, Jochen Scharpf, Martin B. Plenio, Alex Retzker, Fedor Jelezko, Tim R. Eichhorn, Tobias A. Schaub, Matthias Pfender, Philipp Neumann, Ilai Schwartz</span><br><span class="cite">Nature 658, 1153 (2026)</span><br><a href="https://doi.org/10.1038/s41586-026-11147-6" target="_blank" rel="noopener">10.1038/s41586-026-11147-6</a></p>
+</div>
+</section>
+<section class="section" id="j-ncomms">
+<h2>Nature Communications<span class="abbr">Nat. Commun.</span><span class="cnt">1 篇</span></h2>
+<p class="lede">Nature Communications 中的量子信息与量子技术论文</p>
+<h3 style="font-size:13px;font-weight:600;color:var(--muted);letter-spacing:1px;margin:26px 0 12px">2026-10-28（周三）· 1 篇</h3>
+<div class="entry">
+<p class="no">No. 08</p><h3>微腔色心纳米定位实现硅基明亮纯净单光子源<span class="en">Bright and pure single-photon source in silicon by nanoscale positioning of a color center in a microcavity</span></h3>
+<p class="tags"><span class="tag cover">★ 封面文章</span></p>
+<p class="teaser">将单个W色心纳米级定位在圆形布拉格光栅微腔中，在1217 nm零声子线获得1.29×10^6 counts/s饱和计数率和g(2)(0)=0.06±0.02，脉冲触发单光子纯度达93±2%。</p>
+<p class="body">硅是光子量子技术的领先材料平台。然而，在近红外波段高效集成高性能单光子源仍然是一个关键挑战。在这里，我们展示了一个波长为 1217 nm 的全硅单光子源，它通过将单个 W 色心纳米级定位在圆形布拉格光栅微腔中制造而成。工作波长对应于 W 色心的零声子线，并被微腔增强。在带隙以上连续波激发下，我们获得了 1.29 × 10^6 counts/s 的饱和光子计数率，并具有显著的光子反聚束（g^(2)(0) = 0.06 ± 0.02）。在弱脉冲激发下的触发操作产生纯度为 93 ± 2% 的单光子。在饱和时，我们揭示了由再抽运过程引起的纯度退化，未来可通过选择性激发方案加以缓解。这些结果代表了朝着硅光子学中按需不可区分单光子源迈出的重要一步。将色心确定性集成到硅光子微腔中对可扩展量子光子学很重要。在这里，作者将单个 W 色心定位在圆形布拉格光栅微腔中，并展示了明亮、高纯度且可触发操作的近红外单光子发射。</p><details><summary>Abstract (English)</summary><div class="en-abs">Silicon is a leading material platform for photonic quantum technologies. However, a key challenge remains the efficient integration of high-performance single-photon sources in the near infrared. Here we present an all-silicon single-photon source at 1217 nm wavelength, fabricated by nanoscale positioning of a single W center in a circular Bragg grating cavity. The operation wavelength corresponds to the W center’s zero-phonon line that is enhanced by the cavity. Under above-gap continuous-wave excitation, we obtain a saturated photon count rate of 1.29&amp;nbsp;×&amp;nbsp;106 counts/s with pronounced photon antibunching (g(2)(0)&amp;nbsp;=&amp;nbsp;0.06&amp;nbsp;±&amp;nbsp;0.02). Triggered operation under weak pulsed excitation produces single photons with 93&amp;nbsp;±&amp;nbsp;2% purity. At saturation, we reveal purity degradation due to repumping processes, that could be mitigated using selective excitation schemes in the future. These results represent a major step towards on-demand sources of indistinguishable single photons in silicon photonics. Deterministic integration of color centers into silicon photonic cavities is important for scalable quantum photonics. Here, the authors position individual W centers in circular Bragg grating cavities and demonstrate bright near-infrared single-photon emission with high purity and triggered operation.</div></details>
+<p class="src"><span class="au">Baptiste Lefaucher, Yoann Baron, Jean-Baptiste Jager, Vincent Calvo, Christian Elsässer, Giuliano Coppola, Frédéric Mazen, Sébastien Kerdilès, Félix Cache, Anaïs Dréau, Jean-Michel Gérard</span><br><span class="cite">Nat. Commun. (2026)</span><br><a href="https://doi.org/10.1038/s41467-026-78809-x" target="_blank" rel="noopener">10.1038/s41467-026-78809-x</a></p>
+</div>
+</section>
+<footer>
+<b>数据来源</b>　APS（Physical Review Letters / PRX / PRX Quantum）、Nature 系列、Science 系列官方网站与 Crossref。中文标题、简介与摘要译文由本机模型生成，仅供快速浏览；<b>学术引用请以英文原文为准</b>。<br>本页为按月累计的完整档案，每条都含中文摘要与英文原文。
+</footer>
+</div>
+<a class="totop" href="#" aria-label="回到顶部">↑</a>
+</body>
+</html>
