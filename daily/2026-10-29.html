@@ -24,15 +24,15 @@ body{
        "Hiragino Sans GB","Microsoft YaHei",sans-serif;
   -webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:820px;margin:0 auto;padding:0 18px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 28px}
 
 /* ---- 头部 ---- */
 .hero{
   background:linear-gradient(135deg,var(--purple) 0%,#5c1a86 58%,var(--teal) 100%);
-  color:#fff;padding:40px 18px 34px;margin-bottom:26px;
+  color:#fff;padding:40px 28px 34px;margin-bottom:26px;
   border-radius:0 0 26px 26px;
 }
-.hero .inner{max-width:820px;margin:0 auto}
+.hero .inner{max-width:1280px;margin:0 auto}
 .hero .kicker{
   font-size:12px;letter-spacing:3px;text-transform:uppercase;opacity:.72;
   margin:0 0 10px;font-weight:600;
@@ -40,6 +40,18 @@ body{
 .hero h1{margin:0 0 10px;font-size:27px;line-height:1.35;font-weight:700;letter-spacing:.4px}
 .hero .meta{margin:0;font-size:13.5px;opacity:.86;line-height:1.9}
 .hero .meta b{font-weight:600;opacity:1}
+
+/* ---- 版块切换 ---- */
+.tabs{
+  display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;
+}
+.tabs a{
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  box-shadow:var(--shadow);padding:8px 20px;text-decoration:none;
+  font-size:14px;font-weight:700;color:var(--ink2);
+  transition:border-color .15s,color .15s,background .15s;
+}
+.tabs a:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-soft)}
 
 /* ---- 序言 ---- */
 .preface{
@@ -90,8 +102,15 @@ body{
   margin:0 0 18px 15px;font-size:13px;color:var(--muted);line-height:1.7;
 }
 
-/* ---- 条目 ---- */
+/* ---- 条目容器：宽屏双栏 ---- */
+.entries{
+  column-count:2;
+  column-gap:22px;
+}
 .entry{
+  break-inside:avoid;
+  -webkit-column-break-inside:avoid;
+  page-break-inside:avoid;
   background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
   padding:20px 22px;margin:0 0 16px;box-shadow:var(--shadow);position:relative;
 }
@@ -180,6 +199,50 @@ body{
   background:var(--purple-soft);color:var(--purple);
   font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;
 }
+/* ---- 首页年份块 ---- */
+.years{margin:0}
+.yearblock{margin:0 0 34px}
+.yhead{
+  display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+  border-bottom:2px solid var(--purple);padding:0 0 10px;margin:0 0 16px;
+}
+.yhead h2{
+  margin:0;font-size:44px;font-weight:800;letter-spacing:-1.5px;
+  color:var(--purple);line-height:1;font-variant-numeric:tabular-nums;
+}
+.ysum{font-size:13.5px;color:var(--muted);font-weight:600}
+.mlist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+@media (min-width:760px){ .mlist{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1180px){ .mlist{grid-template-columns:repeat(3,1fr)} }
+.mlist li{display:flex;align-items:stretch;gap:8px}
+.mrow{
+  flex:1;display:flex;align-items:center;gap:14px;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:13px 16px;text-decoration:none;
+  transition:border-color .15s,transform .15s;
+}
+.mrow:hover{border-color:var(--purple);transform:translateY(-1px)}
+.mnum{
+  font-size:26px;font-weight:800;color:var(--purple);opacity:.32;
+  font-variant-numeric:tabular-nums;line-height:1;min-width:42px;
+}
+.mtxt b{display:block;font-size:15.5px;color:var(--ink);font-weight:700}
+.mtxt i{display:block;margin-top:3px;font-size:12.5px;color:var(--muted);font-style:normal}
+.mextra{display:flex;flex-direction:column;gap:6px;justify-content:center}
+.mini{
+  font-size:11.5px;font-weight:700;color:var(--teal);text-decoration:none;
+  background:var(--teal-soft);border:1px solid #cfe6e6;border-radius:6px;
+  padding:4px 9px;white-space:nowrap;
+}
+.mini:hover{background:var(--teal);color:#fff}
+.biglink{
+  display:block;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:16px 18px;margin:0 0 10px;text-decoration:none;
+  font-size:16px;font-weight:700;color:var(--ink);
+}
+.biglink:hover{border-color:var(--purple)}
+.biglink span{display:block;margin-top:5px;font-size:13px;font-weight:400;color:var(--muted)}
+
 footer{
   margin-top:52px;padding:22px 0 0;border-top:1px solid var(--line);
   color:var(--muted);font-size:12.5px;line-height:1.9;
@@ -208,6 +271,7 @@ footer b{color:var(--ink2);font-weight:600}
   .entry h3{font-size:16.5px}
   .entry .body{font-size:14.5px;line-height:1.85}
   .wrap{padding:0 14px}
+  .entries{column-count:1}
 }
 
 @media print{
@@ -226,21 +290,24 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Quantum Information Digest · 2026-10-29</p>
 <h1>量子信息速递 · 10 月 29 日</h1>
-<p class="meta"><div>周四 · 共 <b>1</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-10-29</div><div>生成于 2026-11-02 21:08</div></p>
+<p class="meta"><div>周四 · 共 <b>1</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-10-29</div><div>生成于 2026-11-02 21:32</div></p>
 </div></header>
 <div class="wrap">
+<nav class="tabs"><a href="../index.html">首页</a><a href="../daily/index.html">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a></nav>
 <a class="back" href="../index.html">← 返回索引</a>
 <div class="preface"><p class="h">序 言</p><p>本刊按 APS、Nature、Science 三大系列的目标期刊检索量子信息与量子技术领域的新发表工作，经学科筛选后按期刊汇总。每一条给出中英文标题、作者、卷页与中文摘要，点击 DOI 可直达原文。中文标题、导读与摘要译文均由模型生成，速度优先、难免有疏漏，欢迎指出。</p></div>
 <nav class="nav"><p class="h">阅读导航</p><ul><li><a href="#j-prxquantum">PRX Quantum<i>1</i></a></li></ul></nav>
 <section class="section" id="j-prxquantum">
 <h2>PRX Quantum<span class="abbr">PRX Quantum</span><span class="cnt">1 篇</span></h2>
 <p class="lede">PRX Quantum 全刊（专注量子信息科学与技术）</p>
+<div class="entries">
 <div class="entry">
 <p class="no">No. 01</p><h3>超导GKP量子比特逻辑门与读出的建模<span class="en">Modeling Logical Gates and Readout of Superconducting Gottesman-Kitaev-Preskill Qubits</span></h3>
 
 <p class="teaser">针对GKP比特理论噪声模型与实际超导器件条件的脱节，用随机位移信道近似损耗与退相位，并分析Clifford门的误差扩散与解码器修正，可使门失真下降多个量级。</p>
 <p class="body">Gottesman-Kitaev-Preskill (GKP) 码是实现容错量子计算的一条令人振奋的途径，因为高斯资源加上 GKP 泡利本征态的制备就足以实现通用量子计算。然而，GKP 量子比特在理论上被设计用来纠正的噪声模型——均匀随机位移误差——与实际超导器件中影响 GKP 量子比特的条件之间存在脱节：真实噪声信道、逻辑门以及低效率的测量。本文从三个方面弥合这一差距。第一，我们用随机位移信道近似损耗与退相位对近似 GKP 码态的影响，并表明该近似与数值计算吻合良好。第二，我们分析 GKP Clifford 门的误差扩散性质，并说明在每实现一个门之后对解码器作相应修改，可将门失真降低多个数量级。第三，我们考虑零差测量低效率对逻辑态读出的影响，并利用量子轨迹理论分析一种提高测量效率的方案。</p><details><summary>Abstract (English)</summary><div class="en-abs">The Gottesman-Kitaev-Preskill (GKP) code is an exciting route to fault-tolerant quantum computing since Gaussian resources and GKP Pauli-eigenstate preparation are sufficient to achieve universal quantum computing. However, there is a disconnect between the noise model that GKP qubits are in theory designed to correct—uniform random displacement errors—and the conditions that affect GKP qubits in superconducting devices in practice: realistic noise channels, logical gates, and inefficient measurements. In this work we bridge this gap in three ways. First, we approximate the effect loss and dephasing on approximate GKP codestates using a random displacement channel, and show that this approximation matches well with numerics. Second, we analyze the error-spreading properties of GKP Clifford gates and describe how a modification in the decoder following the implementation of each gate can reduce the gate infidelity by multiple orders of magnitude. Finally, we consider the effect of homodyne measurement inefficiencies on logical state readout and analyze a scheme to improve the measurement efficiency using the theory of quantum trajectories. See 14 more figures</div></details>
 <p class="src"><span class="au">Mackenzie H. Shaw, Andrew C. Doherty, and Arne L. Grimsmo</span><br><span class="cite">PRX Quantum 7, 043020 (2026)</span><br><a href="https://doi.org/10.1103/k1tk-wh93" target="_blank" rel="noopener">10.1103/k1tk-wh93</a></p>
+</div>
 </div>
 </section>
 <footer>
