@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light">
 <meta name="format-detection" content="telephone=no">
-<title>量子信息速递 · 2026 年 10 月</title>
+<title>量子信息速递 · 2026 年 11 月</title>
 <style>
 :root{
   --ink:#1d1d1f; --ink2:#3c3c43; --muted:#86868b; --line:#e6e6eb;
@@ -27,10 +27,12 @@ body{
 .wrap{max-width:1280px;margin:0 auto;padding:0 28px}
 
 /* ---- 头部 ---- */
+/* 头部通栏直角：圆角会在下方左右两角留出缺口（底色透出来），
+   与下面内容区的直角卡片放在一起显得没对齐，所以这里是矩形。 */
 .hero{
   background:linear-gradient(135deg,var(--purple) 0%,#5c1a86 58%,var(--teal) 100%);
   color:#fff;padding:40px 28px 34px;margin-bottom:26px;
-  border-radius:0 0 26px 26px;
+  border-radius:0;
 }
 .hero .inner{max-width:1280px;margin:0 auto}
 .hero .kicker{
@@ -42,6 +44,9 @@ body{
 .hero .meta b{font-weight:600;opacity:1}
 
 /* ---- 版块切换 ---- */
+/* 当前所在版块用「实心紫底 + 内阴影」强调：实心底色在一排白胶囊里最抓眼，
+   和内阴影一起构成轻微的「按下去」感，和头部渐变同色系。
+   不用边框颜色是因为边框在浅色背景上对比度不足，远看分不出来。 */
 .tabs{
   display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;
 }
@@ -49,9 +54,14 @@ body{
   background:var(--card);border:1px solid var(--line);border-radius:999px;
   box-shadow:var(--shadow);padding:8px 20px;text-decoration:none;
   font-size:14px;font-weight:700;color:var(--ink2);
-  transition:border-color .15s,color .15s,background .15s;
+  transition:border-color .15s,color .15s,background .15s,box-shadow .15s;
 }
 .tabs a:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-soft)}
+.tabs a.active{
+  background:var(--purple);border-color:var(--purple);color:#fff;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.22),0 2px 8px rgba(127,5,133,.28);
+}
+.tabs a.active:hover{background:#6d0472;color:#fff}
 
 /* ---- 序言 ---- */
 .preface{
@@ -265,7 +275,7 @@ footer b{color:var(--ink2);font-weight:600}
 .totop:hover{opacity:1}
 
 @media (max-width:560px){
-  .hero{padding:30px 18px 26px;border-radius:0 0 20px 20px}
+  .hero{padding:30px 18px 26px;border-radius:0}
   .hero h1{font-size:22px}
   .entry{padding:16px 16px}
   .entry h3{font-size:16.5px}
@@ -288,12 +298,12 @@ footer b{color:var(--ink2);font-weight:600}
 </head>
 <body>
 <header class="hero"><div class="inner">
-<p class="kicker">Monthly Archive · 2026-10</p>
-<h1>量子信息速递 · 2026 年 10 月</h1>
-<p class="meta"><div>共 <b>18</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-10-30</div><div>生成于 2026-11-02 23:05</div></p>
+<p class="kicker">Monthly Archive · 2026-11</p>
+<h1>量子信息速递 · 2026 年 11 月</h1>
+<p class="meta"><div>共 <b>18</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-10-30</div><div>生成于 2026-11-02 23:23</div></p>
 </div></header>
 <div class="wrap">
-<nav class="tabs"><a href="../index.html">首页</a><a href="../daily/index.html">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a></nav>
+<nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-02.html">日报</a><a href="../monthly/index.html" class="active" aria-current="page">月报</a><a href="../topic/index.html">专题</a></nav>
 <a class="back" href="../index.html">← 返回索引</a>
 <div class="preface"><p class="h">序 言</p><p>本刊按 APS、Nature、Science 三大系列的目标期刊检索量子信息与量子技术领域的新发表工作，经学科筛选后按期刊汇总。每一条给出中英文标题、作者、卷页与中文摘要，点击 DOI 可直达原文。中文标题、导读与摘要译文均由模型生成，速度优先、难免有疏漏，欢迎指出。</p></div>
 <nav class="nav"><p class="h">阅读导航</p><ul><li><a href="#j-prl">Phys. Rev. Lett.<i>5</i></a></li><li><a href="#j-prx">Phys. Rev. X<i>1</i></a></li><li><a href="#j-prxquantum">PRX Quantum<i>9</i></a></li><li><a href="#j-nature">Nature<i>1</i></a></li><li><a href="#j-ncomms">Nat. Commun.<i>2</i></a></li></ul></nav>

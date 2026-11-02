@@ -27,10 +27,12 @@ body{
 .wrap{max-width:1280px;margin:0 auto;padding:0 28px}
 
 /* ---- 头部 ---- */
+/* 头部通栏直角：圆角会在下方左右两角留出缺口（底色透出来），
+   与下面内容区的直角卡片放在一起显得没对齐，所以这里是矩形。 */
 .hero{
   background:linear-gradient(135deg,var(--purple) 0%,#5c1a86 58%,var(--teal) 100%);
   color:#fff;padding:40px 28px 34px;margin-bottom:26px;
-  border-radius:0 0 26px 26px;
+  border-radius:0;
 }
 .hero .inner{max-width:1280px;margin:0 auto}
 .hero .kicker{
@@ -42,6 +44,9 @@ body{
 .hero .meta b{font-weight:600;opacity:1}
 
 /* ---- 版块切换 ---- */
+/* 当前所在版块用「实心紫底 + 内阴影」强调：实心底色在一排白胶囊里最抓眼，
+   和内阴影一起构成轻微的「按下去」感，和头部渐变同色系。
+   不用边框颜色是因为边框在浅色背景上对比度不足，远看分不出来。 */
 .tabs{
   display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;
 }
@@ -49,9 +54,14 @@ body{
   background:var(--card);border:1px solid var(--line);border-radius:999px;
   box-shadow:var(--shadow);padding:8px 20px;text-decoration:none;
   font-size:14px;font-weight:700;color:var(--ink2);
-  transition:border-color .15s,color .15s,background .15s;
+  transition:border-color .15s,color .15s,background .15s,box-shadow .15s;
 }
 .tabs a:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-soft)}
+.tabs a.active{
+  background:var(--purple);border-color:var(--purple);color:#fff;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.22),0 2px 8px rgba(127,5,133,.28);
+}
+.tabs a.active:hover{background:#6d0472;color:#fff}
 
 /* ---- 序言 ---- */
 .preface{
@@ -265,7 +275,7 @@ footer b{color:var(--ink2);font-weight:600}
 .totop:hover{opacity:1}
 
 @media (max-width:560px){
-  .hero{padding:30px 18px 26px;border-radius:0 0 20px 20px}
+  .hero{padding:30px 18px 26px;border-radius:0}
   .hero h1{font-size:22px}
   .entry{padding:16px 16px}
   .entry h3{font-size:16.5px}
@@ -290,10 +300,10 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Monthly Archive · Full Abstracts</p>
 <h1>月度详版</h1>
-<p class="meta"><div>共 <b>1</b> 个月 · <b>18</b> 篇</div><div>本页生成于 2026-11-02 23:05</div></p>
+<p class="meta"><div>共 <b>1</b> 个月 · <b>18</b> 篇</div><div>本页生成于 2026-11-02 23:23</div></p>
 </div></header>
 <div class="wrap">
-<nav class="tabs"><a href="../index.html">首页</a><a href="../daily/index.html">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a></nav>
+<nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-02.html">日报</a><a href="../monthly/index.html" class="active" aria-current="page">月报</a><a href="../topic/index.html">专题</a></nav>
 <a class="back" href="../index.html">← 返回索引</a>
 <div class="preface"><p class="h">序 言</p><p>按月累计的完整档案。每个月的全部论文按期刊分节，每条都给出中文标题、中文摘要与可展开的英文原文，适合集中通读。</p></div>
 
@@ -301,9 +311,9 @@ footer b{color:var(--ink2);font-weight:600}
 <div class="yhead"><h2>2026</h2><span class="ysum">1 个月 · 18 篇</span></div>
 <ul class="mlist">
 <li>
-<a class="mrow" href="../monthly/2026-10.html">
-<span class="mnum">10</span>
-<span class="mtxt"><b>10 月</b><i>18 篇 · 原地更新</i></span>
+<a class="mrow" href="../monthly/2026-11.html">
+<span class="mnum">11</span>
+<span class="mtxt"><b>11 月</b><i>18 篇 · 原地更新</i></span>
 </a>
 </li>
 </ul>
