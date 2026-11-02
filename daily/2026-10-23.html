@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="format-detection" content="telephone=no">
+<title>量子信息速递 · 10 月 23 日</title>
+<style>
+:root{
+  --ink:#1d1d1f; --ink2:#3c3c43; --muted:#86868b; --line:#e6e6eb;
+  --bg:#f6f6f8; --card:#ffffff;
+  --purple:#7f0585; --purple-soft:#f7ecf8;
+  --teal:#176b73; --teal-soft:#eaf4f4;
+  --gold:#a8741a; --gold-soft:#fdf3e0;
+  --radius:14px;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;padding:0 0 72px;background:var(--bg);color:var(--ink);
+  font:16px/1.8 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+       "Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:820px;margin:0 auto;padding:0 18px}
+
+/* ---- 头部 ---- */
+.hero{
+  background:linear-gradient(135deg,var(--purple) 0%,#5c1a86 58%,var(--teal) 100%);
+  color:#fff;padding:40px 18px 34px;margin-bottom:26px;
+  border-radius:0 0 26px 26px;
+}
+.hero .inner{max-width:820px;margin:0 auto}
+.hero .kicker{
+  font-size:12px;letter-spacing:3px;text-transform:uppercase;opacity:.72;
+  margin:0 0 10px;font-weight:600;
+}
+.hero h1{margin:0 0 10px;font-size:27px;line-height:1.35;font-weight:700;letter-spacing:.4px}
+.hero .meta{margin:0;font-size:13.5px;opacity:.86;line-height:1.9}
+.hero .meta b{font-weight:600;opacity:1}
+
+/* ---- 序言 ---- */
+.preface{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;margin:0 0 22px;box-shadow:var(--shadow);
+}
+.preface .h{
+  font-size:12.5px;font-weight:700;letter-spacing:2px;color:var(--purple);
+  margin:0 0 8px;
+}
+.preface p{margin:0;font-size:14px;line-height:1.85;color:var(--ink2)}
+
+/* ---- 阅读导航 ---- */
+.nav{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 20px 12px;margin:0 0 30px;box-shadow:var(--shadow);
+}
+.nav .h{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1.5px;margin:0 0 12px}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.nav a{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 13px;border-radius:999px;background:#f2f2f5;
+  color:var(--ink2);text-decoration:none;font-size:13.5px;
+  transition:background .16s,color .16s;
+}
+.nav a:hover{background:var(--purple-soft);color:var(--purple)}
+.nav a i{
+  font-style:normal;font-size:11.5px;font-weight:700;color:var(--purple);
+  background:#fff;border-radius:999px;padding:0 7px;line-height:18px;min-width:20px;text-align:center;
+}
+
+/* ---- 期刊分节 ---- */
+.section{margin:0 0 40px}
+.section > h2{
+  display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  font-size:19px;font-weight:700;margin:0 0 4px;padding:0 0 0 13px;
+  border-left:4px solid var(--purple);line-height:1.5;
+}
+.section > h2 .abbr{
+  font-size:12px;font-weight:600;color:var(--muted);
+  letter-spacing:.6px;text-transform:uppercase;
+}
+.section > h2 .cnt{
+  font-size:12.5px;font-weight:600;color:var(--purple);
+  background:var(--purple-soft);border-radius:999px;padding:2px 10px;
+}
+.section > .lede{
+  margin:0 0 18px 15px;font-size:13px;color:var(--muted);line-height:1.7;
+}
+
+/* ---- 条目 ---- */
+.entry{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 22px;margin:0 0 16px;box-shadow:var(--shadow);position:relative;
+}
+.entry .no{
+  font-size:11.5px;font-weight:700;color:var(--muted);
+  letter-spacing:1.2px;margin:0 0 6px;font-variant-numeric:tabular-nums;
+}
+.entry h3{
+  margin:0 0 10px;font-size:17.5px;line-height:1.55;font-weight:700;color:var(--ink);
+}
+.entry h3 .en{
+  display:block;margin-top:6px;font-size:13px;font-weight:400;
+  color:var(--muted);line-height:1.6;font-family:Georgia,"Times New Roman",serif;
+}
+.tags{margin:0 0 12px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{
+  display:inline-block;font-size:11.5px;font-weight:600;line-height:1;
+  padding:5px 9px;border-radius:6px;
+  background:var(--gold-soft);color:var(--gold);border:1px solid #f0e0c0;
+}
+.tag.ky{background:var(--purple-soft);color:var(--purple);border-color:#eddcf0}
+.tag.jc{background:var(--teal-soft);color:var(--teal);border-color:#cfe6e6}
+.tag.cover{background:#fdecec;color:#a32626;border-color:#f3cccc}
+
+.entry .teaser{
+  margin:0 0 12px;padding:11px 14px;border-radius:9px;
+  background:linear-gradient(180deg,#fafafc,#f5f5f8);
+  border-left:3px solid var(--teal);
+  font-size:14.5px;line-height:1.85;color:var(--ink2);
+}
+.entry .body{
+  margin:0;font-size:15px;line-height:1.9;color:var(--ink2);
+  text-align:justify;text-justify:inter-ideograph;
+}
+.entry .body + .body{margin-top:10px}
+
+.entry details{
+  margin:14px 0 0;border-top:1px dashed var(--line);padding-top:12px;
+}
+.entry details summary{
+  cursor:pointer;font-size:12.5px;font-weight:600;color:var(--muted);
+  letter-spacing:.6px;list-style:none;outline:none;user-select:none;
+}
+.entry details summary::-webkit-details-marker{display:none}
+.entry details summary::before{content:"▸ ";color:var(--purple)}
+.entry details[open] summary::before{content:"▾ "}
+.entry details summary:hover{color:var(--purple)}
+.entry details .en-abs{
+  margin:10px 0 0;font-size:13.5px;line-height:1.85;color:#4a4a52;
+  font-family:Georgia,"Times New Roman",serif;text-align:justify;
+}
+
+.entry .src{
+  margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);
+  font-size:12.8px;line-height:1.85;color:var(--muted);
+}
+.entry .src .au{color:var(--ink2)}
+.entry .src .cite{
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:12.2px;color:var(--ink2);
+}
+.entry .src a{
+  color:var(--purple);text-decoration:none;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:12.2px;word-break:break-all;
+}
+.entry .src a:hover{text-decoration:underline}
+
+/* ---- 空状态 / 页脚 ---- */
+.empty{
+  background:var(--card);border:1px dashed var(--line);border-radius:var(--radius);
+  padding:40px 20px;text-align:center;color:var(--muted);font-size:14.5px;
+}
+
+/* ---- 首页卡片链接 ---- */
+.cardlink{
+  display:block;position:relative;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:16px 18px;margin:0 0 10px;
+  text-decoration:none;transition:border-color .15s,transform .15s;
+}
+.cardlink:hover{border-color:var(--purple);transform:translateY(-1px)}
+.cardlink .cl-t{display:block;font-size:16px;font-weight:700;color:var(--ink);letter-spacing:.2px}
+.cardlink .cl-s{display:block;margin-top:5px;font-size:13px;color:var(--muted)}
+.cardlink .cl-b{
+  position:absolute;right:16px;top:16px;
+  background:var(--purple-soft);color:var(--purple);
+  font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;
+}
+footer{
+  margin-top:52px;padding:22px 0 0;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;line-height:1.9;
+}
+footer b{color:var(--ink2);font-weight:600}
+
+.back{
+  display:inline-block;margin:0 0 16px;padding:7px 15px;
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  color:var(--purple);text-decoration:none;font-size:13px;font-weight:600;
+}
+.back:hover{border-color:var(--purple);background:var(--purple-soft)}
+
+.totop{
+  position:fixed;right:20px;bottom:22px;width:42px;height:42px;border-radius:50%;
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--purple);text-decoration:none;font-size:17px;opacity:.9;
+}
+.totop:hover{opacity:1}
+
+@media (max-width:560px){
+  .hero{padding:30px 18px 26px;border-radius:0 0 20px 20px}
+  .hero h1{font-size:22px}
+  .entry{padding:16px 16px}
+  .entry h3{font-size:16.5px}
+  .entry .body{font-size:14.5px;line-height:1.85}
+  .wrap{padding:0 14px}
+}
+
+@media print{
+  body{background:#fff}
+  .hero{background:none;color:#000;border-bottom:2px solid #000;padding:0 0 16px}
+  .hero .kicker,.hero .meta{opacity:1;color:#444}
+  .nav,.totop{display:none}
+  .entry,.preface{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+  .entry details{display:block}
+  .entry details > summary{display:none}
+  .entry details .en-abs{display:block}
+}
+</style>
+</head>
+<body>
+<header class="hero"><div class="inner">
+<p class="kicker">Quantum Information Digest · 2026-10-23</p>
+<h1>量子信息速递 · 10 月 23 日</h1>
+<p class="meta"><div>周五 · 共 <b>3</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-10-23</div><div>生成于 2026-11-02 21:08</div></p>
+</div></header>
+<div class="wrap">
+<a class="back" href="../index.html">← 返回索引</a>
+<div class="preface"><p class="h">序 言</p><p>本刊按 APS、Nature、Science 三大系列的目标期刊检索量子信息与量子技术领域的新发表工作，经学科筛选后按期刊汇总。每一条给出中英文标题、作者、卷页与中文摘要，点击 DOI 可直达原文。中文标题、导读与摘要译文均由模型生成，速度优先、难免有疏漏，欢迎指出。</p></div>
+<nav class="nav"><p class="h">阅读导航</p><ul><li><a href="#j-prl">Phys. Rev. Lett.<i>1</i></a></li><li><a href="#j-prx">Phys. Rev. X<i>1</i></a></li><li><a href="#j-prxquantum">PRX Quantum<i>1</i></a></li></ul></nav>
+<section class="section" id="j-prl">
+<h2>Physical Review Letters<span class="abbr">Phys. Rev. Lett.</span><span class="cnt">1 篇</span></h2>
+<p class="lede">Physical Review Letters 量子信息科学与技术分区</p>
+<div class="entry">
+<p class="no">No. 01</p><h3>用人工设计的光梯度实现离子纠缠<span class="en">Entangling Ions with Engineered Light Gradients</span></h3>
+<p class="tags"><span class="tag">★ 编辑推荐</span></p>
+<p class="teaser">用与光传播方向正交的含时结构光力驱动几何相位纠缠相互作用，缓解集体运动模式的光谱拥挤，在单个势阱中多达 12 个离子的晶体上实现错误率低于 5×10⁻³ 的两量子比特门。</p>
+<p class="body">集体运动模式的光谱拥挤会通过引起对旁观模式的非共振耦合，限制囚禁离子量子处理器中纠缠相互作用的保真度。我们提出一种由横向的、含时结构光力驱动的几何相位纠缠相互作用。通过在与光传播方向正交的平面内施加该力，我们减轻了光谱拥挤的影响，同时保留了单离子寻址能力。只要量子比特态经历差分 AC Stark 频移，该方案就与任意量子比特编码兼容。我们在单个势阱中囚禁多达 12 个离子的离子晶体上实验实现了错误率低于 5 × 10⁻³ 的高保真两量子比特门。这些结果确立了梯度场光频移门作为在光谱拥挤的囚禁离子系统中产生高保真纠缠的可扩展途径。</p><details><summary>Abstract (English)</summary><div class="en-abs">Spectral crowding of collective motional modes limits the fidelity of entangling interactions in trapped-ion quantum processors by inducing off-resonant coupling to spectator modes. We introduce a geometric-phase entangling interaction driven by a transverse, time-dependent structured-light force. By applying the force in a plane orthogonal to the optical propagation direction, we reduce the effects of spectral crowding while preserving single-ion addressing. The scheme is compatible with arbitrary qubit encodings, provided that the qubit states experience a differential AC Stark shift. We experimentally realize high-fidelity two-qubit gates with error rates below 5 × 10 − 3 in ion crystals containing up to 12 ions confined within a single potential well. These results establish gradient-field light-shift gates as a scalable approach to high-fidelity entanglement generation in spectrally crowded trapped-ion systems.</div></details>
+<p class="src"><span class="au">Tommaso Faorlin, Lorenz Panzl, Phoebe Grosser, Pablo Viñas, Alan Kahan, Walter Joseph Hörmann, Yannick Weiser, Giovanni Cerchiari, Thomas Feldker, Alexander Erhard, Georg Jacob, Juris Ulmanis, Rainer Blatt, Alejandro Bermudez, and Thomas Monz</span><br><span class="cite">Phys. Rev. Lett. 137, 170601 (2026)</span><br><a href="https://doi.org/10.1103/4smy-6w2n" target="_blank" rel="noopener">10.1103/4smy-6w2n</a></p>
+</div>
+</section>
+<section class="section" id="j-prx">
+<h2>Physical Review X<span class="abbr">Phys. Rev. X</span><span class="cnt">1 篇</span></h2>
+<p class="lede">Physical Review X 全刊（以量子信息与量子多体为主）</p>
+<div class="entry">
+<p class="no">No. 02</p><h3>对经典场性质进行传感的量子优势<span class="en">Quantum Advantage for Sensing Properties of Classical Fields</span></h3>
+<p class="tags"><span class="tag jc">量子纠缠</span></p>
+<p class="teaser">提出量子信号学习框架，仅用双模压缩、无源光学与静态零拍测量即可同时估计经典信号的多种性质并压制散粒噪声，证明其在电磁关联测量、干涉腔反馈控制与傅里叶域匹配滤波等任务上具有指数级或实用量子加速。</p>
+<p class="body">现代精密实验常常在量子噪声极限下用玻色传感器探测未知经典场，此时真空涨落限制了常规读出。我们提出量子信号学习——一个将计量学推广到更广泛的性质学习情形的传感框架，并提出一种量子增强协议，能够同时估计经典信号的许多性质，并将散粒噪声抑制到真空水平以下。我们的方案只需要双模压缩、无源光学元件和静态零拍测量，并且能够从同一实验数据集中对许多性质进行经典估计。我们证明该协议可为常见的经典传感任务带来量子加速，包括测量电磁关联、干涉腔的实时反馈控制以及傅里叶域匹配滤波。为确立这些分离，我们引入一种最优输运条件化方法，并证明了相对于所有无纠缠策略的最坏情况指数级分离，以及相对于零拍和外差基准的实用加速。我们进一步表明，当把压缩视为一种资源时，采用压缩光的协议能够比任何相干经典探针以指数级更快的速度感知结构化的经典背景。</p><details><summary>Abstract (English)</summary><div class="en-abs">Modern precision experiments often probe unknown classical fields with bosonic sensors in quantum-noise-limited regimes where vacuum fluctuations limit conventional readout. We introduce quantum signal learning, a sensing framework that extends metrology to a broader property-learning setting, and propose a quantum-enhanced protocol that simultaneously estimates many properties of a classical signal with shot noise suppressed below the vacuum level. Our scheme requires only two-mode squeezing, passive optics, and static homodyne measurements, and enables classical estimation of many properties from the same experimental dataset. We prove that our protocol enables a quantum speedup for common classical sensing tasks, including measuring electromagnetic correlations, real-time feedback control of interferometric cavities, and Fourier-domain matched filtering. To establish these separations, we introduce an optimal-transport conditioning method and show both worst-case exponential separations from all entanglement-free strategies and practical speedups over homodyne and heterodyne baselines. We further show that when squeezing is treated as a resource, a protocol with squeezed light can sense a structured classical background exponentially faster than any coherent classical probe.</div></details>
+<p class="src"><span class="au">Jordan Cotler, Daine L. Danielson, and Ishaan Kannan</span><br><span class="cite">Phys. Rev. X 16, 041025 (2026)</span><br><a href="https://doi.org/10.1103/6ps1-mw9l" target="_blank" rel="noopener">10.1103/6ps1-mw9l</a></p>
+</div>
+</section>
+<section class="section" id="j-prxquantum">
+<h2>PRX Quantum<span class="abbr">PRX Quantum</span><span class="cnt">1 篇</span></h2>
+<p class="lede">PRX Quantum 全刊（专注量子信息科学与技术）</p>
+<div class="entry">
+<p class="no">No. 03</p><h3>拓扑稳定子码能隙边界的算法构造：通向低开销平面 qLDPC 码<span class="en">Algorithmic Construction of Gapped Boundaries for Topological Stabilizer Codes: A Route to Low-Overhead Planar qLDPC Codes</span></h3>
+
+<p class="teaser">建立算子代数框架与算法，从截断体码系统构造二维拓扑泡利稳定子码的全部能隙边界与缺陷，借助 Laurent 多项式与 Hermite、Smith 标准形实现自动化计算，为开放边界的低开销平面 qLDPC 码奠定基础。</p>
+<p class="body">量子低密度奇偶校验（qLDPC）码有望实现低开销的容错量子存储，但许多领先的构造天然定义在周期格点上，而可扩展的量子硬件更青睐具有开放边界的平面架构。在本工作中，我们发展了一个通用的算子代数框架和计算算法，用于构造二维拓扑泡利稳定子码的所有能隙边界和缺陷。从截断的体码出发，我们的方法识别边界规范算子、边界任意子及其弦算子，然后通过任意子凝聚和拓扑序补全构造微观边界哈密顿量，从而消除边界附近的局域逻辑算子。我们建立了体任意子与反常边界子系统码激发之间的一一对应关系，使得融合规则、拓扑自旋和编织统计可以直接从边界算子代数中提取。对于平移不变的码，Laurent 多项式表示将这些任务化为基于 Hermite 和 Smith 标准形的有限矩阵计算，从而可对素数维和合数维的 Z_d qudit 实现自动化构造。我们在环面码、色码、双半子码、六半子码和反常三费米子码上演示了该框架，并将其应用于双变量自行车码，揭示了大的逻辑维度和任意子弦异常长的平移周期。通过系统地将体拓扑数据转化为显式的边界和缺陷哈密顿量，我们的框架可以作为构造具有开放边界的低开销平面 qLDPC 码以及设计容错逻辑操作的基础。</p><details><summary>Abstract (English)</summary><div class="en-abs">Quantum low-density parity-check (qLDPC) codes promise low-overhead fault-tolerant quantum memory, but many leading constructions are naturally defined on periodic lattices, whereas scalable quantum hardware favors planar architectures with open boundaries. In this work, we develop a general operator-algebraic framework and computational algorithms for constructing all gapped boundaries and defects of two-dimensional topological Pauli stabilizer codes. Starting from a truncated bulk code, our method identifies boundary gauge operators, boundary anyons, and their string operators, and then constructs microscopic boundary Hamiltonians through anyon condensation and topological-order completion, thereby eliminating local logical operators near the boundary. We establish a one-to-one bulk-boundary correspondence between bulk anyons and excitations of the anomalous boundary subsystem code, enabling fusion rules, topological spins, and braiding statistics to be extracted directly from the boundary operator algebra. For translation-invariant codes, Laurent-polynomial representations reduce these tasks to finite matrix computations based on Hermite and Smith normal forms, enabling automated constructions for Z d qudits of both prime and composite dimension. We demonstrate the framework on toric, color, double-semion, six-semion, and anomalous three-fermion codes, and apply it to bivariate bicycle codes, revealing large logical dimensions and unusually long translation periods for anyon strings. By systematically converting bulk topological data into explicit boundary and defect Hamiltonians, our framework can serve as a foundation for constructing low-overhead planar qLDPC codes with open boundaries and for engineering fault-tolerant logical operations. See 33 more figures</div></details>
+<p class="src"><span class="au">Zijian Liang (梁子健), Bowen Yang (杨博闻), Joseph T. Iosue, and Yu-An Chen (陳昱安)</span><br><span class="cite">PRX Quantum 7, 043016 (2026)</span><br><a href="https://doi.org/10.1103/989h-xjqv" target="_blank" rel="noopener">10.1103/989h-xjqv</a></p>
+</div>
+</section>
+<footer>
+<b>数据来源</b>　APS（Physical Review Letters / PRX / PRX Quantum）、Nature 系列、Science 系列官方网站与 Crossref。中文标题、简介与摘要译文由本机模型生成，仅供快速浏览；<b>学术引用请以英文原文为准</b>。<br>展开每条下方的 <b>Abstract (English)</b> 可查看英文原摘要。
+</footer>
+</div>
+<a class="totop" href="#" aria-label="回到顶部">↑</a>
+</body>
+</html>
