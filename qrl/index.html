@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="format-detection" content="telephone=no">
+<title>QRL（测试版）</title>
+<style>
+:root{
+  --ink:#1d1d1f; --ink2:#3c3c43; --muted:#86868b; --line:#e6e6eb;
+  --bg:#f6f6f8; --card:#ffffff;
+  --purple:#7f0585; --purple-soft:#f7ecf8;
+  --teal:#176b73; --teal-soft:#eaf4f4;
+  --gold:#a8741a; --gold-soft:#fdf3e0;
+  --radius:14px;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;padding:0 0 72px;background:var(--bg);color:var(--ink);
+  font:16px/1.8 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+       "Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+
+/* ---- 头部 ---- */
+/* 头部通栏直角：圆角会在下方左右两角留出缺口（底色透出来），
+   与下面内容区的直角卡片放在一起显得没对齐，所以这里是矩形。 */
+.hero{
+  background:linear-gradient(135deg,var(--purple) 0%,#5c1a86 58%,var(--teal) 100%);
+  color:#fff;padding:40px 28px 34px;margin-bottom:26px;
+  border-radius:0;
+}
+.hero .inner{max-width:1280px;margin:0 auto}
+.hero .kicker{
+  font-size:12px;letter-spacing:3px;text-transform:uppercase;opacity:.72;
+  margin:0 0 10px;font-weight:600;
+}
+.hero h1{margin:0 0 10px;font-size:27px;line-height:1.35;font-weight:700;letter-spacing:.4px}
+.hero .meta{margin:0;font-size:13.5px;opacity:.86;line-height:1.9}
+.hero .meta b{font-weight:600;opacity:1}
+
+/* ---- 版块切换 ---- */
+/* 当前所在版块用「实心紫底 + 内阴影」强调：实心底色在一排白胶囊里最抓眼，
+   和内阴影一起构成轻微的「按下去」感，和头部渐变同色系。
+   不用边框颜色是因为边框在浅色背景上对比度不足，远看分不出来。 */
+.tabs{
+  display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;
+}
+.tabs a{
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  box-shadow:var(--shadow);padding:8px 20px;text-decoration:none;
+  font-size:14px;font-weight:700;color:var(--ink2);
+  transition:border-color .15s,color .15s,background .15s,box-shadow .15s;
+}
+.tabs a:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-soft)}
+.tabs a.active{
+  background:var(--purple);border-color:var(--purple);color:#fff;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.22),0 2px 8px rgba(127,5,133,.28);
+}
+.tabs a.active:hover{background:#6d0472;color:#fff}
+
+/* ---- 序言 ---- */
+.preface{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;margin:0 0 22px;box-shadow:var(--shadow);
+}
+.preface .h{
+  font-size:12.5px;font-weight:700;letter-spacing:2px;color:var(--purple);
+  margin:0 0 8px;
+}
+.preface p{margin:0;font-size:14px;line-height:1.85;color:var(--ink2)}
+
+/* ---- QRL 喜报卡片 ---- */
+/* 用户 m07802：「用尽可能大的字体（横向铺满目前双栏宽度）写『喜报！QRL发新文章了！』，
+   卡片背景主配色为红色与金色……越有这种花哨的土味最好。」
+   所以这里刻意不跟全站的紫色系走：烫金粗边 + 双层红渐变 + 斜纹底 + 四角金饰 + 灯笼，
+   标题用 clamp 吃到容器宽度上限。整块只在 QRL 页、且有新文章时才出现。 */
+.gongxi{
+  position:relative;margin:0 0 24px;padding:38px 26px 32px;text-align:center;
+  border-radius:var(--radius);overflow:hidden;isolation:isolate;
+  background:
+    radial-gradient(circle at 50% -30%,rgba(255,236,170,.42),transparent 62%),
+    repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 14px,transparent 14px 28px),
+    linear-gradient(160deg,#e0322a 0%,#c0161a 44%,#8d0b0c 100%);
+  border:3px solid #f2c94c;
+  box-shadow:
+    inset 0 0 0 2px #8d0b0c,
+    inset 0 0 46px rgba(120,4,4,.55),
+    0 12px 34px rgba(141,11,12,.34);
+  color:#fff6da;
+}
+/* 四角贴金色小方块，模仿请柬的烫金包角 */
+.gongxi::before,.gongxi::after{
+  content:"";position:absolute;width:58px;height:58px;pointer-events:none;
+  border:3px solid #f2c94c;opacity:.85;
+}
+.gongxi::before{top:10px;left:10px;border-right:0;border-bottom:0;border-radius:12px 0 0 0}
+.gongxi::after{bottom:10px;right:10px;border-left:0;border-top:0;border-radius:0 0 12px 0}
+.gongxi .gk{
+  margin:0 0 8px;font-size:13px;font-weight:700;letter-spacing:8px;
+  color:#ffe9a8;text-indent:8px;
+}
+.gongxi .gt{
+  margin:0;font-size:clamp(30px,5.4vw,64px);line-height:1.16;font-weight:900;
+  letter-spacing:2px;color:#ffe9a8;
+  text-shadow:
+    0 2px 0 #a8741a, 0 4px 0 #7d540f, 0 8px 20px rgba(0,0,0,.42),
+    0 0 26px rgba(255,214,110,.55);
+}
+.gongxi .gd{
+  margin:16px auto 0;max-width:52em;font-size:14.5px;line-height:1.95;color:#fff3cf;opacity:.96;
+}
+.gongxi .gd b{color:#ffe9a8}
+.gongxi .gl{
+  display:inline-flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:18px 0 0;padding:0;list-style:none;
+}
+.gongxi .gl li{
+  font-size:12.5px;font-weight:700;color:#7d0c0c;background:#ffe9a8;
+  border-radius:999px;padding:4px 12px;
+}
+/* 宽屏两侧挂灯笼：纯装饰，窄屏直接隐藏，避免挤掉标题 */
+.gongxi .lantern{
+  position:absolute;top:16px;font-size:34px;line-height:1;opacity:.9;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.35));
+}
+.gongxi .lantern.l{left:18px}
+.gongxi .lantern.r{right:18px}
+@media (max-width:720px){
+  .gongxi .lantern{display:none}
+  .gongxi{padding:26px 16px 22px}
+}
+
+/* ---- 阅读导航 ---- */
+.nav{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 20px 12px;margin:0 0 30px;box-shadow:var(--shadow);
+}
+.nav .h{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1.5px;margin:0 0 12px}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.nav a{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 13px;border-radius:999px;background:#f2f2f5;
+  color:var(--ink2);text-decoration:none;font-size:13.5px;
+  transition:background .16s,color .16s;
+}
+.nav a:hover{background:var(--purple-soft);color:var(--purple)}
+.nav a i{
+  font-style:normal;font-size:11.5px;font-weight:700;color:var(--purple);
+  background:#fff;border-radius:999px;padding:0 7px;line-height:18px;min-width:20px;text-align:center;
+}
+
+/* ---- 期刊分节 ---- */
+.section{margin:0 0 40px}
+.section > h2{
+  display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  font-size:19px;font-weight:700;margin:0 0 4px;padding:0 0 0 13px;
+  border-left:4px solid var(--purple);line-height:1.5;
+}
+.section > h2 .abbr{
+  font-size:12px;font-weight:600;color:var(--muted);
+  letter-spacing:.6px;text-transform:uppercase;
+}
+.section > h2 .cnt{
+  font-size:12.5px;font-weight:600;color:var(--purple);
+  background:var(--purple-soft);border-radius:999px;padding:2px 10px;
+}
+.section > .lede{
+  margin:0 0 18px 15px;font-size:13px;color:var(--muted);line-height:1.7;
+}
+
+/* ---- 最近更新：固定三栏 ----
+   三栏位置本身表达新旧顺序：左＝最新，中＝上一轮，右＝再上一轮。
+   所以这里**刻意**写死 repeat(3,1fr) 而不是 auto-fit——期数不够时宁可留空槽，
+   也不让卡片撑满整行；否则「只有一期」和「有三期」的版面看起来一样，
+   位置就不再携带「这是第几新」的信息了。 */
+.recent3{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+}
+@media (max-width:820px){.recent3{grid-template-columns:1fr}}
+.recent3 .cardlink{
+  display:flex;flex-direction:column;gap:10px;height:100%;margin:0;min-height:140px;
+}
+/* 角标：比卡片区其它标签大一档，圆角收敛成方框而不是胶囊
+   （方框在卡片右上角更像印章，胶囊太圆会显得软）。
+   选择器要写成 .recent3 .cardlink .cl-b 三级——通用的 .cardlink .cl-b 定义在下面，
+   权重相同而位置更靠后，两级选择器会被它盖掉。 */
+.recent3 .cardlink .cl-b{
+  position:absolute;right:14px;top:14px;
+  font-size:12.5px;padding:5px 12px;border-radius:7px;letter-spacing:.3px;
+}
+/* 日期：三栏统一成「11 月 3 日」这种中文写法，同一个字号、同一个字重，不再加粗。
+   Times New Roman 是等宽数字、字形偏瘦，和下方「11 月」那一栏的观感更接近；
+   中文回退到系统字体，避免 Times 缺字时行高跳变。 */
+/* 字体与「2026」栏里的月份卡片标题（.mtxt b）保持一致：同一套无衬线字体、
+   同为 700 加粗，免得同一个页面里两种笔触打架。字号仍比正文大一号，用来
+   承担「这是个日期」的视觉重量。 */
+.recent3 .cardlink .cl-d{
+  order:1;display:block;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+    "Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:24px;font-weight:700;color:var(--ink);
+  letter-spacing:0;line-height:1.25;
+  font-variant-numeric:lining-nums tabular-nums;
+}
+.recent3 .cardlink .cl-d small{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+    "Microsoft YaHei",sans-serif;
+  font-size:12.5px;font-weight:400;margin-left:8px;color:var(--muted);
+  letter-spacing:0;
+}
+/* 补录批次用区间，字符多一倍，行高放松一点，字号与单日保持一致 */
+.recent3 .cardlink .cl-d.range{line-height:1.35}
+.recent3 .cardlink .cl-s{order:3;margin-top:auto;font-size:12.5px}
+.recent3 .slot-empty{
+  border:1px dashed var(--line);border-radius:var(--radius);min-height:140px;
+  display:flex;align-items:center;justify-content:center;
+  color:#c6c6cc;font-size:12.5px;background:transparent;
+}
+
+/* ---- 条目容器 ----
+   默认单栏：日报一期通常只有几篇，双栏会把每条挤窄、读摘要时视线来回跳。
+   月报/专题一次几十篇，才用双栏（由 .entries.two 开启）。 */
+.entries{
+  column-count:1;
+}
+/* 双栏，默认**同行等高**；任一卡片展开英文摘要后，该行退回「各按自身高度」。
+   月报和专题用。
+
+   折叠状态下两卡等高最整齐：顶端、底端都齐平，没有横向空白带。较矮的那张
+   多出来的空间留在它**自己内部**的下方，看起来像「这张内容短一点」，
+   而不是像 align-items:start 那样把空白丢到卡片外面、整行像没对齐。
+
+   展开时反过来：展开的那张会突然长高很多（英文摘要动辄一两千字符），
+   若还强行等高，同行另一张会被拉到与展开内容等高，底部多出一大块空白。
+   所以每行是一个独立容器（.row），里面用 :has() 探测,
+   只要本行有任意 <details open>，就把该行的 align-items 切回 start。
+
+   用 :has() 而不是给 <details> 挂 JS：这是纯 CSS 状态，不需要脚本，
+   也不会因为事件绑漏而失效。现代浏览器均支持（Chrome 105+/Safari 15.4+/Firefox 121+）；
+   不支持的旧浏览器只会停留在「始终等高」的降级表现，仍可用。 */
+.entries.grid2{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.row{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:0 22px;
+  align-items:stretch;
+}
+/* 本行有展开项 → 该行改为各按自身高度 */
+.row:has(details[open]){
+  align-items:start;
+}
+.row .entry{
+  margin:0;
+  display:flex;
+  flex-direction:column;
+}
+.entries.two{
+  column-count:2;
+  column-gap:22px;
+}
+.entry{
+  break-inside:avoid;
+  -webkit-column-break-inside:avoid;
+  page-break-inside:avoid;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 22px;margin:0 0 16px;box-shadow:var(--shadow);position:relative;
+}
+.entry .no{
+  font-size:11.5px;font-weight:700;color:var(--muted);
+  letter-spacing:1.2px;margin:0 0 6px;font-variant-numeric:tabular-nums;
+}
+.entry h3{
+  margin:0 0 10px;font-size:17.5px;line-height:1.55;font-weight:700;color:var(--ink);
+}
+.entry h3 .en{
+  display:block;margin-top:6px;font-size:13px;font-weight:400;
+  color:var(--muted);line-height:1.6;font-family:Georgia,"Times New Roman",serif;
+}
+.tags{margin:0 0 12px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{
+  display:inline-block;font-size:11.5px;font-weight:600;line-height:1;
+  padding:5px 9px;border-radius:6px;
+  background:var(--gold-soft);color:var(--gold);border:1px solid #f0e0c0;
+}
+.tag.ky{background:var(--purple-soft);color:var(--purple);border-color:#eddcf0}
+.tag.jc{background:var(--teal-soft);color:var(--teal);border-color:#cfe6e6}
+.tag.ph{background:#eaf1fb;color:#2563a8;border-color:#cfdff4}
+.tag.fb{background:#fdf3e0;color:#8a5a12;border-color:#f0dfba}
+.tag.cover{background:#fdecec;color:#a32626;border-color:#f3cccc}
+
+.entry .teaser{
+  margin:0 0 12px;padding:11px 14px;border-radius:9px;
+  background:linear-gradient(180deg,#fafafc,#f5f5f8);
+  border-left:3px solid var(--teal);
+  font-size:14.5px;line-height:1.85;color:var(--ink2);
+}
+.entry .body{
+  margin:0;font-size:15px;line-height:1.9;color:var(--ink2);
+  text-align:justify;text-justify:inter-ideograph;
+}
+.entry .body + .body{margin-top:10px}
+
+.entry details{
+  margin:14px 0 0;border-top:1px dashed var(--line);padding-top:12px;
+}
+.entry details summary{
+  cursor:pointer;font-size:12.5px;font-weight:600;color:var(--muted);
+  letter-spacing:.6px;list-style:none;outline:none;user-select:none;
+}
+.entry details summary::-webkit-details-marker{display:none}
+.entry details summary::before{content:"▸ ";color:var(--purple)}
+.entry details[open] summary::before{content:"▾ "}
+.entry details summary:hover{color:var(--purple)}
+.entry details .en-abs{
+  margin:10px 0 0;font-size:13.5px;line-height:1.85;color:#4a4a52;
+  font-family:Georgia,"Times New Roman",serif;text-align:justify;
+}
+
+.entry .src{
+  margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);
+  font-size:12.8px;line-height:1.85;color:var(--muted);
+}
+.entry .src .au{color:var(--ink2)}
+.entry .src .cite{
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:12.2px;color:var(--ink2);
+}
+.entry .src a{
+  color:var(--purple);text-decoration:none;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:12.2px;word-break:break-all;
+}
+.entry .src a:hover{text-decoration:underline}
+
+/* ---- 空状态 / 页脚 ---- */
+.empty{
+  background:var(--card);border:1px dashed var(--line);border-radius:var(--radius);
+  padding:40px 20px;text-align:center;color:var(--muted);font-size:14.5px;
+}
+
+/* ---- 首页卡片链接 ---- */
+.cardlink{
+  display:block;position:relative;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:16px 18px;margin:0 0 10px;
+  text-decoration:none;transition:border-color .15s,transform .15s;
+}
+.cardlink:hover{border-color:var(--purple);transform:translateY(-1px)}
+.cardlink .cl-t{display:block;font-size:16px;font-weight:700;color:var(--ink);letter-spacing:.2px}
+.cardlink .cl-s{display:block;margin-top:5px;font-size:13px;color:var(--muted)}
+.cardlink .cl-b{
+  position:absolute;right:16px;top:16px;
+  background:var(--purple-soft);color:var(--purple);
+  font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;
+}
+/* ---- 首页年份块 ---- */
+.years{margin:0}
+.yearblock{margin:0 0 34px}
+.yhead{
+  display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+  border-bottom:2px solid var(--purple);padding:0 0 10px;margin:0 0 16px;
+}
+.yhead h2{
+  margin:0;font-size:44px;font-weight:800;letter-spacing:-1.5px;
+  color:var(--purple);line-height:1;font-variant-numeric:tabular-nums;
+}
+.ysum{font-size:13.5px;color:var(--muted);font-weight:600}
+.mlist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+@media (min-width:760px){ .mlist{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1180px){ .mlist{grid-template-columns:repeat(3,1fr)} }
+/* 栏数变体：由索引页自己指定，不再全站一套。
+   - .two 月报索引用：三栏时每张卡只剩二百来像素，卡片标题那行（期刊构成）
+     会被挤成两行，反而比两栏更难扫。
+   - .one 专题索引用：大标题是专题名，下面每年一条入口，单栏读起来是
+     一份「一年一行」的清单，多栏会把四个专题块切得零碎。 */
+@media (min-width:760px){ .mlist.two{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1180px){ .mlist.two{grid-template-columns:repeat(2,1fr)} }
+.mlist.one{grid-template-columns:1fr}
+@media (min-width:760px){ .mlist.one{grid-template-columns:1fr} }
+@media (min-width:1180px){ .mlist.one{grid-template-columns:1fr} }
+/* 专题索引卡左侧写年份，四位数比两位月份宽不少，
+   默认的 min-width:42px 会把右边的文字挤歪，这里单独放宽。 */
+.mnum.wide{min-width:76px;font-size:22px;letter-spacing:-.5px}
+/* 专题块内的方向说明：.section > .lede 的左缩进是为分节标题准备的，
+   这里的大标题是年份块的样式，说明文字要贴左对齐。 */
+.yearblock .tsnote{margin:-4px 0 14px;font-size:13px;color:var(--muted);line-height:1.7}
+.mlist li{display:flex;align-items:stretch;gap:8px}
+.mrow{
+  flex:1;display:flex;align-items:center;gap:14px;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:13px 16px;text-decoration:none;
+  transition:border-color .15s,transform .15s;
+}
+.mrow:hover{border-color:var(--purple);transform:translateY(-1px)}
+.mnum{
+  font-size:26px;font-weight:800;color:var(--purple);opacity:.32;
+  font-variant-numeric:tabular-nums;line-height:1;min-width:42px;
+}
+.mtxt b{display:block;font-size:15.5px;color:var(--ink);font-weight:700}
+.mtxt i{display:block;margin-top:3px;font-size:12.5px;color:var(--muted);font-style:normal}
+.mextra{display:flex;flex-direction:column;gap:6px;justify-content:center}
+.mini{
+  font-size:11.5px;font-weight:700;color:var(--teal);text-decoration:none;
+  background:var(--teal-soft);border:1px solid #cfe6e6;border-radius:6px;
+  padding:4px 9px;white-space:nowrap;
+}
+.mini:hover{background:var(--teal);color:#fff}
+.biglink{
+  display:block;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:16px 18px;margin:0 0 10px;text-decoration:none;
+  font-size:16px;font-weight:700;color:var(--ink);
+}
+.biglink:hover{border-color:var(--purple)}
+.biglink span{display:block;margin-top:5px;font-size:13px;font-weight:400;color:var(--muted)}
+
+footer{
+  margin-top:52px;padding:22px 0 0;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;line-height:1.9;
+}
+footer b{color:var(--ink2);font-weight:600}
+
+.back{
+  display:inline-block;margin:0 0 16px;padding:7px 15px;
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  color:var(--purple);text-decoration:none;font-size:13px;font-weight:600;
+}
+.back:hover{border-color:var(--purple);background:var(--purple-soft)}
+
+.totop{
+  position:fixed;right:20px;bottom:22px;width:42px;height:42px;border-radius:50%;
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--purple);text-decoration:none;font-size:17px;opacity:.9;
+}
+.totop:hover{opacity:1}
+
+@media (max-width:560px){
+  .hero{padding:30px 18px 26px;border-radius:0}
+  .hero h1{font-size:22px}
+  .entry{padding:16px 16px}
+  .entry h3{font-size:16.5px}
+  .entry .body{font-size:14.5px;line-height:1.85}
+  .wrap{padding:0 14px}
+  .entries{column-count:1}
+  /* 手机上两栏会把每条挤到 300px 以内，摘要没法读，直接退回单栏 */
+  .entries.grid2,.entries.two{grid-template-columns:1fr;column-count:1}
+  .row{grid-template-columns:1fr}
+}
+
+@media print{
+  body{background:#fff}
+  .hero{background:none;color:#000;border-bottom:2px solid #000;padding:0 0 16px}
+  .hero .kicker,.hero .meta{opacity:1;color:#444}
+  .nav,.totop{display:none}
+  .entry,.preface{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+  .entry details{display:block}
+  .entry details > summary{display:none}
+  .entry details .en-abs{display:block}
+}
+</style>
+</head>
+<body>
+<header class="hero"><div class="inner">
+<p class="kicker">Quantum Review Letters · Beta</p>
+<h1>QRL（测试版）</h1>
+<p class="meta"><div>共 <b>25</b> 篇</div><div>最近一次检查 2026-11-03</div><div>生成于 2026-11-03 23:31</div></p>
+</div></header>
+<div class="wrap">
+<nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-03.html">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a><a href="../qrl/index.html" class="active" aria-current="page">QRL（测试版）</a></nav>
+
+<div class="gongxi">
+<span class="lantern l">🏮</span><span class="lantern r">🏮</span>
+<p class="gk">Q R L · 新 刊 速 报</p>
+<p class="gt">喜报！QRL发新文章了！</p>
+<p class="gd">本次共收录新文章 <b>2</b> 篇（2026-11-03 更新），已一并归入下方目录，按发表期次倒序排列。</p>
+<ul class="gl"><li>量子探针增强重力加速度常数测量</li><li>高温超导纳米线单光子探测器及其在空间激光通信中的应用前景</li></ul>
+</div>
+<div class="preface"><p class="h">序 言</p><p>本页是 Quantum Review Letters 的整刊速览（测试版）：该刊每有新文章被 Crossref 收录，次日早上 8 点这里就会更新，并在目录上方挂出喜报。与「日报」「月报」不同，本页不做学科关键词筛选——这刊本身就是量子信息专刊，全收才对。每条给出中英文标题、作者、卷页与中文摘要，点击 DOI 可直达原文。中文标题、导读与摘要译文均由模型生成，仅供快速浏览。</p></div>
+<nav class="nav"><p class="h">阅读导航</p><ul><li><a href="#j-qrl">QRL<i>25</i></a></li></ul></nav>
+<section class="section" id="j-qrl">
+<h2>Quantum Review Letters<span class="abbr">QRL</span><span class="cnt">25 篇</span></h2>
+<p class="lede">本页整刊收录该刊新近发表的全部工作，不再做学科关键词筛选。</p>
+<div class="entries grid2">
+<div class="row">
+<div class="entry">
+<p class="no">No. 01</p><h3>量子探针增强重力加速度常数测量<span class="en">Enhanced quantum sensing of gravitational acceleration constant</span></h3>
+
+<p class="teaser">利用离域量子探针测量地球局部引力场，精度随波函数两分量间距的平方提升，实际位置测量下性能相对最终极限的下降不足一个数量级，并证明g与m联合估计的额外噪声可以忽略。</p>
+<p class="body">我们研究利用量子探针精确测定地球局部引力场强度。研究结果表明，离域探针通常优于局域探针，其精度提升随波函数两分量之间间距的平方增长。这种优势在真实位置测量下依然存在，此时性能相对最终极限的下降不到一个数量级。我们还讨论了地球表面的影响，证明其效应在粒子落到地面之前不久以前都可以忽略。最后，我们处理了引力加速度g与探针质量m的联合估计，证明由二者内在不相容性引起的额外估计噪声可以忽略。</p><details><summary>Abstract (English)</summary><div class="en-abs">We investigate the use of quantum probes to accurately determine the strength of the local gravitational field on Earth. Our findings show that delocalized probes generally outperform localized ones, with the precision enhancement scaling quadratically with the separation between the two wavefunction components. This advantage persists under realistic position measurements, where performance are degraded by less than one order of magnitude with respect to the ultimate bound. We also discuss the influence of Earth’s surface, demonstrating that its effect can be neglected until shortly before the particle hits the floor. Finally, we address the joint estimation of the gravitational acceleration g and the probe mass m , proving that the excess estimation noise arising from their inherent incompatibility is negligible.</div></details>
+<p class="src"><span class="au">Giorgio Stucchi, Matteo G.A. Paris</span><br><span class="cite">Quantum Review Letters 2, 194-201 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.10.002" target="_blank" rel="noopener">10.1016/j.qrl.2026.10.002</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 02</p><h3>高温超导纳米线单光子探测器及其在空间激光通信中的应用前景<span class="en">High-Tc superconducting nanowire single-photon detectors and their potential applications in space laser communication</span></h3>
+
+
+<p class="body">（原文摘要暂未获取到，可点链接查看）</p>
+<p class="src"><span class="au">Ruohan Lv, Yutong Wang, Guangqing Xia, Jijun Zhao, Huimin Zhang</span><br><span class="cite">Quantum Review Letters 2, 202-214 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.10.001" target="_blank" rel="noopener">10.1016/j.qrl.2026.10.001</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry">
+<p class="no">No. 03</p><h3>量子伊辛模型中长程相互作用与耗散的博弈<span class="en">Interplay between long-range interactions and dissipation in quantum Ising model</span></h3>
+
+<p class="teaser">将长程相互作用量子伊辛模型拓展到开放系统，发现长程作用既能稳定铁磁畴、抑制噪声，又使每个自旋间接暴露于更大环境而加速记忆丧失，弱耗散下呈现依赖初态的丰富弛豫动力学。</p>
+<p class="body">长程相互作用模型展现出由偏离集体描述所驱动的丰富动力学现象。本工作将这些模型的研究拓展至开放量子系统，聚焦于非局域相互作用与局域耗散之间复杂的相互作用。结果表明，长程相互作用对弛豫的影响具有两面性：它们通过稳定铁磁畴、减小局域涨落来抑制噪声的影响，但同时通过间接使每个自旋暴露于更广阔的环境而加速记忆丧失。强耗散将系统驱入玻璃态、对作用范围不敏感的弛豫，而弱耗散区的结果则揭示出丰富的依赖状态的动力学。具体而言，长程集体行为保护了从极化态淬火后的系统早期相干性，却主动加速交错位形的弛豫。此外，即使在耗散淬火的近稳态阶段，非局域相互作用仍持续驱动记忆退关联。这些发现为使用长程相互作用的模拟量子模拟器的设计、控制和校准提供了及时的理论洞见。</p><details><summary>Abstract (English)</summary><div class="en-abs">Long-range interacting models exhibit rich dynamical phenomena driven by deviations from collective descriptions. This work extends the study of these models to open quantum systems, focusing on the complex interplay between nonlocal interactions and local dissipation. The results demonstrate that the impact of long-range interactions on relaxation is twofold: they mitigate the impact of noises by stabilizing ferromagnetic domains and reducing local fluctuation, yet simultaneously accelerate memory loss by indirectly exposing each spin to a broader environment. While strong dissipation drives the system into glassy, range-insensitive relaxation, the results in weak dissipation regime reveal rich state-dependent dynamics. Specifically, long-range collective behaviors protect the early-stage coherence of systems quenched from polarized states, whereas they actively accelerate the relaxation of staggered configurations. Furthermore, nonlocal interactions continue to drive memory decorrelation even in the near-steady stages of a dissipative quench. These findings offer timely theoretical insights for the design, control, and calibration of analog quantum simulators operating with long-range interactions.</div></details>
+<p class="src"><span class="au">Zewen Zhang</span><br><span class="cite">Quantum Review Letters 2, 185-193 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.08.002" target="_blank" rel="noopener">10.1016/j.qrl.2026.08.002</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 04</p><h3>QPanda 3.0：面向大规模量子程序的可扩展高性能编译框架<span class="en">QPanda 3.0: A scalable and high performance compilation framework for large scale quantum programs</span></h3>
+
+<p class="teaser">提出高性能量子编程框架QPanda 3.0，通过优化编译流水线、自定义二进制指令流与硬件感知执行策略，编码和解码较OpenQASM 2.0最高分别快86.9倍和35.6倍，较Qiskit平均编译加速10.7倍。</p>
+<p class="body">量子计算有望在某些问题类别上相较经典方法实现计算加速；然而在近期量子与经典混合工作流中，整体性能常受经典处理开销制约。电路编译（包括门分解、拓扑感知的量子比特映射和深度优化）以及电路传输、测量结果交换等协议层通信所带来的时间成本，常常超过实际量子电路执行时间，已成为实际部署的关键瓶颈。本文提出QPanda 3.0，一个高性能量子编程框架，针对支撑NISQ时代混合集成的经典编译路径进行加速优化。借助优化的编译流水线、自定义二进制指令流（OriginBIS）和硬件感知执行策略，QPanda 3.0相比OpenQASM 2.0的编码速度最高提升86.9倍、解码速度最高提升35.6倍，并在四种评估的连通拓扑上相较Qiskit平均实现10.7倍编译加速，其中在方形拓扑上118量子比特W态电路的最高加速达597倍。这些能力使得在金融、材料科学和组合优化等多个领域开发可扩展量子算法成为可能，并支持混合计算环境中的工业部署与云端执行。</p><details><summary>Abstract (English)</summary><div class="en-abs">Quantum computing promises computational speedups over classical approaches for certain problem classes; however, in near term quantum and classical hybrid workflows, the overall performance is often constrained by classical processing overhead. The time cost associated with circuit compilation, which includes gate decomposition, topology aware qubit mapping, and depth optimization, together with protocol level communication such as circuit transfer and measurement result exchange, frequently exceeds the actual quantum circuit execution time and has become a critical bottleneck to practical deployment. In this paper, we propose QPanda 3.0, a high performance quantum programming framework optimized to accelerate the classical compilation path that underpins NISQ era hybrid integration. Leveraging an optimized compilation pipeline, a custom binary instruction stream (OriginBIS), and hardware aware execution strategies, QPanda 3.0 achieves up to 86.9 × faster encoding and 35.6 × faster decoding than OpenQASM 2.0, as well as an average 10.7 × compilation speedup over Qiskit across the four evaluated connectivity topologies, with a peak speedup of 597 × for a 118-qubit W-state circuit on a square topology. These capabilities enable the development of scalable quantum algorithms across various domains, including finance, materials science, and combinatorial optimization, supporting both industrial deployment and cloud based execution in hybrid computing environments.</div></details>
+<p class="src"><span class="au">Tian-Rui Zou, Yuan Fang, Jing Wang, Jun Fu, Shu-Bin Zhao, Lei Yu, Dong-Yi Zhao, Hui Wang, Chun-Yun Zhao, Yun Ma, Chuang-Shi Ma, Bin Ye, Ning Gao, Chun-Lin Wan, Meng-Han Dou, Zhao-Yun Chen, Guo-Ping Guo</span><br><span class="cite">Quantum Review Letters 2, 172-184 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.08.001" target="_blank" rel="noopener">10.1016/j.qrl.2026.08.001</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry">
+<p class="no">No. 05</p><h3>自然光合作用中的量子效应：从分子结构到人工光能转换的设计原理<span class="en">Quantum effects in natural photosynthesis: From molecular architecture to design principles for artificial light-energy conversion</span></h3>
+
+<p class="teaser">综述产氧与不产氧光合系统中结构特征、量子机制与能量传递效率的关系，指出能量梯度与簇状排列等设计原理，并探讨如何通过调控结构参数指导人工光合系统的设计。</p>
+<p class="body">光合作用是核心的生物化学过程，将太阳能转化为化学能并支撑地球生命。本综述阐明产氧与不产氧光养生物中结构特征、量子机制与能量传递效率之间的关系。我们考察光捕获复合体的不同几何构型如何通过电子耦合与振动相干优化能量传递效率。综述强调了支配这些效应的原理——能量梯度和簇状排列，并讨论了评估光合系统能量传递效率的常用计算方法。受自然光系统几何结构的启发，我们讨论这些原理如何指导人工光合系统的设计，重点在于对结构参数进行策略性调控以增强量子介导的能量传递。这一理论框架强调发色团排列、电子耦合和环境相互作用在提高能量捕获与转换效率方面的重要性。最后，我们展望未来方向，强调需要更清晰地理解这些结构特征如何转化到合成系统中。未来研究应有助于缩小自然与人工光合系统之间的差距，并支持可持续能源技术的发展。</p><details><summary>Abstract (English)</summary><div class="en-abs">Photosynthesis is a central biochemical process, which converts solar energy into chemical energy and supports life on Earth. This review elucidates the relationship among structural features, quantum mechanisms and energy transfer efficiency in both oxygenic and anoxygenic phototrophs. We examine how different geometric configurations of light-harvesting complexes optimize energy transfer efficiency through electronic coupling and vibronic coherence. The review highlights the principles, energy gradient and clustered arrangement, that govern these effects and discusses common computational methods for evaluating energy transfer efficiency in photosynthetic systems. Drawing inspiration from the geometric architectures of natural photosystems, we discuss how these principles may guide the design of artificial photosynthetic systems, focusing on the strategic tuning of structural parameters to enhance quantum-mediated energy transfer. This theoretical framework emphasizes the importance of chromophore arrangement, electronic coupling, and environmental interactions in improving energy capture and conversion efficiency. Finally, we consider future directions, stressing the need for a clearer understanding of how these structural features can be translated into synthetic systems. Future research should help narrow the gap between natural and artificial photosynthetic systems, and support the development of sustainable energy technologies.</div></details>
+<p class="src"><span class="au">Kai-Ya Zhang, Rui Li, Yi Li, Ming-Zi Jin, Rong-Hang Chen, Qing Ai</span><br><span class="cite">Quantum Review Letters 2, 143-160 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.07.003" target="_blank" rel="noopener">10.1016/j.qrl.2026.07.003</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 06</p><h3>主动光钟进展：近十年发展与未来展望<span class="en">Advances in active optical clocks: Past decade developments and future outlook</span></h3>
+
+<p class="teaser">综述主动光钟近十年从概念走向实验的进展，介绍坏腔机制下抑制腔牵引、直接由原子跃迁产生相干钟光的原理，以及冷原子脉冲超辐射与热原子连续波两条技术路线。</p>
+<p class="body">原子钟按其运行方式可大致分为被动型和主动型。在微波波段，主动氢脉泽具有优异的短期稳定度，与铯喷泉标准一起被广泛用作守时系统中的飞轮振荡器。在光学波段，被动光钟已实现前所未有的准确度和稳定度，但代价是与超稳腔以及将原子制备在光晶格或离子阱中相关的大型复杂基础设施。相比之下，主动光钟在坏腔机制下直接从原子跃迁产生相干钟光，其中腔牵引被强烈抑制，从而降低了对腔波动的敏感度，并有可能简化光钟架构。过去十年间，主动光钟已从概念性提议发展成为快速推进的领域，包括基于冷原子的脉冲超辐射系统和基于热原子蒸气的连续波坏腔系统。本综述总结主动光钟的最新进展，并讨论该领域的未来方向。</p><details><summary>Abstract (English)</summary><div class="en-abs">Atomic clocks can be broadly classified into passive and active types according to their mode of operation. In the microwave domain, active hydrogen masers provide excellent short-term stability and are widely used as flywheel oscillators in timekeeping systems along with the cesium fountain standards. In the optical domain, passive optical clocks have achieved unprecedented accuracy and stability, but at the cost of large and complex infrastructures associated with ultrastable cavities and the preparation of atoms in optical lattices or ion traps. By contrast, active optical clocks generate coherent clock light directly from an atomic transition in the bad-cavity regime, where cavity pulling is strongly suppressed, thereby reducing sensitivity to cavity fluctuations and potentially simplifying optical clock architectures. Over the past decade, active optical clocks have developed from a conceptual proposal into a rapidly advancing field that includes pulsed superradiant systems based on cold atoms and continuous-wave bad-cavity systems based on thermal atomic vapors. This review summarizes recent progress in active optical clocks and discusses future directions of the field.</div></details>
+<p class="src"><span class="au">Chen Wang, Shougang Zhang, Jingbiao Chen, Deshui Yu</span><br><span class="cite">Quantum Review Letters 2, 161-171 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.07.002" target="_blank" rel="noopener">10.1016/j.qrl.2026.07.002</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry">
+<p class="no">No. 07</p><h3>利用量子度规设计拓扑量子态传输<span class="en">Engineering topological quantum state transfer via quantum metric</span></h3>
+
+<p class="teaser">提出以量子度规、最小能隙和循环时间刻画非绝热跃迁的几何绝热判据，并在两个广义SSH模型中优化泵浦路径，使单格点态与双格点纠缠态的拓扑量子态传输保真度和速度显著提升。</p>
+<p class="body">拓扑泵浦在拓扑物理中备受关注，在实现鲁棒量子态传输（QST）方面具有很高价值。然而，在绝热演化要求下加速拓扑QST仍具挑战。本工作提出一种几何绝热判据，采用有效量子度规，通过量子度规、最小能隙和循环时间刻画演化过程中的非绝热跃迁。利用两个广义Su–Schrieffer–Heeger模型，我们系统验证了该绝热判据在分别优化单格点态和双格点纠缠态拓扑泵浦路径方面的有效性。数值模拟表明，通过设计使有效量子度规最小化的泵浦路径，QST的保真度和速度可显著提升。我们的工作为通过量子度规优化实现高保真拓扑QST提供了通用框架。</p><details><summary>Abstract (English)</summary><div class="en-abs">Topological pumping has attracted great attention in topological physics and is highly valuable in the realization of robust quantum state transfer (QST). However, speeding up the topological QST under the requirement of adiabatic evolutions remains challenging. In this work, we propose a geometric adiabatic criterion with an effective quantum metric that characterizes non-adiabatic transitions during evolutions via the quantum metric, minimal energy gap and cycle time. Using two generalized Su–Schrieffer–Heeger models, we systematically validate our adiabatic criterion in optimizing topological pumping paths for transferring single-site states and two-site entangled states, respectively. With numerical simulations, we show that by designing pumping paths for minimizing the effective quantum metric, the fidelity and speed of the QST can be significantly improved. Our works provides a general framework for high-fidelity topological QST via quantum metric optimization.</div></details>
+<p class="src"><span class="au">Ming-Zhu Xiao, Hai-Tao Ding, Dan-Wei Zhang</span><br><span class="cite">Quantum Review Letters 2, 135-142 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.07.001" target="_blank" rel="noopener">10.1016/j.qrl.2026.07.001</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 08</p><h3>模拟拓扑相的超冷原子晶格系统：综述<span class="en">Ultracold atomic lattice systems for simulating topological phases: A review</span></h3>
+
+<p class="teaser">综述光晶格、合成晶格、Floquet工程晶格与光镊阵列四类超冷原子平台在模拟拓扑相方面的实验突破、已实现模型及探测表征技术，并展望强关联与非平衡拓扑相研究。</p>
+<p class="body">得益于近期的快速进展，用于模拟拓扑相的超冷原子晶格系统正处于关键阶段，正从既有范式演变为日益通用和可编程的量子模拟器。在本综述中，我们考察四大类平台的最新实验进展：光晶格，包括激光辅助隧穿光晶格和光学拉曼晶格；动量空间或内态空间中的合成晶格；Floquet工程晶格；以及光镊阵列，它们都为实现和探测拓扑物质提供了独特能力。对每一类平台，我们重点介绍代表性实验突破、已实现的拓扑模型以及所采用的先进探测与表征技术，强调这些互补方法如何共同拓展量子模拟的前沿。我们还讨论强关联与非平衡拓扑相中的新兴方向，并对未来前景作出展望。</p><details><summary>Abstract (English)</summary><div class="en-abs">Owing to rapid recent progress, ultracold atomic lattice systems for simulating topological phases are now at a pivotal stage, evolving from established paradigms into increasingly versatile and programmable quantum simulators. In this review, we survey recent experimental advances across four major classes of platforms: optical lattices, including optical lattices with laser-assisted tunneling and optical Raman lattices; synthetic lattices in momentum or internal-state space; Floquet-engineered lattices; and optical tweezer arrays, all of which offer distinct capabilities for realizing and probing topological matter. For each class, we highlight representative experimental breakthroughs, the topological models that have been realized, and the advanced detection and characterization techniques employed, emphasizing how these complementary approaches collectively expand the frontier of quantum simulation. We also discuss emerging directions in strongly correlated and nonequilibrium topological phases, and conclude with an outlook on future prospects.</div></details>
+<p class="src"><span class="au">Bei-Bei Wang, Xiao-Dong Lin, Jinyi Zhang, Long Zhang</span><br><span class="cite">Quantum Review Letters 2, 117-134 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.06.003" target="_blank" rel="noopener">10.1016/j.qrl.2026.06.003</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry">
+<p class="no">No. 09</p><h3>基于脉冲的变分量子算法及其应用<span class="en">Pulse-based variational quantum algorithms</span></h3>
+
+<p class="teaser">综述基于脉冲的变分量子算法，其直接在硬件原生哈密顿量上优化连续控制场，易于实现且显著降低量子资源开销，并覆盖理论、算法、多平台部署及量子化学与组合优化等应用。</p>
+<p class="body">变分量子算法（VQA）是含噪中等规模量子（NISQ）器件实际应用的主要候选方案。近来，基于脉冲的变分量子算法（p-VQA）作为传统基于门的VQA的有力替代方案而兴起。通过直接在硬件原生哈密顿量上优化连续控制场，基于脉冲的方法易于实现，并能显著降低量子资源开销，从而提升NISQ器件上量子算法的整体性能。在本综述中，我们全面梳理p-VQA的最新进展，涵盖理论、算法以及在各类量子计算平台上的硬件部署。我们还回顾p-VQA在量子化学中的变分量子本征求解器、用于组合优化的量子近似优化算法以及量子机器学习任务中的应用。</p><details><summary>Abstract (English)</summary><div class="en-abs">Variational quantum algorithms (VQAs) are the leading candidates for practical applications of noisy intermediate-scale quantum (NISQ) devices. Recently, pulse-based variational quantum algorithms (p-VQAs) have emerged as a compelling alternative to traditional gate-based VQAs. By optimizing continuous control fields directly on hardware-native Hamiltonians, pulse-based methods are easy to implement and can significantly reduce quantum resource overhead, thereby enhancing the overall performance of quantum algorithms on NISQ devices. In this review, we present a comprehensive survey over recent advances in p-VQAs, covering theory, algorithms, and hardware deployments across various quantum computing platforms. We also review applications of p-VQAs to variational quantum eigensolver in quantum chemistry, quantum approximate optimization algorithm for combinatorial optimization, and quantum machine learning tasks.</div></details>
+<p class="src"><span class="au">Han-Xiao Tao, Re-Bing Wu</span><br><span class="cite">Quantum Review Letters 2, 99-110 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.06.002" target="_blank" rel="noopener">10.1016/j.qrl.2026.06.002</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 10</p><h3>基于量子频率梳的资源高效连续变量GHZ纠缠制备<span class="en">Resource-efficient generation of continuous-variable Greenberger–Horne–Zeilinger entanglement based on a quantum frequency comb</span></h3>
+
+<p class="teaser">利用同步泵浦光学参量振荡器产生的单一量子频率梳，经多像素零拍探测与本征模分解，在单光束内确定性制备三组分连续变量GHZ态，关联方差0.57、0.75、0.57均低于散粒噪声极限。</p>
+<p class="body">连续变量（CV）多组分纠缠态，尤其是Greenberger–Horne–Zeilinger（GHZ）态，是量子网络和量子信息处理不可或缺的资源。生成CV GHZ态的传统方法依赖于通过复杂干涉网络组合多个独立制备的压缩光，这在可扩展性和稳定性方面带来重大挑战。在此，我们实验演示了一种紧凑且资源高效的方案，利用同步泵浦光学参量振荡器产生的单一量子频率梳生成三组分CV GHZ态。通过采用多像素零拍探测，我们同时测量多个频带的正交涨落，并在单次测量中重建完整的多模协方差矩阵。通过本征模分解，我们提取出一组独立的压缩超模，随后通过后处理中实现的定制线性幺正操作对其进行变换。利用该方法，我们从三个超模确定性地构建三组分GHZ态，并通过van Loock–Furusawa判据验证其纠缠，测得相应关联方差分别为0.57、0.75和0.57，均低于散粒噪声极限。该方法在单一光束内有效实现了可扩展的纠缠生成方案，无需复杂干涉网络。我们的结果为多模量子信息处理提供了可扩展且多功能的平台。</p><details><summary>Abstract (English)</summary><div class="en-abs">Continuous-variable (CV) multipartite entangled states, particularly Greenberger–Horne–Zeilinger (GHZ) states, are an indispensable resource for quantum networks and quantum information processing. Conventional approaches to generating CV GHZ states rely on combining multiple independently prepared squeezed lights through complex interferometric networks, which impose significant challenges in scalability and stability. Here, we experimentally demonstrate a compact and resource-efficient scheme for generating a tripartite CV GHZ state from a single quantum frequency comb produced by a synchronously pumped optical parametric oscillator. By employing multipixel homodyne detection, we simultaneously measure quadrature fluctuations across multiple frequency bands and reconstruct the full multimode covariance matrix in a single measurement. Through eigenmode decomposition, we extract a set of independent squeezed supermodes, which are subsequently transformed via a tailored linear unitary operation implemented in post-processing. Using this approach, we deterministically construct a tripartite GHZ state from three supermodes and verify its entanglement via the van Loock–Furusawa criteria, with the corresponding correlation variances measured to be 0.57, 0.75, and 0.57, all below the shot noise limit. This method effectively realizes a scalable entanglement generation scheme within a single optical beam, eliminating the need for complex interferometric networks. Our results provide a scalable and versatile platform for multimode quantum information processing.</div></details>
+<p class="src"><span class="au">Juan Li, Peng Liu, Xinghua Li, Xueying Yang, Tao Liu, Ruifang Dong, Shougang Zhang</span><br><span class="cite">Quantum Review Letters 2, 111-116 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.06.001" target="_blank" rel="noopener">10.1016/j.qrl.2026.06.001</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry">
+<p class="no">No. 11</p><h3>分形光调控：下一代光学超材料的空间拓扑蓝图<span class="en">Fractal light control: A spatial topology blueprint for next-generation optical meta-materials</span></h3>
+
+<p class="teaser">提出基于准维度流形定态薛定谔方程的微观模型，结合Lorentz–Lorenz关系计算分形超原子的极化率与折射率，预测分形复杂度增大时极化率发散并趋于纯虚折射率，为拓扑设计超材料提供框架。</p>
+<p class="body">超材料凭借人工设计的亚波长结构，展现出天然材料所不具备的非凡光学与非线性光学性质，例如负折射率和增强的非线性效应。这些性质源于其拓扑（几何）设计（即空间排布与连通性），而非化学组成。尽管已取得显著进展，将这类涌现现象与准维度拓扑设计联系起来的完整理论框架仍未被探索。在本工作中，我们提出一个简单却强大的微观理论模型，基于针对分形等准维度流形的定态薛定谔方程，计算单个超原子的分子极化率。随后通过Lorentz–Lorenz关系获得宏观折射率，并借助统计力学架起微观与宏观描述之间的桥梁。通过推广拉普拉斯算符并引入分数阶导数，我们导出了适用于非整数维度系统的形式体系。我们通过分析约束在正多边形和Koch雪花曲线上的粒子的波函数与静态偶极极化率来验证该模型，展示了向经典极限的收敛以及与负折射率实验观测的定性一致。更具体地说，该模型预测电极化率随分形复杂度增加而发散，并通过Lorentz–Lorenz关系在渐近极限下导致纯虚折射率（完美反射体）——这一趋势与仅凭几何结构即可产生非标准光学响应的观察定性一致。我们的结果凸显了拓扑在决定光学性质中的关键作用，并为设计具有定制功能的先进超材料奠定了基础，可应用于生物材料、光子学、传感和通信等领域。</p><details><summary>Abstract (English)</summary><div class="en-abs">Meta-materials, with their artificially engineered subwavelength structures, exhibit extraordinary optical and nonlinear optical properties not found in natural materials, such as negative refractive index and enhanced nonlinear effects. These properties arise from their topological (geometric) design ( i.e. , spatial arrangement and connectivity) rather than chemical composition. Despite significant advancements, a comprehensive theoretical framework linking these emergent phenomena to quasi-dimensional topological design remains unexplored. In this work, we propose a simple yet powerful microscopic theoretical model based on the Time-Independent Schrödinger Equation for quasi-dimensional manifolds, such as fractals, to compute the molecular polarizability of individual meta-atoms. The macroscopic refractive index is then obtained via the Lorentz–Lorenz relation, bridging the microscopic and macroscopic descriptions through statistical mechanics. By generalizing the Laplacian operator and introducing fractional derivatives, we derive a formalism applicable to systems with non-integer dimensions. We validate our model by analyzing the wavefunctions and static dipole polarizabilities of particles constrained on regular polygons and Koch snowflake curves, demonstrating convergence to classical limits and qualitative agreement with experimental observations of negative refractive index. More specifically, the proposed model predicts a divergent electric polarizability as fractal complexity increases, leading via the Lorentz–Lorenz relation to a purely imaginary refractive index (perfect reflector) in the asymptotic limit – a qualitative trend consistent with the observation that geometric structure alone can produce non-standard optical responses. Our results highlight the pivotal role of topology in determining optical properties and provide a foundation for designing advanced meta-materials with tailored functionalities for applications in biomaterials, photonics, sensing, and telecommunications.</div></details>
+<p class="src"><span class="au">Enrico Benassi, Rodolfo Guzzi</span><br><span class="cite">Quantum Review Letters 2, 90-98 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.05.004" target="_blank" rel="noopener">10.1016/j.qrl.2026.05.004</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 12</p><h3>基于通道-态对偶的纠缠绘景与量子模拟<span class="en">Quantum simulation in the entanglement picture</span></h3>
+
+<p class="teaser">提出基于新型通道-态对偶的「纠缠绘景」，把量子算法表述为信道作用，并演示其在多体动力学、量子场论与热物理模拟中的应用。</p>
+<p class="body">「绘景」的概念在量子力学中是基础性的。本文基于在量子信息科学中显示出重要性的新型通道-态对偶，提出一种新的绘景，我们称之为纠缠绘景。我们展示了纠缠绘景在量子算法中的应用，用于模拟多体动力学、量子场论、热物理以及更一般的物理量。</p><details><summary>Abstract (English)</summary><div class="en-abs">The notion of “picture” is fundamental in quantum mechanics. In this work, a new picture, which we call entanglement picture, is proposed based on the novel channel-state duality, whose importance is revealed in quantum information science. We illustrate the application of entanglement picture in quantum algorithms for the simulation of many-body dynamics, quantum field theory, thermal physics, and more generic quantities.</div></details>
+<p class="src"><span class="au">Dong-Sheng Wang, Xiang Xu, Yuan-Dong Liu</span><br><span class="cite">Quantum Review Letters 2, 57-62 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.05.003" target="_blank" rel="noopener">10.1016/j.qrl.2026.05.003</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry">
+<p class="no">No. 13</p><h3>基于合成维度方法的冷原子量子模拟：简要综述<span class="en">Quantum simulation via synthetic dimension approach with cold atoms: A brief review</span></h3>
+
+<p class="teaser">综述冷原子合成维度平台的基本原理与近期进展，说明如何把内部或外部原子态映射为离散格点以实现紧束缚哈密顿量的灵活设计，并讨论其优势、局限与未来方向。</p>
+<p class="body">合成维度方法已成为冷原子量子模拟工具箱中一种通用而强大的技术，是传统光晶格平台的有力补充。通过将原子的内部或外部态映射为离散格点，该方法可精确控制局域隧穿幅度、相位和格点势，从而灵活设计紧束缚哈密顿量。借助这些能力，人们在超精细态与里德堡态、动量晶格以及谐振子阱模式等一系列平台上，实验探索了拓扑、合成规范场、无序诱导现象以及奇特的时间依赖动力学。本综述总结了主要实验合成维度平台的基本原理及其在量子模拟方面的最新进展。我们还讨论了合成维度方法的优势与当前局限，并对未来方向作出展望，包括混合维度架构和高维多体物理研究。</p><details><summary>Abstract (English)</summary><div class="en-abs">Synthetic dimension approach has emerged as a versatile and powerful technique in cold-atom toolbox for quantum simulation, serving as a complementary alternative to conventional optical lattice platforms. By mapping internal or external atomic states into discrete lattice sites, this method provides precise control over local tunneling amplitudes, phases, and on-site potentials, enabling flexible engineering of tight-binding Hamiltonians. Such capabilities have facilitated the experimental exploration of topology, synthetic gauge fields, disorder-induced phenomena, and exotic time-dependent dynamics across a range of platforms, including hyperfine and Rydberg states, momentum lattices, and harmonic-trap modes. In this review, we summarize the underlying principles of the key experimental synthetic dimension platforms, and their recent advances in quantum simulation. We also discuss the advantages and current limitations of the synthetic method, and provide a perspective on future directions, including hybrid-dimensional architectures and the study of high-dimensional many-body physics.</div></details>
+<p class="src"><span class="au">Kaixuan Ren, Zhengye Li, Bo Yan, Tao Chen</span><br><span class="cite">Quantum Review Letters 2, 77-89 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.05.002" target="_blank" rel="noopener">10.1016/j.qrl.2026.05.002</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 14</p><h3>从量子力学加速度极限到幺正动力学中可观测量涨落增长的上界<span class="en">From quantum-mechanical acceleration limits to upper bounds on fluctuation growth of observables in unitary dynamics</span></h3>
+
+<p class="teaser">将此前针对哈密顿量标准差的量子加速度极限推广到任意可观测量，给出其标准差变化速度受「速度型」可观测量标准差限制的不等式，并以二能级系统与有限维谐振子为例说明。</p>
+<p class="body">最近，人们针对由任意非定常哈密顿量支配的量子系统幺正时间演化，提出了量子加速度极限的概念。该极限表明，哈密顿量算符的标准差随时间的变化率——它表征量子演化在投影希尔伯特空间中的加速度——受到哈密顿量时间导数的标准差的约束，即 σ̇_H ≤ σ_Ḣ。本文将我们早先的发现推广到幺正量子动力学框架下的任意可观测量 A，得到不等式 σ̇_A ≤ σ_vA。这一关系意味着，任意可观测量的标准差的变化速度受其相应的速度型可观测量 v_A 的标准差限制。最后，出于教学目的，我们给出清晰的例子来说明该不等式的意义，选取了与二能级量子系统的幺正动力学以及有限维福克空间中谐振子相关的合适可观测量。</p><details><summary>Abstract (English)</summary><div class="en-abs">Recently, the notion of a quantum acceleration limit has been proposed for any unitary time evolution of quantum systems governed by arbitrary nonstationary Hamiltonians. This limit articulates that the rate of change over time of the standard deviation of the Hamiltonian operator — representing the acceleration of quantum evolution within projective Hilbert space — is constrained by the standard deviation of the time-derivative of the Hamiltonian, expressed as σ ̇ H ≤ σ H ̇ . In this paper, we extend our earlier findings to encompass any observable A within the framework of unitary quantum dynamics, leading to the inequality σ ̇ A ≤ σ v A . This relationship signifies that the speed of the standard deviation of any observable is limited by the standard deviation of its associated velocity-like observable v A . Finally, for pedagogical purposes, we illustrate the relevance of our inequality by providing clear examples. We choose suitable observables related to the unitary dynamics of two-level quantum systems, as well as a harmonic oscillator within a finite-dimensional Fock space.</div></details>
+<p class="src"><span class="au">Carlo Cafaro, Walid Redjem, Paul M. Alsing, Newshaw Bahreyni, Christian Corda</span><br><span class="cite">Quantum Review Letters 2, 63-76 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.05.001" target="_blank" rel="noopener">10.1016/j.qrl.2026.05.001</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry">
+<p class="no">No. 15</p><h3>用噪声统计关联方法客观评估原子钟物理效应不确定度<span class="en">Objectively evaluate uncertainty of physical effect of atomic clock by noise statistical correlation method</span></h3>
+
+<p class="teaser">提出利用原子钟运行中记录的频率信号与环境噪声信号的统计关联来评估物理效应不确定度，无需专门实验；在 87Rb 喷泉频标上测得二阶塞曼频移与碰撞频移，结果与传统方法吻合。</p>
+<p class="body">不确定度是原子钟最重要的特性之一，它通过一系列针对相关物理效应的专门实验评估获得。本文提出一种评估原子钟某些物理效应不确定度贡献的改进方法。与以往方法相比，该方法着眼于原子钟运行过程中记录的原子钟频率信号与环境噪声信号之间的关联，无需开展专门实验。理论分析与数值模拟表明，该方法能够测量灵敏度系数并评估相关不确定度。在 87Rb 喷泉频率标准上进行了实验验证，评估了二阶塞曼频移和碰撞频移，结果分别为 1.418(47)×10⁻¹³ 和 1.44(9)×10⁻¹⁶。测得的二阶塞曼频移与以往方法的结果在 0.3% 的偏差内一致。该方法可在正常运行期间实时、同时评估多个主要系统效应带来的不确定度，因而在原子钟与精密测量领域具有重要应用价值。</p><details><summary>Abstract (English)</summary><div class="en-abs">Uncertainty is one of the most important characteristics of atomic clocks, which is obtained through a series of specific experiment evaluation of relevant physical effects. This paper presents an improved method for evaluating uncertainty contribution of some physical effects of atomic clock. Compared with previous method, the method focuses on the correlation of frequency signal of atomic clock and environmental noise signal which is recorded in the operation of atomic clock, and specific experiment is not necessary.Theoretical analysis and numerical simulations demonstrate that this method enables the measurement of sensitivity coefficients and the evaluation of associated uncertainties. Experimental demonstration was conducted on an 87 Rb fountain frequency standard, where the second-order Zeeman frequency shift and collision frequency shift were evaluated, with the result of 1 . 418 ( 47 ) × 1 0 − 13 and 1 . 44 ( 9 ) × 1 0 − 16 , respectively. The measured second-order Zeeman shift is consistent with results from previous methods within a deviation of 0.3%. The method allows real-time, concurrent uncertainty evaluation of multiple dominant systematic effects during normal operation, thereby holding significant application value in atomic clocks and precision measurement.</div></details>
+<p class="src"><span class="au">Zhiyi Liu, Qian Wang, Yao Li, Rong Wei</span><br><span class="cite">Quantum Review Letters 2, 51-56 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.04.001" target="_blank" rel="noopener">10.1016/j.qrl.2026.04.001</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 16</p><h3>星地量子通信中模式配对量子密钥分发的性能研究<span class="en">Performance research on mode-pairing quantum key distribution in satellite-to-ground quantum communication</span></h3>
+
+<p class="teaser">采用非均匀大气传输模型刻画湍流、气溶胶散射、太阳干扰与平台抖动等损耗，数值模拟不同天顶角与环境条件下模式配对 QKD 的成码率，指出天顶角增大会显著降低成码率，夜间明显优于白天。</p>
+<p class="body">本研究考察模式配对量子密钥分发（MP-QKD）在星地自由空间信道上的性能。采用非均匀大气传输模型来刻画密钥损耗机制，包括湍流、气溶胶散射、太阳干扰以及平台引起的光束抖动。数值模拟量化了不同天顶角和环境条件下的安全密钥率。结果表明，天顶角增大会显著降低密钥率，因为更长的光程加剧了传输损耗和大气损伤。在相同大气条件下，夜间的密钥率高于白天，主要原因是太阳干扰可忽略，导致背景光子计数更低、量子比特误码率（QBER）更小。在当前的简化模型中，增大最大配对间隔 l 可提高密钥率，但增益逐渐饱和。这些结果给出了 MP-QKD 在代表性星地自由空间构型下的性能评估，并为参数选择、环境敏感性分析和鲁棒系统设计提供了实用指导。</p><details><summary>Abstract (English)</summary><div class="en-abs">This study investigates the performance of mode-pairing quantum key distribution (MP-QKD) over satellite-to-ground free-space channels. A nonuniform atmospheric transmission model is adopted to characterize key loss mechanisms, including turbulence, aerosol scattering, solar interference, and platform-induced beam jitter. Numerical simulations quantify the secret key rate under varying zenith angles and environmental conditions. Results show that increasing zenith angle significantly degrades the key rate because the longer optical path aggravates propagation loss and atmospheric impairment. Under identical atmospheric conditions, nighttime achieves a higher key rate than daytime, mainly because negligible solar interference leads to lower background-photon counts and a reduced QBER. Within the present simplified model, increasing the maximum pairing interval l improves the key rate, although the gain gradually saturates. These findings provide a performance evaluation of MP-QKD in a representative satellite-to-ground free-space configuration and offer practical guidance for parameter selection, environmental-sensitivity analysis, and robust system design.</div></details>
+<p class="src"><span class="au">Yujia Zhang, Yue Li, Haoyang Wang, Kaiyi Shi, Chang Liu, Duo Ma, Fangze Ma, Haiqiang Ma</span><br><span class="cite">Quantum Review Letters 2, 42-50 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.03.002" target="_blank" rel="noopener">10.1016/j.qrl.2026.03.002</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry">
+<p class="no">No. 17</p><h3>光磁力耦合系统中机械类猫态的产生<span class="en">Generation of mechanical cat-like states via optomagnomechanics</span></h3>
+
+<p class="teaser">提出两步方案：先用两束微波脉冲制备压缩机械态，再以弱红失谐光脉冲触发反斯托克斯散射，通过探测 k 个光子从压缩热态中减去 k 个声子，从而得到机械运动的类猫态。</p>
+<p class="body">我们提出一种制备机械运动类猫叠加态的光磁力方案。该方案包含两个步骤，基于磁力系统，其中磁致伸缩诱导的位移进一步通过辐射压与光学腔模耦合。我们首先用两束微波脉冲驱动磁力系统，制备一个压缩机械态。随后关闭微波驱动，并向光学腔输入一束弱的红失谐光脉冲，以微弱激发光力反斯托克斯散射。我们表明，在以探测到来自腔输出场的 k 个反斯托克斯光子为条件时，可以从所制备的压缩热态中减去 k 个声子，从而使机械运动处于类猫态。该工作为结合光力学与磁力学生成机械叠加态提供了新途径，并可能在宏观量子态研究和坍缩理论检验中找到应用。</p><details><summary>Abstract (English)</summary><div class="en-abs">We propose an optomagnomechanical approach for preparing a cat-like superposition state of mechanical motion. Our protocol consists of two steps and is based on the magnomechanical system where the magnetostrictively induced displacement further couples to an optical cavity mode via radiation pressure. We first prepare a squeezed mechanical state by driving the magnomechanical system with two microwave pulses. We then switch off the microwave drives and send a weak red-detuned optical pulse to the optical cavity to weakly activate the optomechanical anti-Stokes scattering. We show that k phonons can be subtracted from the prepared squeezed thermal state, conditioned on the detection of k anti-Stokes photons from the cavity output field, which prepares the mechanical motion in a cat-like state. The work provides a new avenue for preparing mechanical superposition states by combining opto- and magnomechanics and may find applications in the study of macroscopic quantum states and the test of collapse theories.</div></details>
+<p class="src"><span class="au">Hao-Tian Li, Hong-Bin Wang, Zi-Xu Lu, Jie Li</span><br><span class="cite">Quantum Review Letters 2, 35-41 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.03.001" target="_blank" rel="noopener">10.1016/j.qrl.2026.03.001</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 18</p><h3>薄膜铌酸锂波导中 2 μm 光子的片上量子频率转换<span class="en">On-chip quantum frequency conversion of 2μm photon in thin-film lithium niobate waveguide</span></h3>
+
+<p class="teaser">在畴工程薄膜铌酸锂平台上首次实现 2 μm 光子到可见波段的量子频率转换，在仅 58 mW 的极低泵浦饱和功率下获得 42% 的最高内转换效率，为可见光与 2 μm 光子互联提供片上方案。</p>
+<p class="body">量子频率转换（QFC）在实际量子信息技术中起着关键作用，因为它为通常在各自最佳波长工作的不同量子器件之间架起桥梁。波长较长的光子在自由空间中具有更低的传输损耗和更低的太阳辐射噪声，因而有望用于白天的长距离量子通信。此外，2 μm 以上波长还与许多重要分子的吸收带重叠，因此对气体和分子探测具有重要意义。然而，该波段技术的发展主要受制于与其他量子器件的光谱失配，尤其是量子探测和量子存储器，它们最佳工作在可见波段。本文在畴工程薄膜铌酸锂（TFLN）平台上首次演示了 2 μm 光子到可见波段的量子频率转换。得益于该集成平台的强非线性，在仅 58 mW 的极低泵浦饱和功率下实现了 42% 的最高内量子转换效率。该工作在同一集成平台上建立了可见光与 2 μm 波段光子之间的高效互联，推动了未来面向量子通信、传感与计量的实用量子芯片的发展。• 强模场限制与畴工程薄膜铌酸锂（TFLN）结合大 χ(2)，实现高效片上非线性转换。• 首次在薄膜铌酸锂上演示 2 μm 波段光子的量子频率转换（QFC）。</p><details><summary>Abstract (English)</summary><div class="en-abs">Quantum frequency conversion (QFC) plays a critical role in practical quantum information technology as it provides a bridge among different quantum devices, which usually operate at different optimal wavelength. Photons with longer wavelength feature lower propagation loss and lower solar radiation noise in free space, hence hold promise for daylight long distance quantum communication. Besides, wavelength over 2 μ m also overlap with the absorption band of many important molecules, hence is of great importance for gases and molecules detection. Yet development of technology in this region has been hindered primarily by the spectral mismatch with other quantum devices, notably quantum detection and memories, which optimally operate in the visible band. Here, we demonstrate the first QFC of 2 μ m photons to the visible region on domain-engineered thin-film lithium niobate (TFLN) platform. Benefiting from the strong nonlinearity in such integrated platform, the highest internal quantum conversion efficiency of 42% is achieved at an exceptionally low pump saturation power of only 58 mW . This work provides an efficient interconnection between photons operating at the visible and 2 μ m bands in the integrated platform, pushing forward the development of practical quantum chips for application of quantum communication, sensing and metrology in the future. • Strong mode confinement and domain-engineered thin film lithium niobate (TFLN), combined with large χ ( 2 ) , enable efficient on-chip nonlinear conversion. • First demonstration of quantum frequency conversion (QFC) of 2 μ m band photon on thin film lithium niobate.</div></details>
+<p class="src"><span class="au">Zishuo Gu, Chenyu Wang, Mengwen Chen, Zikang Wang, Hua-Ying Liu, Xiao-Hui Tian, Kunpeng Jia, Yong Zhang, Shi-Ning Zhu, Zhenda Xie</span><br><span class="cite">Quantum Review Letters 2, 28-34 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.01.002" target="_blank" rel="noopener">10.1016/j.qrl.2026.01.002</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry">
+<p class="no">No. 19</p><h3>用量子计算机对量子测量过程进行可扩展模拟<span class="en">Scalable simulation of quantum measurement process with quantum computers</span></h3>
+
+<p class="teaser">提出两类量子比特模型分别模拟单光子探测与自旋测量，将被测比特信息映射到一组充当测量装置的量子比特上，可扩展地生成薛定谔猫态并给出显式线路，有望在近期量子计算机上探索量子-经典边界。</p>
+<p class="body">量子信息科学与技术的最新发展，尤其是可编程量子计算机的构建，为研究量子力学的基本问题提供了新机遇。我们提出量子比特模型来模拟量子测量过程，其中一个量子比特的量子信息被映射到一组充当测量装置的量子比特上。一个模型受单光子探测启发，另一个受自旋测量启发。两个模型都可扩展以生成薛定谔猫态，并给出了相应的显式量子线路。大规模模拟可在近期量子计算机上实现，而经典计算机无法高效完成同样的任务。由于模型的可扩展性，此类模拟有助于探索量子测量问题中可能存在的量子-经典边界。此外，我们生成猫态的协议可能在量子计算与量子计量中具有重要应用。</p><details><summary>Abstract (English)</summary><div class="en-abs">Recent development in quantum information sciences and technologies, especially building programmable quantum computers, provide us new opportunities to study fundamental aspects of quantum mechanics. We propose qubit models to emulate the quantum measurement process, in which the quantum information of a qubit is mapped to a collection of qubits acting as the measurement device. One model is motivated by single-photon detection and the other by spin measurement. Both models are scalable to generate Schrödinger cat-like state, and their corresponding quantum circuits are shown explicitly. Large-scale simulations could be realised in near-term quantum computers, while classical computers cannot perform the same task efficiently. Due to the scalability of the models, such simulations can help explore the quantum-to-classical boundary, if exists, in the quantum measurement problem. Besides, our protocol to generate cat states may have important applications in quantum computing and metrology.</div></details>
+<p class="src"><span class="au">Meng-Jun Hu, Yanbei Chen, Yiqiu Ma, Xiang Li, Yubao Liu, Yong-Sheng Zhang, Haixing Miao</span><br><span class="cite">Quantum Review Letters 2, 21-27 (2026)</span><br><a href="https://doi.org/10.1016/j.qrl.2026.01.001" target="_blank" rel="noopener">10.1016/j.qrl.2026.01.001</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 20</p><h3>利用量子费舍尔信息探测 QAOA 中的纠缠与参数敏感性<span class="en">Probing entanglement and parameter sensitivity in QAOA via Quantum Fisher Information</span></h3>
+
+<p class="teaser">以量子费舍尔信息为诊断工具量化 QAOA 态对参数变化的敏感性与关联，发现完全图 Max-Cut 的 QFI 显著大于环形图，纠缠主要放大交叉参数关联且首个纠缠层后收益迅速饱和，据此提出 QFI 引导的变异启发式。</p>
+<p class="body">变分量子算法（VQA）是实现近期量子优势的主要候选方案，但关于参数相关性以及纠缠在塑造其行为中所起作用的重要问题仍然存在。本文采用量子费舍尔信息（QFI）作为诊断工具，量化 QAOA 态对参数变化的敏感性与关联。我们研究了环形图与完全图上的 Max-Cut，以及随机 Ising 模型（RIM）实例，比较了仅 RX 的混合器与 RX-RY 混合的混合器（深度至 ( )，可选纠缠阶段与模式）。跨各类问题，完全图 Max-Cut 实例产生的 QFI 本征值和协方差占比都明显大于环形图，超过散粒噪声标度（ ）而仍低于海森堡极限（ ）。纠缠主要放大交叉参数关联，且其收益迅速饱和：第一个纠缠阶段带来 QFI 的主要增长，而额外的阶段往往收益递减甚至产生不利影响。本工作的一项关键方法学贡献是使用在随机参数样本上平均的 QFI 矩阵，从而揭示稳健的全局趋势，并显示出在不同架构与深度下参数相关性呈现强烈的非均匀性。基于这些洞见，我们提出一种 QFI 引导的变异（QIm）启发式，利用 QFI 对角元来调整变异概率和步长。与均匀和随机重启基线相比，QIm 改善了收敛性与稳定性，在大深度和 RIM 能量景观中尤为明显。总体而言，我们的结果将 QFI 定位为 QAOA 拟设的结构性探针，以及在 NISQ 时代指导有效优化策略设计的实用资源。</p><details><summary>Abstract (English)</summary><div class="en-abs">Variational Quantum Algorithms (VQAs) are leading candidates for achieving near-term quantum advantage, yet important questions remain regarding parameter relevance and the role of entanglement in shaping their behavior. In this work, we employ the Quantum Fisher Information (QFI) as a diagnostic tool to quantify the sensitivity and correlations of QAOA states with respect to parameter variations. We study Max-Cut on cyclic and complete graphs, as well as random Ising model (RIM) instances, comparing RX-only and hybrid RX-RY mixers up to depth ( ) with optional entanglement stages and patterns. Across problem classes, complete-graph Max-Cut instances generate substantially larger QFI eigenvalues and covariance fractions than cyclic ones, exceeding the shot-noise scaling ( ) while remaining below the Heisenberg limit ( ). Entanglement primarily amplifies cross-parameter correlations, and its benefits saturate rapidly: the first entangling stage produces the dominant increase in QFI, while additional stages often yield diminishing or even adverse returns. A key methodological contribution of this work is the use of averaged QFI matrices over random parameter samples, which exposes robust global trends and reveals strongly non-uniform parameter relevance across architectures and depths. Leveraging these insights, we propose a QFI-Informed Mutation (QIm) heuristic that adapts mutation probabilities and step sizes using diagonal QFI entries. QIm improves convergence and stability over uniform and random-restart baselines, especially at large depths and in RIM landscapes. In general, our results position QFI as both a structural probe of QAOA ansätze and a practical resource to guide the design of effective optimization strategies in the NISQ regime.</div></details>
+<p class="src"><span class="au">Brian García Sarmina, Jorge Saavedra Benavides, Guo-Hua Sun, Shi-Hai Dong</span><br><span class="cite">Quantum Review Letters 2, 1-20 (2025)</span><br><a href="https://doi.org/10.1016/j.qrl.2025.12.001" target="_blank" rel="noopener">10.1016/j.qrl.2025.12.001</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry">
+<p class="no">No. 21</p><h3>反向偏置自由载流子耗尽增强的硅微环关联光子对源<span class="en">Correlated photon-pair source using silicon microring enhanced by reverse–biased free–carrier depletion</span></h3>
+
+<p class="teaser">在硅微环旁嵌入 p-i-n 二极管并施加反向偏压以耗尽自由载流子，显著缩短载流子寿命，在 0.038 mW 腔内功率、30 V 偏压下获得近 5 GHz/mW² 的产生率与 231 的符合与偶然符合比。</p>
+<p class="body">本研究系统考察了在微环腔中引入自由载流子耗尽对关联光子对产生的影响。自由载流子耗尽通过在硅微环谐振器旁嵌入 p-i-n 二极管并施加反向偏压实现，从而降低自由载流子吸收造成的非线性损耗。实验结果表明自由载流子寿命显著缩短，改善了光子对产生的关键指标，包括符合计数率、符合与偶然符合比（CAR）以及预告效率。在 0.038 mW 腔内功率和 30 V 偏压下，实现了接近 5 GHz/mW² 的高光子对产生率，相应的 CAR 为 231。然而也观察到，高泵浦功率带来的线性噪声和热扰动等副作用可能压倒这些改善。过高的电压同样会使性能下降，因为消光比偏离最佳工作点。此外，还考虑了直流供电中存在的电源线干扰，它会在透射谱中引起显著振荡，并被证明不利于光子对的产生。</p><details><summary>Abstract (English)</summary><div class="en-abs">This study systematically investigates the impact of introducing free-carrier depletion to the microring cavity on the correlated photon-pair generation. The free-carrier depletion is realized through embedding a p-i-n diode adjacent to the silicon microring resonator and applying a reverse bias voltage, thus reducing the nonlinear loss caused by free carrier absorption. Experimental results show a significant reduction in free-carrier lifetime, which improves key metrics of photon-pair generation, including coincidence rate, coincidence-to-accidental ratio (CAR), and heralding efficiency. A high pair generation rate of near 5 GHz/mW 2 with an associated CAR of 231 is achieved at 0.038 mW on-cavity power and 30 V bias. However, it is observed that the side-effect such as linear noise and thermal disturbance due to high pump power can override the improvements. Excessively high voltage can also degrade the performance as the extinction ratio is deviated from the optimum operating point. Additionally, the power-line interference existing in the DC supply is considered, which induces significant oscillation in the transmission spectrum and is shown detrimental to the photon-pair generation.</div></details>
+<p class="src"><span class="au">Lu Wang, Huajin Chang, Haoyang Wang, Jingmei Zhang, Qiang Zeng, Rongzhen Jiao, Haowen Shu, Xingjun Wang, Zhiliang Yuan</span><br><span class="cite">Quantum Review Letters 1, 34-39 (2025)</span><br><a href="https://doi.org/10.1016/j.qrl.2025.11.001" target="_blank" rel="noopener">10.1016/j.qrl.2025.11.001</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 22</p><h3>保真度可自主调节的量子网络编码<span class="en">Quantum network coding with adjustable fidelity</span></h3>
+
+<p class="teaser">提出一种基于线性网络编码的量子多播方案，借助发送方与接收方之间的GHZ态和非对称最优普适克隆，使各接收方能自主调节恢复态的保真度，仅需1次量子传输和2次经典传输即可完成多播。</p>
+<p class="body">未知量子态的多播是量子网络构建中不可回避的问题。现有大多数量子网络编码方案在多播时只能在一个目标节点上恢复未知态。本文提出一种在线性网络编码网络中多播未知量子态的方案。具体而言，每个发送方与所有接收方之间先制备GHZ态，随后未知态被发送并存储于接收方共享的纠缠态之中，最后接收方利用非对称最优普适克隆获得所需的态。该方案在经典通信受限的网络中只需1次量子传输和2次经典传输即可实现多播。与其他方案相比，本方案允许接收方自主调节保真度，而发送方无须知晓其需求。</p><details><summary>Abstract (English)</summary><div class="en-abs">Multicast of unknown quantum states is an unavoidable issue in the construction of quantum networks. Most existing quantum network coding schemes can only restore an unknown state at one of the target nodes during multicast. In this paper, we propose a quantum network coding scheme to multicast unknown quantum states in networks with linear network coding. Concretely, GHZ states are generated between each sender and all receivers. Unknown states are then sent and stored in the entangled state shared by the receivers. Finally, the receivers use asymmetric optimal universal cloning to obtain the required states. The scheme achieved to multicast within 1 quantum transmission and 2 classical transmissions in networks with constrained classical communication. Compared to other schemes, our scheme allows receivers to autonomously adjust the fidelity without the sender knowing the requirements.</div></details>
+<p class="src"><span class="au">Yuchen Liu, Tao Shang, Jiayu Liu</span><br><span class="cite">Quantum Review Letters 1, 27-33 (2025)</span><br><a href="https://doi.org/10.1016/j.qrl.2025.10.001" target="_blank" rel="noopener">10.1016/j.qrl.2025.10.001</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry">
+<p class="no">No. 23</p><h3>原子磁强计电磁感应成像：走向成熟<span class="en">Electromagnetic induction imaging with atomic magnetometers: Coming of age</span></h3>
+
+<p class="teaser">综述以原子磁强计为传感器的电磁感应成像技术：原子磁强计在低频下仍保持极高灵敏度，突破了传统线圈的限制，使穿障成像与人体器官成像成为可能，并讨论了从医学到安检与工业监测的挑战与机遇。</p>
+<p class="body">电磁感应成像（EMI）是一种发展数十年的成熟成像技术，已被广泛用于评估金属结构中的裂纹以及探测和定位埋藏的金属物体。在标准配置下，EMI的应用范围因传感线圈在低频下灵敏度较差而受到严重限制，这使其无法开展需要低频工作或极高灵敏度的有趣应用，例如穿障成像或人体器官成像。2014年，利用原子磁强计（AM）作为EMI传感器的演示彻底改变了这一局面，为EMI开辟了新的前景，因为原子磁强计在低频下仍能保持极高的灵敏度。这篇综述文章考察了EMI-AM的最新技术水平，并讨论了该技术在从医学到安全与工业监测等诸多领域中的挑战与机遇。</p><details><summary>Abstract (English)</summary><div class="en-abs">Electromagnetic induction imaging (EMI) is a well established imaging technique, developed over several decades. It has been widely used to assess cracks in metallic structures and to detect and localise buried metallic objects. In its standard configuration, EMI’s remit of application is severely restricted by the poor sensitivity of the sensing coil at low frequency. This prevents the exploration of interesting applications where low-frequency operation and/or extreme sensitivity is required, such as through-barrier imaging or imaging of human organs. The demonstration in 2014 of the use of an atomic magnetometer (AM) as sensor for EMI completely changed this scenario, and opened up new perspectives for EMI, as atomic magnetometers maintain their extreme sensitivity at low frequency. This review article examines the state-of-the-art of EMI-AM and discusses challenges and opportunities of the technology in many sectors, from medicine to security and industrial monitoring.</div></details>
+<p class="src"><span class="au">Ferruccio Renzoni</span><br><span class="cite">Quantum Review Letters 1, 22-26 (2025)</span><br><a href="https://doi.org/10.1016/j.qrl.2025.09.001" target="_blank" rel="noopener">10.1016/j.qrl.2025.09.001</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 24</p><h3>超导光腔中Jarzynski等式的经典极限与量子资源理论<span class="en">Jarzynski equality in the context of superconducting optical cavities: Classical limit and its connection with quantum resource theory</span></h3>
+
+<p class="teaser">用Dyson展开给出非线性Jaynes–Cummings模型平均指数化功的解析式，发现高温低Kerr强度为经典区、低温高Kerr强度为量子区，Kerr非线性因而可作为量子资源在有限温度下利用。</p>
+<p class="body">我们研究了Jarzynski等式量子版本的经典极限。模型采用非线性Jaynes–Cummings哈密顿量，它描述Kerr介质中超导光腔内的场。为评估平均指数化功，我们应用Dyson展开并在相互作用绘景中定义功算符。由此得到的解析表达式为在量子范畴内检验Jarzynski等式提供了有力的工具。我们的计算结果揭示了两个不同区域：高温、低Kerr强度下的经典区域，以及低温、高Kerr强度下的量子区域。由于系统与热浴处于平衡，Kerr非线性项的引入因此是量子区域形成的原因。这反过来可被认定为一种量子资源，用于在非零温度环境中获得量子计算上的优势。</p><details><summary>Abstract (English)</summary><div class="en-abs">We investigate the classical limit of a quantum version of Jarzynski equality. Our model is the nonlinear Jaynes–Cummings Hamiltonian, which represents a field within a superconducting optical cavity in a Kerr medium. To assess the averaged exponentiated work, we apply a Dyson expansion and define the work operator in the interaction picture. The resulting analytical expression provides a powerful tool for examining the Jarzynski equality in the quantum domain. Our computational results reveal two distinct regimes: a classical one for high temperatures and low Kerr intensities, and a quantum one for low temperatures and high Kerr intensities. Because the system is in equilibrium with the thermal bath, the introduction of the Kerr nonlinearity term is therefore responsible for the quantum regime. This in turn can be identified as a quantum resource and used to gain advantages in quantum computing in a non-zero temperature environment.</div></details>
+<p class="src"><span class="au">I.P. Vieira, H.C.F. Lemos, A.C. Oliveira</span><br><span class="cite">Quantum Review Letters 1, 11-21 (2025)</span><br><a href="https://doi.org/10.1016/j.qrl.2025.06.001" target="_blank" rel="noopener">10.1016/j.qrl.2025.06.001</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry">
+<p class="no">No. 25</p><h3>迈向激光冷却分子的玻色–爱因斯坦凝聚<span class="en">Towards Bose–Einstein Condensate with laser-cooled molecules</span></h3>
+
+<p class="teaser">综述极性分子激光冷却与俘获的最新进展，涵盖磁光囚禁、亚多普勒冷却与长寿命囚禁，重点讨论相空间密度的提升，以及迈向激光冷却分子玻色–爱因斯坦凝聚所面临的挑战与可能的路径。</p>
+<p class="body">过去十年间，极性分子的激光冷却与俘获取得了显著进展，使其在量子信息、量子化学和精密测量中的应用成为可能。激光冷却、磁光囚禁、亚多普勒冷却以及极性分子的长寿命囚禁等技术均已成功演示。本综述重点介绍了若干关键成果，包括在相空间密度方面的进展，其长期目标是实现激光冷却分子的玻色–爱因斯坦凝聚。我们讨论了当前面临的挑战以及达成这一里程碑的可能策略。</p><details><summary>Abstract (English)</summary><div class="en-abs">Laser cooling and trapping of polar molecules has seen remarkable progress in the past decade, enabling applications in quantum information, quantum chemistry, and precision measurements. Techniques such as laser cooling, magneto-optical trapping, sub-Doppler cooling, and long-lifetime trapping of polar molecules have been successfully demonstrated. This review highlights key achievements, including advancements in phase space density, with the long-term objective of achieving Bose–Einstein condensation in laser-cooled molecules. We discuss the current challenges and potential strategies for reaching this milestone.</div></details>
+<p class="src"><span class="au">Zixuan Zeng, Bo Yan</span><br><span class="cite">Quantum Review Letters 1, 1-10 (2025)</span><br><a href="https://doi.org/10.1016/j.qrl.2025.03.001" target="_blank" rel="noopener">10.1016/j.qrl.2025.03.001</a></p>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<b>数据来源</b>　Crossref 公开元数据、OpenAlex 摘要字段与 ScienceDirect 期刊目录。中文标题、简介与摘要译文由本机模型生成，仅供快速浏览；<b>学术引用请以英文原文为准</b>。<br>本页是独立栏目，收录范围与「日报」「月报」「专题」互不影响。
+</footer>
+</div>
+<a class="totop" href="#" aria-label="回到顶部">↑</a>
+</body>
+</html>

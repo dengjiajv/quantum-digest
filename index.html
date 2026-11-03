@@ -74,6 +74,66 @@ body{
 }
 .preface p{margin:0;font-size:14px;line-height:1.85;color:var(--ink2)}
 
+/* ---- QRL 喜报卡片 ---- */
+/* 用户 m07802：「用尽可能大的字体（横向铺满目前双栏宽度）写『喜报！QRL发新文章了！』，
+   卡片背景主配色为红色与金色……越有这种花哨的土味最好。」
+   所以这里刻意不跟全站的紫色系走：烫金粗边 + 双层红渐变 + 斜纹底 + 四角金饰 + 灯笼，
+   标题用 clamp 吃到容器宽度上限。整块只在 QRL 页、且有新文章时才出现。 */
+.gongxi{
+  position:relative;margin:0 0 24px;padding:38px 26px 32px;text-align:center;
+  border-radius:var(--radius);overflow:hidden;isolation:isolate;
+  background:
+    radial-gradient(circle at 50% -30%,rgba(255,236,170,.42),transparent 62%),
+    repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 14px,transparent 14px 28px),
+    linear-gradient(160deg,#e0322a 0%,#c0161a 44%,#8d0b0c 100%);
+  border:3px solid #f2c94c;
+  box-shadow:
+    inset 0 0 0 2px #8d0b0c,
+    inset 0 0 46px rgba(120,4,4,.55),
+    0 12px 34px rgba(141,11,12,.34);
+  color:#fff6da;
+}
+/* 四角贴金色小方块，模仿请柬的烫金包角 */
+.gongxi::before,.gongxi::after{
+  content:"";position:absolute;width:58px;height:58px;pointer-events:none;
+  border:3px solid #f2c94c;opacity:.85;
+}
+.gongxi::before{top:10px;left:10px;border-right:0;border-bottom:0;border-radius:12px 0 0 0}
+.gongxi::after{bottom:10px;right:10px;border-left:0;border-top:0;border-radius:0 0 12px 0}
+.gongxi .gk{
+  margin:0 0 8px;font-size:13px;font-weight:700;letter-spacing:8px;
+  color:#ffe9a8;text-indent:8px;
+}
+.gongxi .gt{
+  margin:0;font-size:clamp(30px,5.4vw,64px);line-height:1.16;font-weight:900;
+  letter-spacing:2px;color:#ffe9a8;
+  text-shadow:
+    0 2px 0 #a8741a, 0 4px 0 #7d540f, 0 8px 20px rgba(0,0,0,.42),
+    0 0 26px rgba(255,214,110,.55);
+}
+.gongxi .gd{
+  margin:16px auto 0;max-width:52em;font-size:14.5px;line-height:1.95;color:#fff3cf;opacity:.96;
+}
+.gongxi .gd b{color:#ffe9a8}
+.gongxi .gl{
+  display:inline-flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:18px 0 0;padding:0;list-style:none;
+}
+.gongxi .gl li{
+  font-size:12.5px;font-weight:700;color:#7d0c0c;background:#ffe9a8;
+  border-radius:999px;padding:4px 12px;
+}
+/* 宽屏两侧挂灯笼：纯装饰，窄屏直接隐藏，避免挤掉标题 */
+.gongxi .lantern{
+  position:absolute;top:16px;font-size:34px;line-height:1;opacity:.9;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.35));
+}
+.gongxi .lantern.l{left:18px}
+.gongxi .lantern.r{right:18px}
+@media (max-width:720px){
+  .gongxi .lantern{display:none}
+  .gongxi{padding:26px 16px 22px}
+}
+
 /* ---- 阅读导航 ---- */
 .nav{
   background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
@@ -410,10 +470,11 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Quantum Information Digest · Archive</p>
 <h1>量子信息速递</h1>
-<p class="meta"><div>累计 <b>21</b> 篇</div><div>每日 08:00 自动更新</div><div>本页生成于 2026-11-03 21:52</div></p>
+<p class="meta"><div>累计 <b>21</b> 篇</div><div>每日 08:00 自动更新</div><div>本页生成于 2026-11-03 23:31</div></p>
 </div></header>
 <div class="wrap">
-<nav class="tabs"><a href="index.html" class="active" aria-current="page">首页</a><a href="daily/2026-11-03.html">日报</a><a href="monthly/index.html">月报</a><a href="topic/index.html">专题</a></nav>
+<nav class="tabs"><a href="index.html" class="active" aria-current="page">首页</a><a href="daily/2026-11-03.html">日报</a><a href="monthly/index.html">月报</a><a href="topic/index.html">专题</a><a href="qrl/index.html">QRL（测试版）</a></nav>
+
 
 <div class="preface"><p class="h">序 言</p><p>本刊按 APS、Nature、Science、Optica 四大系列的目标期刊以及 PNAS 检索量子信息与量子技术领域的新发表工作，经学科筛选后按期刊汇总。每一条给出中英文标题、作者、卷页与中文摘要，点击 DOI 可直达原文。中文标题、导读与摘要译文均由模型生成，速度优先、难免有疏漏，欢迎指出。</p></div>
 <nav class="nav"><p class="h">阅读导航</p><ul><li><a href="#latest">最近更新<i>3</i></a></li><li><a href="#y-2026">2026 年<i>2</i></a></li></ul></nav>
