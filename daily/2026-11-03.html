@@ -167,18 +167,25 @@ body{
 .entries{
   column-count:1;
 }
-/* 双栏但**逐行**排（左→右→下一行），给月报和专题用。
-   为什么不用 CSS 多列（column-count:2）：多列是先填满左列再填右列，
-   读者按「1、2、3…」的编号去找第 2 条时会跳到右边顶上去，编号顺序和视觉
-   顺序对不上。grid 默认就是行优先，编号从左到右横着走，符合直觉。
-   代价是两栏高度不齐，但月报每一条都是整齐的卡片，参差比错位好。 */
+/* 双栏，但**两栏各自独立往下排**（瀑布式）。
+   每一栏里第 k 张卡片的顶端贴着本栏上一张卡片的底端，互不牵制。
+   对比两种做法：
+   - CSS 多列（column-count:2）：先灌满左列再灌右列，编号顺序和视觉顺序不一致；
+   - 普通 grid 行：行高由该行较高的那张决定，矮的那栏下方会留一段空白，
+     下一行只能从较高卡片的下沿开始（就是「参差不齐的空洞」的来源）。
+   这里用两个独立的列容器，既保住「左右交替」的编号顺序，又让每栏自己严丝合缝。
+   为什么是左右交替而不是先左后右：编号 No. 01/02 是横着走的，读者扫读时
+   眼睛沿着一行往右移动，交替排列才和编号方向一致。 */
 .entries.grid2{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:0 22px;
   align-items:start;
 }
-.entries.grid2 .entry{margin:0 0 16px}
+.entries.grid2 .col{
+  display:flex;flex-direction:column;min-width:0;
+}
+.entries.grid2 .col .entry{margin:0 0 16px}
 .entries.two{
   column-count:2;
   column-gap:22px;
@@ -368,7 +375,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Quantum Information Digest · 2026-11-03</p>
 <h1>量子信息速递 · 11 月 3 日</h1>
-<p class="meta"><div>周二 · 本期共 <b>1</b> 篇</div><div>论文发表于 2026-11-02</div><div>生成于 2026-11-03 10:54</div></p>
+<p class="meta"><div>周二 · 本期共 <b>1</b> 篇</div><div>论文发表于 2026-11-02</div><div>生成于 2026-11-03 11:04</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-03.html" class="active" aria-current="page">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a></nav>
