@@ -112,8 +112,22 @@ body{
   margin:0 0 18px 15px;font-size:13px;color:var(--muted);line-height:1.7;
 }
 
-/* ---- 条目容器：宽屏双栏 ---- */
+/* ---- 最近更新：三栏 ---- */
+/* auto-fit + minmax：只有 1 期时卡片铺满整行，3 期时并排三栏，
+   不用媒体查询也不会留下空槽——写死 repeat(3,1fr) 在期数不足时会有空位。 */
+.recent3{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;
+}
+.recent3 .cardlink{display:flex;flex-direction:column;gap:6px;height:100%}
+.recent3 .cl-b{align-self:flex-start}
+
+/* ---- 条目容器 ----
+   默认单栏：日报一期通常只有几篇，双栏会把每条挤窄、读摘要时视线来回跳。
+   月报/专题一次几十篇，才用双栏（由 .entries.two 开启）。 */
 .entries{
+  column-count:1;
+}
+.entries.two{
   column-count:2;
   column-gap:22px;
 }
@@ -300,7 +314,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Quantum Information Digest · 2026-11-03</p>
 <h1>量子信息速递 · 11 月 3 日</h1>
-<p class="meta"><div>周二 · 共 <b>1</b> 篇</div><div>论文发表于 2026-11-03</div><div>检索窗口 2026-10-20 ~ 2026-11-03</div><div>生成于 2026-11-03 07:01</div></p>
+<p class="meta"><div>周二 · 本期共 <b>1</b> 篇</div><div>论文发表于 2026-11-02</div><div>生成于 2026-11-03 09:56</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-03.html" class="active" aria-current="page">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a></nav>
@@ -321,7 +335,7 @@ footer b{color:var(--ink2);font-weight:600}
 </div>
 </section>
 <footer>
-<b>数据来源</b>　APS（Physical Review Letters / PRX / PRX Quantum）、Nature 系列、Science 系列官方网站与 Crossref。中文标题、简介与摘要译文由本机模型生成，仅供快速浏览；<b>学术引用请以英文原文为准</b>。<br>展开每条下方的 <b>Abstract (English)</b> 可查看英文原摘要。
+<b>数据来源</b>　APS（Physical Review Letters / PRX / PRX Quantum）、Nature 系列、Science 系列官方网站与 Crossref。中文标题、简介与摘要译文由本机模型生成，仅供快速浏览；<b>学术引用请以英文原文为准</b>。<br>展开每条下方的 <b>Abstract (English)</b> 可查看英文原摘要。往期与整月视图请到「月报」「专题」查看。
 </footer>
 </div>
 <a class="totop" href="#" aria-label="回到顶部">↑</a>
