@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light">
 <meta name="format-detection" content="telephone=no">
-<title>专题 · 量子密码、量子纠缠、集成光子学与光纤传感</title>
+<title>专题</title>
 <style>
 :root{
   --ink:#1d1d1f; --ink2:#3c3c43; --muted:#86868b; --line:#e6e6eb;
@@ -315,6 +315,22 @@ body{
 .mlist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 @media (min-width:760px){ .mlist{grid-template-columns:repeat(2,1fr)} }
 @media (min-width:1180px){ .mlist{grid-template-columns:repeat(3,1fr)} }
+/* 栏数变体：由索引页自己指定，不再全站一套。
+   - .two 月报索引用：三栏时每张卡只剩二百来像素，卡片标题那行（期刊构成）
+     会被挤成两行，反而比两栏更难扫。
+   - .one 专题索引用：大标题是专题名，下面每年一条入口，单栏读起来是
+     一份「一年一行」的清单，多栏会把四个专题块切得零碎。 */
+@media (min-width:760px){ .mlist.two{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1180px){ .mlist.two{grid-template-columns:repeat(2,1fr)} }
+.mlist.one{grid-template-columns:1fr}
+@media (min-width:760px){ .mlist.one{grid-template-columns:1fr} }
+@media (min-width:1180px){ .mlist.one{grid-template-columns:1fr} }
+/* 专题索引卡左侧写年份，四位数比两位月份宽不少，
+   默认的 min-width:42px 会把右边的文字挤歪，这里单独放宽。 */
+.mnum.wide{min-width:76px;font-size:22px;letter-spacing:-.5px}
+/* 专题块内的方向说明：.section > .lede 的左缩进是为分节标题准备的，
+   这里的大标题是年份块的样式，说明文字要贴左对齐。 */
+.yearblock .tsnote{margin:-4px 0 14px;font-size:13px;color:var(--muted);line-height:1.7}
 .mlist li{display:flex;align-items:stretch;gap:8px}
 .mrow{
   flex:1;display:flex;align-items:center;gap:14px;
@@ -393,27 +409,52 @@ footer b{color:var(--ink2);font-weight:600}
 <body>
 <header class="hero"><div class="inner">
 <p class="kicker">Special Topics · Cryptography, Entanglement, Photonics &amp; Fiber Sensing</p>
-<h1>专题 · 量子密码、量子纠缠、集成光子学与光纤传感</h1>
-<p class="meta"><div>共 <b>1</b> 个月 · <b>11</b> 篇</div><div>本页生成于 2026-11-03 20:15</div></p>
+<h1>专题</h1>
+<p class="meta"><div>共 <b>3</b> 个方向 · <b>12</b> 篇</div><div>本页生成于 2026-11-03 20:57</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-03.html">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html" class="active" aria-current="page">专题</a></nav>
 <a class="back" href="../index.html">← 返回索引</a>
-<div class="preface"><p class="h">序 言</p><p>从同期全部论文中筛出量子密码（量子密钥分发、多方量子通信、量子随机数发生器、设备无关协议、量子秘密共享）、量子纠缠（纠缠制备与分发、贝尔不等式检验、纠缠交换与纯化、量子导引与非定域性）、集成光子学（片上波导与谐振腔、硅基与氮化硅平台、铌酸锂与光电调制、光子晶体与超表面）以及光纤传感（相位敏感光时域反射、布里渊与拉曼分布式传感、光纤光栅、光纤陀螺与光纤水听）四个方向的工作，摘述比日常推送更详细。</p></div>
+<div class="preface"><p class="h">序 言</p><p>从全部论文中按当前判据筛出量子密码、量子纠缠、集成光子学与光纤传感四个方向。每个方向单独成页，页内只按期刊分节，期刊内部按发表日期倒序——同一个方向的跨月工作是连成一条流看的，不会在月初再起一行。</p></div>
 
-<section class="yearblock" id="y-2026">
-<div class="yhead"><h2>2026</h2><span class="ysum">1 个月 · 11 篇</span></div>
-<ul class="mlist">
+<section class="yearblock" id="t-crypto">
+<div class="yhead"><h2>量子密码</h2><span class="ysum">1 年 · 1 篇</span></div>
+<p class="tsnote">量子密钥分发、多方量子通信、量子随机数发生器、设备无关协议与量子秘密共享。</p>
+<ul class="mlist one">
 <li>
-<a class="mrow" href="../topic/2026-10.html">
-<span class="mnum">10</span>
-<span class="mtxt"><b>Optica · Phys. Rev. Lett. · Nat. Commun. 等 8 刊</b><i>18 篇</i></span>
+<a class="mrow" href="../topic/crypto.html">
+<span class="mnum wide">2026</span>
+<span class="mtxt"><b>2026 年累计 1 篇</b><i>10 月 30 日 – 10 月 30 日 · 1 刊</i></span>
+</a>
+</li>
+</ul>
+</section>
+<section class="yearblock" id="t-ent">
+<div class="yhead"><h2>量子纠缠</h2><span class="ysum">1 年 · 5 篇</span></div>
+<p class="tsnote">纠缠制备与分发、贝尔不等式检验、纠缠交换与纯化、量子导引与非定域性。</p>
+<ul class="mlist one">
+<li>
+<a class="mrow" href="../topic/ent.html">
+<span class="mnum wide">2026</span>
+<span class="mtxt"><b>2026 年累计 5 篇</b><i>10 月 20 日 – 10 月 28 日 · 3 刊</i></span>
+</a>
+</li>
+</ul>
+</section>
+<section class="yearblock" id="t-phot">
+<div class="yhead"><h2>集成光子学</h2><span class="ysum">1 年 · 6 篇</span></div>
+<p class="tsnote">片上波导与谐振腔、硅基与氮化硅平台、铌酸锂与光电调制、光子晶体与超表面等把光学元件集成到芯片上的工作。</p>
+<ul class="mlist one">
+<li>
+<a class="mrow" href="../topic/phot.html">
+<span class="mnum wide">2026</span>
+<span class="mtxt"><b>2026 年累计 6 篇</b><i>10 月 21 日 – 10 月 30 日 · 3 刊</i></span>
 </a>
 </li>
 </ul>
 </section>
 <footer>
-<b>数据来源</b>　APS 系列（Phys. Rev. Lett.、Phys. Rev. X）、Nature 系列（Nature、Nat. Phys.、Nat. Photon.、Nat. Commun.、Commun. Phys.）、Science 系列（Science、Sci. Adv.）、Optica 系列（Optica、Light Sci. Appl.）与 PNAS 官方网站及 Crossref。中文标题、简介与摘要译文由本机模型生成，仅供快速浏览；<b>学术引用请以英文原文为准</b>。<br>点月份查看当月的完整内容。
+<b>数据来源</b>　APS 系列（Phys. Rev. Lett.、Phys. Rev. X）、Nature 系列（Nature、Nat. Phys.、Nat. Photon.、Nat. Commun.、Commun. Phys.）、Science 系列（Science、Sci. Adv.）、Optica 系列（Optica、Light Sci. Appl.）与 PNAS 官方网站及 Crossref。中文标题、简介与摘要译文由本机模型生成，仅供快速浏览；<b>学术引用请以英文原文为准</b>。<br>点年份进入该方向的完整列表；同一篇论文可能同时出现在多个方向。
 </footer>
 </div>
 <a class="totop" href="#" aria-label="回到顶部">↑</a>

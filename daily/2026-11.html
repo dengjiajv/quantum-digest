@@ -315,6 +315,22 @@ body{
 .mlist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 @media (min-width:760px){ .mlist{grid-template-columns:repeat(2,1fr)} }
 @media (min-width:1180px){ .mlist{grid-template-columns:repeat(3,1fr)} }
+/* 栏数变体：由索引页自己指定，不再全站一套。
+   - .two 月报索引用：三栏时每张卡只剩二百来像素，卡片标题那行（期刊构成）
+     会被挤成两行，反而比两栏更难扫。
+   - .one 专题索引用：大标题是专题名，下面每年一条入口，单栏读起来是
+     一份「一年一行」的清单，多栏会把四个专题块切得零碎。 */
+@media (min-width:760px){ .mlist.two{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1180px){ .mlist.two{grid-template-columns:repeat(2,1fr)} }
+.mlist.one{grid-template-columns:1fr}
+@media (min-width:760px){ .mlist.one{grid-template-columns:1fr} }
+@media (min-width:1180px){ .mlist.one{grid-template-columns:1fr} }
+/* 专题索引卡左侧写年份，四位数比两位月份宽不少，
+   默认的 min-width:42px 会把右边的文字挤歪，这里单独放宽。 */
+.mnum.wide{min-width:76px;font-size:22px;letter-spacing:-.5px}
+/* 专题块内的方向说明：.section > .lede 的左缩进是为分节标题准备的，
+   这里的大标题是年份块的样式，说明文字要贴左对齐。 */
+.yearblock .tsnote{margin:-4px 0 14px;font-size:13px;color:var(--muted);line-height:1.7}
 .mlist li{display:flex;align-items:stretch;gap:8px}
 .mrow{
   flex:1;display:flex;align-items:center;gap:14px;
@@ -394,7 +410,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Monthly Index · 2026-11</p>
 <h1>量子信息速递 · 2026 年 11 月</h1>
-<p class="meta"><div>本月 <b>3</b> 期 · <b>3</b> 篇</div><div>本页生成于 2026-11-03 20:15</div></p>
+<p class="meta"><div>本月 <b>3</b> 期 · <b>3</b> 篇</div><div>本页生成于 2026-11-03 20:57</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-03.html" class="active" aria-current="page">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a></nav>

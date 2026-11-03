@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="format-detection" content="telephone=no">
+<title>专题 · 量子密码</title>
+<style>
+:root{
+  --ink:#1d1d1f; --ink2:#3c3c43; --muted:#86868b; --line:#e6e6eb;
+  --bg:#f6f6f8; --card:#ffffff;
+  --purple:#7f0585; --purple-soft:#f7ecf8;
+  --teal:#176b73; --teal-soft:#eaf4f4;
+  --gold:#a8741a; --gold-soft:#fdf3e0;
+  --radius:14px;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;padding:0 0 72px;background:var(--bg);color:var(--ink);
+  font:16px/1.8 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+       "Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+
+/* ---- 头部 ---- */
+/* 头部通栏直角：圆角会在下方左右两角留出缺口（底色透出来），
+   与下面内容区的直角卡片放在一起显得没对齐，所以这里是矩形。 */
+.hero{
+  background:linear-gradient(135deg,var(--purple) 0%,#5c1a86 58%,var(--teal) 100%);
+  color:#fff;padding:40px 28px 34px;margin-bottom:26px;
+  border-radius:0;
+}
+.hero .inner{max-width:1280px;margin:0 auto}
+.hero .kicker{
+  font-size:12px;letter-spacing:3px;text-transform:uppercase;opacity:.72;
+  margin:0 0 10px;font-weight:600;
+}
+.hero h1{margin:0 0 10px;font-size:27px;line-height:1.35;font-weight:700;letter-spacing:.4px}
+.hero .meta{margin:0;font-size:13.5px;opacity:.86;line-height:1.9}
+.hero .meta b{font-weight:600;opacity:1}
+
+/* ---- 版块切换 ---- */
+/* 当前所在版块用「实心紫底 + 内阴影」强调：实心底色在一排白胶囊里最抓眼，
+   和内阴影一起构成轻微的「按下去」感，和头部渐变同色系。
+   不用边框颜色是因为边框在浅色背景上对比度不足，远看分不出来。 */
+.tabs{
+  display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;
+}
+.tabs a{
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  box-shadow:var(--shadow);padding:8px 20px;text-decoration:none;
+  font-size:14px;font-weight:700;color:var(--ink2);
+  transition:border-color .15s,color .15s,background .15s,box-shadow .15s;
+}
+.tabs a:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-soft)}
+.tabs a.active{
+  background:var(--purple);border-color:var(--purple);color:#fff;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.22),0 2px 8px rgba(127,5,133,.28);
+}
+.tabs a.active:hover{background:#6d0472;color:#fff}
+
+/* ---- 序言 ---- */
+.preface{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;margin:0 0 22px;box-shadow:var(--shadow);
+}
+.preface .h{
+  font-size:12.5px;font-weight:700;letter-spacing:2px;color:var(--purple);
+  margin:0 0 8px;
+}
+.preface p{margin:0;font-size:14px;line-height:1.85;color:var(--ink2)}
+
+/* ---- 阅读导航 ---- */
+.nav{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 20px 12px;margin:0 0 30px;box-shadow:var(--shadow);
+}
+.nav .h{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1.5px;margin:0 0 12px}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.nav a{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 13px;border-radius:999px;background:#f2f2f5;
+  color:var(--ink2);text-decoration:none;font-size:13.5px;
+  transition:background .16s,color .16s;
+}
+.nav a:hover{background:var(--purple-soft);color:var(--purple)}
+.nav a i{
+  font-style:normal;font-size:11.5px;font-weight:700;color:var(--purple);
+  background:#fff;border-radius:999px;padding:0 7px;line-height:18px;min-width:20px;text-align:center;
+}
+
+/* ---- 期刊分节 ---- */
+.section{margin:0 0 40px}
+.section > h2{
+  display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  font-size:19px;font-weight:700;margin:0 0 4px;padding:0 0 0 13px;
+  border-left:4px solid var(--purple);line-height:1.5;
+}
+.section > h2 .abbr{
+  font-size:12px;font-weight:600;color:var(--muted);
+  letter-spacing:.6px;text-transform:uppercase;
+}
+.section > h2 .cnt{
+  font-size:12.5px;font-weight:600;color:var(--purple);
+  background:var(--purple-soft);border-radius:999px;padding:2px 10px;
+}
+.section > .lede{
+  margin:0 0 18px 15px;font-size:13px;color:var(--muted);line-height:1.7;
+}
+
+/* ---- 最近更新：固定三栏 ----
+   三栏位置本身表达新旧顺序：左＝最新，中＝上一轮，右＝再上一轮。
+   所以这里**刻意**写死 repeat(3,1fr) 而不是 auto-fit——期数不够时宁可留空槽，
+   也不让卡片撑满整行；否则「只有一期」和「有三期」的版面看起来一样，
+   位置就不再携带「这是第几新」的信息了。 */
+.recent3{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+}
+@media (max-width:820px){.recent3{grid-template-columns:1fr}}
+.recent3 .cardlink{
+  display:flex;flex-direction:column;gap:10px;height:100%;margin:0;min-height:140px;
+}
+/* 角标：比卡片区其它标签大一档，圆角收敛成方框而不是胶囊
+   （方框在卡片右上角更像印章，胶囊太圆会显得软）。
+   选择器要写成 .recent3 .cardlink .cl-b 三级——通用的 .cardlink .cl-b 定义在下面，
+   权重相同而位置更靠后，两级选择器会被它盖掉。 */
+.recent3 .cardlink .cl-b{
+  position:absolute;right:14px;top:14px;
+  font-size:12.5px;padding:5px 12px;border-radius:7px;letter-spacing:.3px;
+}
+/* 日期：三栏统一成「11 月 3 日」这种中文写法，同一个字号、同一个字重，不再加粗。
+   Times New Roman 是等宽数字、字形偏瘦，和下方「11 月」那一栏的观感更接近；
+   中文回退到系统字体，避免 Times 缺字时行高跳变。 */
+/* 字体与「2026」栏里的月份卡片标题（.mtxt b）保持一致：同一套无衬线字体、
+   同为 700 加粗，免得同一个页面里两种笔触打架。字号仍比正文大一号，用来
+   承担「这是个日期」的视觉重量。 */
+.recent3 .cardlink .cl-d{
+  order:1;display:block;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+    "Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:24px;font-weight:700;color:var(--ink);
+  letter-spacing:0;line-height:1.25;
+  font-variant-numeric:lining-nums tabular-nums;
+}
+.recent3 .cardlink .cl-d small{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+    "Microsoft YaHei",sans-serif;
+  font-size:12.5px;font-weight:400;margin-left:8px;color:var(--muted);
+  letter-spacing:0;
+}
+/* 补录批次用区间，字符多一倍，行高放松一点，字号与单日保持一致 */
+.recent3 .cardlink .cl-d.range{line-height:1.35}
+.recent3 .cardlink .cl-s{order:3;margin-top:auto;font-size:12.5px}
+.recent3 .slot-empty{
+  border:1px dashed var(--line);border-radius:var(--radius);min-height:140px;
+  display:flex;align-items:center;justify-content:center;
+  color:#c6c6cc;font-size:12.5px;background:transparent;
+}
+
+/* ---- 条目容器 ----
+   默认单栏：日报一期通常只有几篇，双栏会把每条挤窄、读摘要时视线来回跳。
+   月报/专题一次几十篇，才用双栏（由 .entries.two 开启）。 */
+.entries{
+  column-count:1;
+}
+/* 双栏，默认**同行等高**；任一卡片展开英文摘要后，该行退回「各按自身高度」。
+   月报和专题用。
+
+   折叠状态下两卡等高最整齐：顶端、底端都齐平，没有横向空白带。较矮的那张
+   多出来的空间留在它**自己内部**的下方，看起来像「这张内容短一点」，
+   而不是像 align-items:start 那样把空白丢到卡片外面、整行像没对齐。
+
+   展开时反过来：展开的那张会突然长高很多（英文摘要动辄一两千字符），
+   若还强行等高，同行另一张会被拉到与展开内容等高，底部多出一大块空白。
+   所以每行是一个独立容器（.row），里面用 :has() 探测,
+   只要本行有任意 <details open>，就把该行的 align-items 切回 start。
+
+   用 :has() 而不是给 <details> 挂 JS：这是纯 CSS 状态，不需要脚本，
+   也不会因为事件绑漏而失效。现代浏览器均支持（Chrome 105+/Safari 15.4+/Firefox 121+）；
+   不支持的旧浏览器只会停留在「始终等高」的降级表现，仍可用。 */
+.entries.grid2{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.row{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:0 22px;
+  align-items:stretch;
+}
+/* 本行有展开项 → 该行改为各按自身高度 */
+.row:has(details[open]){
+  align-items:start;
+}
+.row .entry{
+  margin:0;
+  display:flex;
+  flex-direction:column;
+}
+.entries.two{
+  column-count:2;
+  column-gap:22px;
+}
+.entry{
+  break-inside:avoid;
+  -webkit-column-break-inside:avoid;
+  page-break-inside:avoid;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 22px;margin:0 0 16px;box-shadow:var(--shadow);position:relative;
+}
+.entry .no{
+  font-size:11.5px;font-weight:700;color:var(--muted);
+  letter-spacing:1.2px;margin:0 0 6px;font-variant-numeric:tabular-nums;
+}
+.entry h3{
+  margin:0 0 10px;font-size:17.5px;line-height:1.55;font-weight:700;color:var(--ink);
+}
+.entry h3 .en{
+  display:block;margin-top:6px;font-size:13px;font-weight:400;
+  color:var(--muted);line-height:1.6;font-family:Georgia,"Times New Roman",serif;
+}
+.tags{margin:0 0 12px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{
+  display:inline-block;font-size:11.5px;font-weight:600;line-height:1;
+  padding:5px 9px;border-radius:6px;
+  background:var(--gold-soft);color:var(--gold);border:1px solid #f0e0c0;
+}
+.tag.ky{background:var(--purple-soft);color:var(--purple);border-color:#eddcf0}
+.tag.jc{background:var(--teal-soft);color:var(--teal);border-color:#cfe6e6}
+.tag.ph{background:#eaf1fb;color:#2563a8;border-color:#cfdff4}
+.tag.fb{background:#fdf3e0;color:#8a5a12;border-color:#f0dfba}
+.tag.cover{background:#fdecec;color:#a32626;border-color:#f3cccc}
+
+.entry .teaser{
+  margin:0 0 12px;padding:11px 14px;border-radius:9px;
+  background:linear-gradient(180deg,#fafafc,#f5f5f8);
+  border-left:3px solid var(--teal);
+  font-size:14.5px;line-height:1.85;color:var(--ink2);
+}
+.entry .body{
+  margin:0;font-size:15px;line-height:1.9;color:var(--ink2);
+  text-align:justify;text-justify:inter-ideograph;
+}
+.entry .body + .body{margin-top:10px}
+
+.entry details{
+  margin:14px 0 0;border-top:1px dashed var(--line);padding-top:12px;
+}
+.entry details summary{
+  cursor:pointer;font-size:12.5px;font-weight:600;color:var(--muted);
+  letter-spacing:.6px;list-style:none;outline:none;user-select:none;
+}
+.entry details summary::-webkit-details-marker{display:none}
+.entry details summary::before{content:"▸ ";color:var(--purple)}
+.entry details[open] summary::before{content:"▾ "}
+.entry details summary:hover{color:var(--purple)}
+.entry details .en-abs{
+  margin:10px 0 0;font-size:13.5px;line-height:1.85;color:#4a4a52;
+  font-family:Georgia,"Times New Roman",serif;text-align:justify;
+}
+
+.entry .src{
+  margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);
+  font-size:12.8px;line-height:1.85;color:var(--muted);
+}
+.entry .src .au{color:var(--ink2)}
+.entry .src .cite{
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:12.2px;color:var(--ink2);
+}
+.entry .src a{
+  color:var(--purple);text-decoration:none;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:12.2px;word-break:break-all;
+}
+.entry .src a:hover{text-decoration:underline}
+
+/* ---- 空状态 / 页脚 ---- */
+.empty{
+  background:var(--card);border:1px dashed var(--line);border-radius:var(--radius);
+  padding:40px 20px;text-align:center;color:var(--muted);font-size:14.5px;
+}
+
+/* ---- 首页卡片链接 ---- */
+.cardlink{
+  display:block;position:relative;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:16px 18px;margin:0 0 10px;
+  text-decoration:none;transition:border-color .15s,transform .15s;
+}
+.cardlink:hover{border-color:var(--purple);transform:translateY(-1px)}
+.cardlink .cl-t{display:block;font-size:16px;font-weight:700;color:var(--ink);letter-spacing:.2px}
+.cardlink .cl-s{display:block;margin-top:5px;font-size:13px;color:var(--muted)}
+.cardlink .cl-b{
+  position:absolute;right:16px;top:16px;
+  background:var(--purple-soft);color:var(--purple);
+  font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;
+}
+/* ---- 首页年份块 ---- */
+.years{margin:0}
+.yearblock{margin:0 0 34px}
+.yhead{
+  display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+  border-bottom:2px solid var(--purple);padding:0 0 10px;margin:0 0 16px;
+}
+.yhead h2{
+  margin:0;font-size:44px;font-weight:800;letter-spacing:-1.5px;
+  color:var(--purple);line-height:1;font-variant-numeric:tabular-nums;
+}
+.ysum{font-size:13.5px;color:var(--muted);font-weight:600}
+.mlist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+@media (min-width:760px){ .mlist{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1180px){ .mlist{grid-template-columns:repeat(3,1fr)} }
+/* 栏数变体：由索引页自己指定，不再全站一套。
+   - .two 月报索引用：三栏时每张卡只剩二百来像素，卡片标题那行（期刊构成）
+     会被挤成两行，反而比两栏更难扫。
+   - .one 专题索引用：大标题是专题名，下面每年一条入口，单栏读起来是
+     一份「一年一行」的清单，多栏会把四个专题块切得零碎。 */
+@media (min-width:760px){ .mlist.two{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1180px){ .mlist.two{grid-template-columns:repeat(2,1fr)} }
+.mlist.one{grid-template-columns:1fr}
+@media (min-width:760px){ .mlist.one{grid-template-columns:1fr} }
+@media (min-width:1180px){ .mlist.one{grid-template-columns:1fr} }
+/* 专题索引卡左侧写年份，四位数比两位月份宽不少，
+   默认的 min-width:42px 会把右边的文字挤歪，这里单独放宽。 */
+.mnum.wide{min-width:76px;font-size:22px;letter-spacing:-.5px}
+/* 专题块内的方向说明：.section > .lede 的左缩进是为分节标题准备的，
+   这里的大标题是年份块的样式，说明文字要贴左对齐。 */
+.yearblock .tsnote{margin:-4px 0 14px;font-size:13px;color:var(--muted);line-height:1.7}
+.mlist li{display:flex;align-items:stretch;gap:8px}
+.mrow{
+  flex:1;display:flex;align-items:center;gap:14px;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:13px 16px;text-decoration:none;
+  transition:border-color .15s,transform .15s;
+}
+.mrow:hover{border-color:var(--purple);transform:translateY(-1px)}
+.mnum{
+  font-size:26px;font-weight:800;color:var(--purple);opacity:.32;
+  font-variant-numeric:tabular-nums;line-height:1;min-width:42px;
+}
+.mtxt b{display:block;font-size:15.5px;color:var(--ink);font-weight:700}
+.mtxt i{display:block;margin-top:3px;font-size:12.5px;color:var(--muted);font-style:normal}
+.mextra{display:flex;flex-direction:column;gap:6px;justify-content:center}
+.mini{
+  font-size:11.5px;font-weight:700;color:var(--teal);text-decoration:none;
+  background:var(--teal-soft);border:1px solid #cfe6e6;border-radius:6px;
+  padding:4px 9px;white-space:nowrap;
+}
+.mini:hover{background:var(--teal);color:#fff}
+.biglink{
+  display:block;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:16px 18px;margin:0 0 10px;text-decoration:none;
+  font-size:16px;font-weight:700;color:var(--ink);
+}
+.biglink:hover{border-color:var(--purple)}
+.biglink span{display:block;margin-top:5px;font-size:13px;font-weight:400;color:var(--muted)}
+
+footer{
+  margin-top:52px;padding:22px 0 0;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;line-height:1.9;
+}
+footer b{color:var(--ink2);font-weight:600}
+
+.back{
+  display:inline-block;margin:0 0 16px;padding:7px 15px;
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  color:var(--purple);text-decoration:none;font-size:13px;font-weight:600;
+}
+.back:hover{border-color:var(--purple);background:var(--purple-soft)}
+
+.totop{
+  position:fixed;right:20px;bottom:22px;width:42px;height:42px;border-radius:50%;
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--purple);text-decoration:none;font-size:17px;opacity:.9;
+}
+.totop:hover{opacity:1}
+
+@media (max-width:560px){
+  .hero{padding:30px 18px 26px;border-radius:0}
+  .hero h1{font-size:22px}
+  .entry{padding:16px 16px}
+  .entry h3{font-size:16.5px}
+  .entry .body{font-size:14.5px;line-height:1.85}
+  .wrap{padding:0 14px}
+  .entries{column-count:1}
+  /* 手机上两栏会把每条挤到 300px 以内，摘要没法读，直接退回单栏 */
+  .entries.grid2,.entries.two{grid-template-columns:1fr;column-count:1}
+  .row{grid-template-columns:1fr}
+}
+
+@media print{
+  body{background:#fff}
+  .hero{background:none;color:#000;border-bottom:2px solid #000;padding:0 0 16px}
+  .hero .kicker,.hero .meta{opacity:1;color:#444}
+  .nav,.totop{display:none}
+  .entry,.preface{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+  .entry details{display:block}
+  .entry details > summary{display:none}
+  .entry details .en-abs{display:block}
+}
+</style>
+</head>
+<body>
+<header class="hero"><div class="inner">
+<p class="kicker">Special Topic · crypto</p>
+<h1>专题 · 量子密码</h1>
+<p class="meta"><div>共 <b>1</b> 篇 · 收录区间 2026-10-20 ~ 2026-11-03</div><div>检索窗口 2026-10-20 ~ 2026-11-03</div><div>生成于 2026-11-03 20:57</div></p>
+</div></header>
+<div class="wrap">
+<nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-03.html">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html" class="active" aria-current="page">专题</a></nav>
+<a class="back" href="../index.html">← 返回索引</a>
+<div class="preface"><p class="h">序 言</p><p>本专题汇集量子密码方向的工作：量子密钥分发、多方量子通信、量子随机数发生器、设备无关协议与量子秘密共享。每一条都给出完整中文摘要与可展开的英文原文；跨年跨月统一按期刊分节，期刊内部按发表日期倒序。</p></div>
+<nav class="nav"><p class="h">阅读导航</p><ul><li><a href="#crypto">量子密码<i>1</i></a></li></ul></nav>
+<section class="section" id="crypto"><h2>量子密码<span class="cnt">1 篇</span></h2>
+<p class="lede">量子密钥分发、多方量子通信、量子随机数发生器、设备无关协议与量子秘密共享。</p>
+<h3 style="font-size:15px;font-weight:700;margin:26px 0 12px;color:var(--ink2)">Optica<span class="abbr" style="font-size:11.5px;color:var(--muted);margin-left:8px">1 篇</span></h3>
+<div class="entries grid2">
+<div class="row">
+<div class="entry">
+<p class="no">No. 01</p><h3>基于金刚石色心的量子网络：原理、进展与展望<span class="en">Quantum networks using color defects in diamond: principles, progress, and perspectives</span></h3>
+<p class="tags"><span class="tag ky">量子密码</span><span class="tag ph">集成光子</span></p>
+<p class="teaser">综述金刚石色缺陷的光学与自旋性质及其在量子网络构建单元中的进展，介绍城域尺度量子网络演示，并讨论基础与实验层面的挑战及可能解决方案。</p>
+<p class="body">大规模量子网络将在量子通信、分布式量子计算、传感与计量等领域实现量子信息科学全新的应用。要构建这类网络的节点，金刚石色缺陷是最有希望的候选者之一。其优异的光学性质、快速的自旋量子比特控制以及长的自旋相干时间，使其非常适合量子信息处理与量子存储应用。此外，金刚石纳米光子结构与光子集成电路异质集成的最新进展，使这些系统更加高效，并更适合可扩展的量子处理器架构。在这篇综合性综述中，我们讨论这些系统的光学与自旋性质、量子网络构建单元的最新进展、城域尺度量子网络的演示，以及这些系统在基础与实验层面相关的挑战和潜在解决方案。</p><details><summary>Abstract (English)</summary><div class="en-abs">Large-scale quantum networks will enable entirely new applications of quantum information science in fields such as quantum communication, distributed quantum computing, sensing, and metrology. To build nodes of such networks, diamond color defects are one of the promising candidates. Their excellent optical properties, fast spin-qubit control, and long spin coherence times make them well suited for quantum information processing and quantum memory applications. Additionally, recent advances in the heterogeneous integration of diamond nanophotonic structures with photonic integrated circuits have made these systems more efficient and well suited for scalable quantum processor architectures. In this comprehensive review, we discuss the optical and spin properties of these systems, recent progress in the building blocks of quantum networks, and demonstrations of metropolitan-scale quantum networks, as well as the challenges associated with these systems at both the fundamental and experimental levels, along with potential solutions.</div></details>
+<p class="src"><span class="au">Ayan Majumder, Cem Güney Torun, Tim Schröder, Gregor Pieplow, Prem Kumar, Kasturi Saha</span><br><span class="cite">Optica 13, 2319 (2026)</span><br><a href="https://doi.org/10.1364/optica.607038" target="_blank" rel="noopener">10.1364/optica.607038</a></p>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<b>数据来源</b>　APS 系列（Phys. Rev. Lett.、Phys. Rev. X）、Nature 系列（Nature、Nat. Phys.、Nat. Photon.、Nat. Commun.、Commun. Phys.）、Science 系列（Science、Sci. Adv.）、Optica 系列（Optica、Light Sci. Appl.）与 PNAS 官方网站及 Crossref。中文标题、简介与摘要译文由本机模型生成，仅供快速浏览；<b>学术引用请以英文原文为准</b>。<br>点顶部「专题」可回到专题总目录，切换其它方向。
+</footer>
+</div>
+<a class="totop" href="#" aria-label="回到顶部">↑</a>
+</body>
+</html>
