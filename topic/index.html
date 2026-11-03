@@ -142,7 +142,7 @@ body{
   order:1;display:block;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
     "Hiragino Sans GB","Microsoft YaHei",sans-serif;
-  font-size:24px;font-weight:700;color:var(--purple);
+  font-size:24px;font-weight:700;color:var(--ink);
   letter-spacing:0;line-height:1.25;
   font-variant-numeric:lining-nums tabular-nums;
 }
@@ -167,6 +167,18 @@ body{
 .entries{
   column-count:1;
 }
+/* 双栏但**逐行**排（左→右→下一行），给月报和专题用。
+   为什么不用 CSS 多列（column-count:2）：多列是先填满左列再填右列，
+   读者按「1、2、3…」的编号去找第 2 条时会跳到右边顶上去，编号顺序和视觉
+   顺序对不上。grid 默认就是行优先，编号从左到右横着走，符合直觉。
+   代价是两栏高度不齐，但月报每一条都是整齐的卡片，参差比错位好。 */
+.entries.grid2{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:0 22px;
+  align-items:start;
+}
+.entries.grid2 .entry{margin:0 0 16px}
 .entries.two{
   column-count:2;
   column-gap:22px;
@@ -336,6 +348,8 @@ footer b{color:var(--ink2);font-weight:600}
   .entry .body{font-size:14.5px;line-height:1.85}
   .wrap{padding:0 14px}
   .entries{column-count:1}
+  /* 手机上两栏会把每条挤到 300px 以内，摘要没法读，直接退回单栏 */
+  .entries.grid2,.entries.two{grid-template-columns:1fr;column-count:1}
 }
 
 @media print{
@@ -354,7 +368,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Special Topics · Quantum Cryptography &amp; Entanglement</p>
 <h1>专题 · 量子密码与量子纠缠</h1>
-<p class="meta"><div>共 <b>1</b> 个月 · <b>3</b> 篇</div><div>本页生成于 2026-11-03 10:48</div></p>
+<p class="meta"><div>共 <b>1</b> 个月 · <b>3</b> 篇</div><div>本页生成于 2026-11-03 10:54</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-03.html">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html" class="active" aria-current="page">专题</a></nav>
@@ -367,7 +381,7 @@ footer b{color:var(--ink2);font-weight:600}
 <li>
 <a class="mrow" href="../topic/2026-11.html">
 <span class="mnum">11</span>
-<span class="mtxt"><b>11 月</b><i>3 篇</i></span>
+<span class="mtxt"><b>PRX Quantum · Phys. Rev. Lett. · Nat. Commun. 等 5 刊</b><i>19 篇</i></span>
 </a>
 </li>
 </ul>
