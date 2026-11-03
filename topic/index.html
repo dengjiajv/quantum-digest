@@ -112,14 +112,35 @@ body{
   margin:0 0 18px 15px;font-size:13px;color:var(--muted);line-height:1.7;
 }
 
-/* ---- 最近更新：三栏 ---- */
-/* auto-fit + minmax：只有 1 期时卡片铺满整行，3 期时并排三栏，
-   不用媒体查询也不会留下空槽——写死 repeat(3,1fr) 在期数不足时会有空位。 */
+/* ---- 最近更新：固定三栏 ----
+   三栏位置本身表达新旧顺序：左＝最新，中＝上一轮，右＝再上一轮。
+   所以这里**刻意**写死 repeat(3,1fr) 而不是 auto-fit——期数不够时宁可留空槽，
+   也不让卡片撑满整行；否则「只有一期」和「有三期」的版面看起来一样，
+   位置就不再携带「这是第几新」的信息了。 */
 .recent3{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
 }
-.recent3 .cardlink{display:flex;flex-direction:column;gap:6px;height:100%}
-.recent3 .cl-b{align-self:flex-start}
+@media (max-width:820px){.recent3{grid-template-columns:1fr}}
+.recent3 .cardlink{
+  display:flex;flex-direction:column;gap:8px;height:100%;margin:0;min-height:128px;
+}
+.recent3 .cl-b{align-self:flex-start;position:static;order:2}
+/* 大号日期：截短成 月/日，一眼能比出先后，不必读完整日期 */
+.recent3 .cl-d{
+  order:1;display:block;font-size:31px;font-weight:800;color:var(--purple);
+  letter-spacing:-.6px;line-height:1.1;font-variant-numeric:tabular-nums;
+}
+.recent3 .cl-d small{
+  font-size:14px;font-weight:700;margin-left:6px;letter-spacing:0;color:var(--muted);
+}
+/* 补录批次没有「某一天」，用区间表示，字号跟着降一档才不会挤成两行 */
+.recent3 .cl-d.range{font-size:19px;letter-spacing:0;line-height:1.4}
+.recent3 .cl-s{order:3;margin-top:auto;font-size:12.5px}
+.recent3 .slot-empty{
+  border:1px dashed var(--line);border-radius:var(--radius);min-height:128px;
+  display:flex;align-items:center;justify-content:center;
+  color:#c6c6cc;font-size:12.5px;background:transparent;
+}
 
 /* ---- 条目容器 ----
    默认单栏：日报一期通常只有几篇，双栏会把每条挤窄、读摘要时视线来回跳。
@@ -314,7 +335,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Special Topics · Quantum Cryptography &amp; Entanglement</p>
 <h1>专题 · 量子密码与量子纠缠</h1>
-<p class="meta"><div>共 <b>1</b> 个月 · <b>3</b> 篇</div><div>本页生成于 2026-11-03 10:02</div></p>
+<p class="meta"><div>共 <b>1</b> 个月 · <b>3</b> 篇</div><div>本页生成于 2026-11-03 10:31</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-03.html">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html" class="active" aria-current="page">专题</a></nav>
