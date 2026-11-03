@@ -135,10 +135,14 @@ body{
 /* 日期：三栏统一成「11 月 3 日」这种中文写法，同一个字号、同一个字重，不再加粗。
    Times New Roman 是等宽数字、字形偏瘦，和下方「11 月」那一栏的观感更接近；
    中文回退到系统字体，避免 Times 缺字时行高跳变。 */
+/* 字体与「2026」栏里的月份卡片标题（.mtxt b）保持一致：同一套无衬线字体、
+   同为 700 加粗，免得同一个页面里两种笔触打架。字号仍比正文大一号，用来
+   承担「这是个日期」的视觉重量。 */
 .recent3 .cardlink .cl-d{
   order:1;display:block;
-  font-family:"Times New Roman",Georgia,serif;
-  font-size:24px;font-weight:400;color:var(--purple);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+    "Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:24px;font-weight:700;color:var(--purple);
   letter-spacing:0;line-height:1.25;
   font-variant-numeric:lining-nums tabular-nums;
 }
@@ -350,7 +354,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Monthly Archive · 2026-11</p>
 <h1>量子信息速递 · 2026 年 11 月</h1>
-<p class="meta"><div>共 <b>19</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-11-02</div><div>生成于 2026-11-03 10:45</div></p>
+<p class="meta"><div>共 <b>19</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-11-02</div><div>生成于 2026-11-03 10:48</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-03.html">日报</a><a href="../monthly/index.html" class="active" aria-current="page">月报</a><a href="../topic/index.html">专题</a></nav>
