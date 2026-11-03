@@ -122,22 +122,37 @@ body{
 }
 @media (max-width:820px){.recent3{grid-template-columns:1fr}}
 .recent3 .cardlink{
-  display:flex;flex-direction:column;gap:8px;height:100%;margin:0;min-height:128px;
+  display:flex;flex-direction:column;gap:10px;height:100%;margin:0;min-height:140px;
 }
-.recent3 .cl-b{align-self:flex-start;position:static;order:2}
-/* 大号日期：截短成 月/日，一眼能比出先后，不必读完整日期 */
-.recent3 .cl-d{
-  order:1;display:block;font-size:31px;font-weight:800;color:var(--purple);
-  letter-spacing:-.6px;line-height:1.1;font-variant-numeric:tabular-nums;
+/* 角标：比卡片区其它标签大一档，圆角收敛成方框而不是胶囊
+   （方框在卡片右上角更像印章，胶囊太圆会显得软）。
+   选择器要写成 .recent3 .cardlink .cl-b 三级——通用的 .cardlink .cl-b 定义在下面，
+   权重相同而位置更靠后，两级选择器会被它盖掉。 */
+.recent3 .cardlink .cl-b{
+  position:absolute;right:14px;top:14px;
+  font-size:12.5px;padding:5px 12px;border-radius:7px;letter-spacing:.3px;
 }
-.recent3 .cl-d small{
-  font-size:14px;font-weight:700;margin-left:6px;letter-spacing:0;color:var(--muted);
+/* 日期：三栏统一成「11 月 3 日」这种中文写法，同一个字号、同一个字重，不再加粗。
+   Times New Roman 是等宽数字、字形偏瘦，和下方「11 月」那一栏的观感更接近；
+   中文回退到系统字体，避免 Times 缺字时行高跳变。 */
+.recent3 .cardlink .cl-d{
+  order:1;display:block;
+  font-family:"Times New Roman",Georgia,serif;
+  font-size:24px;font-weight:400;color:var(--purple);
+  letter-spacing:0;line-height:1.25;
+  font-variant-numeric:lining-nums tabular-nums;
 }
-/* 补录批次没有「某一天」，用区间表示，字号跟着降一档才不会挤成两行 */
-.recent3 .cl-d.range{font-size:19px;letter-spacing:0;line-height:1.4}
-.recent3 .cl-s{order:3;margin-top:auto;font-size:12.5px}
+.recent3 .cardlink .cl-d small{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+    "Microsoft YaHei",sans-serif;
+  font-size:12.5px;font-weight:400;margin-left:8px;color:var(--muted);
+  letter-spacing:0;
+}
+/* 补录批次用区间，字符多一倍，行高放松一点，字号与单日保持一致 */
+.recent3 .cardlink .cl-d.range{line-height:1.35}
+.recent3 .cardlink .cl-s{order:3;margin-top:auto;font-size:12.5px}
 .recent3 .slot-empty{
-  border:1px dashed var(--line);border-radius:var(--radius);min-height:128px;
+  border:1px dashed var(--line);border-radius:var(--radius);min-height:140px;
   display:flex;align-items:center;justify-content:center;
   color:#c6c6cc;font-size:12.5px;background:transparent;
 }
@@ -335,7 +350,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Quantum Information Digest · Archive</p>
 <h1>量子信息速递</h1>
-<p class="meta"><div>累计 <b>19</b> 篇</div><div>每日 08:00 自动更新</div><div>本页生成于 2026-11-03 10:31</div></p>
+<p class="meta"><div>累计 <b>19</b> 篇</div><div>每日 08:00 自动更新</div><div>本页生成于 2026-11-03 10:39</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="index.html" class="active" aria-current="page">首页</a><a href="daily/2026-11-03.html">日报</a><a href="monthly/index.html">月报</a><a href="topic/index.html">专题</a></nav>
@@ -348,7 +363,7 @@ footer b{color:var(--ink2);font-weight:600}
 <div class="recent3">
 <a class="cardlink" href="daily/2026-11-03.html">
 <span class="cl-b">最新</span>
-<span class="cl-d">11/03<small>周二</small></span>
+<span class="cl-d">11 月 3 日<small>周二</small></span>
 <span class="cl-s">2026-11-03 · 更新 1 篇</span>
 </a>
 <a class="cardlink" href="monthly/2026-11.html">
