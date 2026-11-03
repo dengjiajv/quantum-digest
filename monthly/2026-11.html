@@ -167,25 +167,37 @@ body{
 .entries{
   column-count:1;
 }
-/* 双栏**等高拉伸**（行优先 + 同行两卡等高），月报和专题用。
-   同一行的两张卡片顶端齐平，且都被拉到与该行较高的那张等高；
-   较矮的卡片多出来的空间留在它自己内部的下方。
+/* 双栏，默认**同行等高**；任一卡片展开英文摘要后，该行退回「各按自身高度」。
+   月报和专题用。
 
-   为什么不用另外两种：
-   - CSS 多列（column-count:2）：先灌满左列再灌右列，编号与视觉顺序不一致；
-   - align-items:start 的行网格：矮卡保持自身高度，空白落在卡片**外面**，
-     下一行要等较高的卡片结束才开始，看起来像「内容没对齐」的破版。
+   折叠状态下两卡等高最整齐：顶端、底端都齐平，没有横向空白带。较矮的那张
+   多出来的空间留在它**自己内部**的下方，看起来像「这张内容短一点」，
+   而不是像 align-items:start 那样把空白丢到卡片外面、整行像没对齐。
 
-   关键在 align-items:stretch（网格默认值，这里显式写出来表明是有意为之）
-   配合 .entry 的 flex 纵向布局：卡片被撑高后，正文自然停在顶部，
-   剩余空间沉到底部，而不是把段落拉伸变形。 */
+   展开时反过来：展开的那张会突然长高很多（英文摘要动辄一两千字符），
+   若还强行等高，同行另一张会被拉到与展开内容等高，底部多出一大块空白。
+   所以每行是一个独立容器（.row），里面用 :has() 探测,
+   只要本行有任意 <details open>，就把该行的 align-items 切回 start。
+
+   用 :has() 而不是给 <details> 挂 JS：这是纯 CSS 状态，不需要脚本，
+   也不会因为事件绑漏而失效。现代浏览器均支持（Chrome 105+/Safari 15.4+/Firefox 121+）；
+   不支持的旧浏览器只会停留在「始终等高」的降级表现，仍可用。 */
 .entries.grid2{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.row{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:16px 22px;
+  gap:0 22px;
   align-items:stretch;
 }
-.entries.grid2 .entry{
+/* 本行有展开项 → 该行改为各按自身高度 */
+.row:has(details[open]){
+  align-items:start;
+}
+.row .entry{
   margin:0;
   display:flex;
   flex-direction:column;
@@ -361,6 +373,7 @@ footer b{color:var(--ink2);font-weight:600}
   .entries{column-count:1}
   /* 手机上两栏会把每条挤到 300px 以内，摘要没法读，直接退回单栏 */
   .entries.grid2,.entries.two{grid-template-columns:1fr;column-count:1}
+  .row{grid-template-columns:1fr}
 }
 
 @media print{
@@ -379,7 +392,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Monthly Archive · 2026-11</p>
 <h1>量子信息速递 · 2026 年 11 月</h1>
-<p class="meta"><div>共 <b>19</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-11-02</div><div>生成于 2026-11-03 11:16</div></p>
+<p class="meta"><div>共 <b>19</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-11-02</div><div>生成于 2026-11-03 11:23</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-03.html">日报</a><a href="../monthly/index.html" class="active" aria-current="page">月报</a><a href="../topic/index.html">专题</a></nav>
@@ -390,6 +403,7 @@ footer b{color:var(--ink2);font-weight:600}
 <h2>Physical Review Letters<span class="abbr">Phys. Rev. Lett.</span><span class="cnt">5 篇</span></h2>
 <p class="lede">Physical Review Letters 量子信息科学与技术分区</p>
 <div class="entries grid2">
+<div class="row">
 <div class="entry">
 <p class="no">No. 01</p><h3>利用逻辑量子比特探测稀有事件的量子传感<span class="en">Rare-Event Quantum Sensing Using Logical Qubits</span></h3>
 <p class="tags"><span class="tag">★ 编辑推荐</span></p>
@@ -404,6 +418,8 @@ footer b{color:var(--ink2);font-weight:600}
 <p class="body">毫米波正逐渐成为连接和增强里德堡原子、光力学和超导量子比特等不同量子平台的使能技术。在本快报中，我们探索毫米波光子与常规 transmon 量子比特之间的相互作用，特别是用于量子比特读出。我们研究了一个电路量子电动力学系统，它由频率为 ω_r = 2π × 34.7 GHz 的毫米波腔和频率为 ω_q = 2π × 3.1 GHz 的 transmon 量子比特组成，二者以 g = 2π × 1.3 GHz 的速率耦合。由于腔与量子比特之间失谐如此之大，ω_r/ω_q &gt; 10，我们能够抑制驱动引起的不需要的共振态跃迁，从而实现用于量子比特读出的强驱动。即使以超过 100 个光子驱动，我们也测得没有共振态跃迁，并用超过 100 个光子读出量子比特状态，在无需量子极限放大器辅助的情况下实现大于 99% 的测量保真度。</p><details><summary>Abstract (English)</summary><div class="en-abs">Millimeter waves are emerging as an enabling technology for connecting and enhancing different quantum platforms such as Rydberg atoms, optomechanics, and superconducting qubits. In this Letter, we explore the interaction between millimeter wave photons and conventional transmon qubits, specifically for qubit readout. We study a circuit quantum electrodynamic system consisting of a millimeter wave cavity at ω r = 2 π × 34.7 GHz and a transmon qubit at ω q = 2 π × 3.1 GHz coupled at rate g = 2 π × 1.3 GHz . With such a large detuning between cavity and qubit, ω r / ω q &gt; 10 , we are able to suppress drive induced unwanted resonant state transitions, enabling strong drives for qubit readout. We measure no resonant state transitions even when driving with more than 100 photons and read out the qubit state with more than 100 photons to achieve a measurement fidelity greater than 99% without the aid of a quantum limited amplifier.</div></details>
 <p class="src"><span class="au">Akash V. Dixit, Zachary L. Parrott, Dennis Chunikhin, Trevyn F. Q. Larson, Bradley D. Hauer, and John D. Teufel</span><br><span class="cite">Phys. Rev. Lett. 137, 180803 (2026)</span><br><a href="https://doi.org/10.1103/c84y-ggqs" target="_blank" rel="noopener">10.1103/c84y-ggqs</a></p>
 </div>
+</div>
+<div class="row">
 <div class="entry">
 <p class="no">No. 03</p><h3>超越量子比特极限的超导三能级量子链路<span class="en">Superconducting Qutrit Link beyond the Qubit Limit</span></h3>
 <p class="tags"><span class="tag">★ 编辑推荐</span><span class="tag jc">量子纠缠</span></p>
@@ -418,6 +434,8 @@ footer b{color:var(--ink2);font-weight:600}
 <p class="body">集体运动模式的光谱拥挤会对旁观模式产生非共振耦合，从而限制囚禁离子量子处理器中纠缠相互作用的保真度。我们引入一种由横向、含时结构光力驱动的几何相位纠缠相互作用。通过在与光传播方向正交的平面内施加该力，我们在保留单离子寻址能力的同时降低了光谱拥挤的影响。只要量子比特态经历差分 AC Stark 频移，该方案就与任意量子比特编码兼容。我们在单个势阱中最多包含 12 个离子的离子晶体上实验实现了错误率低于 5 × 10^-3 的高保真双量子比特门。这些结果确立了梯度场光频移门作为在光谱拥挤的囚禁离子系统中产生高保真纠缠的可扩展途径。</p><details><summary>Abstract (English)</summary><div class="en-abs">Spectral crowding of collective motional modes limits the fidelity of entangling interactions in trapped-ion quantum processors by inducing off-resonant coupling to spectator modes. We introduce a geometric-phase entangling interaction driven by a transverse, time-dependent structured-light force. By applying the force in a plane orthogonal to the optical propagation direction, we reduce the effects of spectral crowding while preserving single-ion addressing. The scheme is compatible with arbitrary qubit encodings, provided that the qubit states experience a differential AC Stark shift. We experimentally realize high-fidelity two-qubit gates with error rates below 5 × 10 − 3 in ion crystals containing up to 12 ions confined within a single potential well. These results establish gradient-field light-shift gates as a scalable approach to high-fidelity entanglement generation in spectrally crowded trapped-ion systems.</div></details>
 <p class="src"><span class="au">Tommaso Faorlin, Lorenz Panzl, Phoebe Grosser, Pablo Viñas, Alan Kahan, Walter Joseph Hörmann, Yannick Weiser, Giovanni Cerchiari, Thomas Feldker, Alexander Erhard, Georg Jacob, Juris Ulmanis, Rainer Blatt, Alejandro Bermudez, and Thomas Monz</span><br><span class="cite">Phys. Rev. Lett. 137, 170601 (2026)</span><br><a href="https://doi.org/10.1103/4smy-6w2n" target="_blank" rel="noopener">10.1103/4smy-6w2n</a></p>
 </div>
+</div>
+<div class="row">
 <div class="entry">
 <p class="no">No. 05</p><h3>玻色极化子作为相对论 Unruh-DeWitt 探测器<span class="en">Bose Polarons as Relativistic Unruh-DeWitt Detectors: Entanglement Harvesting from Bose-Einstein Condensates</span></h3>
 <p class="tags"><span class="tag">★ 编辑推荐</span><span class="tag jc">量子纠缠</span></p>
@@ -426,11 +444,13 @@ footer b{color:var(--ink2);font-weight:600}
 <p class="src"><span class="au">T. Rick Perche, Francesco Gozzini, and Markus K. Oberthaler</span><br><span class="cite">Phys. Rev. Lett. 137, 170401 (2026)</span><br><a href="https://doi.org/10.1103/54t2-pmf8" target="_blank" rel="noopener">10.1103/54t2-pmf8</a></p>
 </div>
 </div>
+</div>
 </section>
 <section class="section" id="j-prx">
 <h2>Physical Review X<span class="abbr">Phys. Rev. X</span><span class="cnt">1 篇</span></h2>
 <p class="lede">Physical Review X 全刊（以量子信息与量子多体为主）</p>
 <div class="entries grid2">
+<div class="row">
 <div class="entry">
 <p class="no">No. 06</p><h3>量子信号学习：传感经典场性质的量子优势<span class="en">Quantum Advantage for Sensing Properties of Classical Fields</span></h3>
 <p class="tags"><span class="tag jc">量子纠缠</span></p>
@@ -439,11 +459,13 @@ footer b{color:var(--ink2);font-weight:600}
 <p class="src"><span class="au">Jordan Cotler, Daine L. Danielson, and Ishaan Kannan</span><br><span class="cite">Phys. Rev. X 16, 041025 (2026)</span><br><a href="https://doi.org/10.1103/6ps1-mw9l" target="_blank" rel="noopener">10.1103/6ps1-mw9l</a></p>
 </div>
 </div>
+</div>
 </section>
 <section class="section" id="j-prxquantum">
 <h2>PRX Quantum<span class="abbr">PRX Quantum</span><span class="cnt">10 篇</span></h2>
 <p class="lede">PRX Quantum 全刊（专注量子信息科学与技术）</p>
 <div class="entries grid2">
+<div class="row">
 <div class="entry">
 <p class="no">No. 07</p><h3>泡利传播实现强关联量子系统的快速经典模拟<span class="en">Pauli Propagation Enables Fast Classical Simulation of Strongly Correlated Quantum Systems</span></h3>
 
@@ -458,6 +480,8 @@ footer b{color:var(--ink2);font-weight:600}
 <p class="body">对光晶格中超冷原子运动自由度的相干控制，为利用有质量粒子实现可编程量子动力学提供了一条有前景的途径。我们提出并分析了一种实现超冷原子相干重排的方案，它对应于单粒子运动态上的任意幺正变换。利用光超晶格中的动力学与离散线性光学之间的类比，我们采用 Clements 方案，从双阱阵列中的隧穿和相位移动系统地构造任意全局 N 维单粒子幺正变换。隧穿被全局控制，而局域操作则通过位点分辨的势移动实现。我们数值研究了该方案对强度噪声和寻址串扰的敏感性。我们确定了由这种幺正构造所支持的关键子程序，包括离散傅里叶变换和非原生哈密顿量的实现。将该方案推广到二维，可实现全对全的原子重排，其电路深度随原子数亚线性增长，为原子重排提供了一种高密度、高度可扩展的方法。另见 1 幅图。</p><details><summary>Abstract (English)</summary><div class="en-abs">Coherent control of motional degrees of freedom of ultracold atoms in optical lattices offers a promising route toward programmable quantum dynamics with massive particles. We propose and analyze a scheme for implementing coherent rearrangement of ultracold atoms, corresponding to arbitrary unitary transformations on single-particle motional states. Exploiting an analogy between dynamics in optical superlattices and discrete linear optics, we employ the Clements scheme to systematically construct any global N -dimensional single-particle unitary from tunneling and phase shifts in arrays of double wells. Tunneling is controlled globally, while local operations are achieved through site-resolved potential shifts. We numerically investigate the susceptibility of the scheme to intensity noise and addressing crosstalk. We identify key subroutines enabled by this unitary construction, including the discrete Fourier transform and the implementation of non-native Hamiltonians. Extending the scheme to two dimensions enables all-to-all atomic rearrangement with a circuit depth that scales sublinearly with the atom number, providing a high-density and highly scalable approach to atom rearrangement. See 1 more figures</div></details>
 <p class="src"><span class="au">Alexander Roth, Liyang Qiu, Timon Hilker, Titus Franz, and Philipp M. Preiss</span><br><span class="cite">PRX Quantum 7, 043021 (2026)</span><br><a href="https://doi.org/10.1103/jsr3-2r5t" target="_blank" rel="noopener">10.1103/jsr3-2r5t</a></p>
 </div>
+</div>
+<div class="row">
 <div class="entry">
 <p class="no">No. 09</p><h3>超导GKP量子比特的逻辑门与读出建模<span class="en">Modeling Logical Gates and Readout of Superconducting Gottesman-Kitaev-Preskill Qubits</span></h3>
 
@@ -472,6 +496,8 @@ footer b{color:var(--ink2);font-weight:600}
 <p class="body">持续补充的光镊阵列将为中性原子量子比特解锁无限深度的量子电路。限制这类系统循环时间的一个关键瓶颈，是从最初装载了多个原子的光镊中移除原子。在光辅助碰撞的传统技术中，缓慢的碰撞动力学将移除多余原子的时间尺度限制在几毫秒。在这里，我们提出并演示了一种方案，利用光镊内里德堡阻塞和自电离，在微秒时间尺度上从多占据光镊中选择性地一次移除一个原子。我们在 171Yb 的两种互补机制中演示了该协议。从基态进行双光子里德堡激发时，我们在 64.8 μs 内将多原子概率降至 1%，同时在 58.2(2)% 的光镊中保留单原子；这与相同实验条件下光辅助碰撞所达到的填充分数相当，但速度快了两个数量级以上。从亚稳态 3P0 进行单光子激发时，降低的单原子损失使填充分数提高到 74.8(3)%，代价是制备 3P0 态原子所需的额外时间开销。最终填充分数受到一种尚未解释的两体损失机制的限制；如果该问题得到解决，就有可能实现快速、准确定性的装载。</p><details><summary>Abstract (English)</summary><div class="en-abs">Continuously replenished optical tweezer arrays will unlock unlimited-depth quantum circuits with neutral atom qubits. A key bottleneck limiting the cycle time of these systems is removing atoms from tweezers initially loaded with more than one atom. In the conventional technique of light-assisted collisions, slow collisional dynamics limit the timescale for removing excess atoms to several milliseconds. Here, we propose and demonstrate a scheme for selectively removing one atom at a time from multiply occupied tweezers on a microsecond timescale, using intra-tweezer Rydberg blockade and autoionization. We demonstrate the protocol in Yb 171 in two complementary regimes. With two-photon Rydberg excitation from the ground state, we reduce the multi-atom probability to 1% in 64.8 μ s , while retaining single atoms in 58.2 ( 2 ) % of the tweezers, which is comparable to the filling fraction achieved with light-assisted collisions under the same experimental conditions, but over two orders of magnitude faster. With single-photon excitation from the metastable state P 0 3 , reduced single-atom loss enables a higher filling fraction of 74.8 ( 3 ) % , at the cost of additional temporal overhead to prepare the atoms in P 0 3 . The final filling fraction is limited by an unexplained two-body loss mechanism, which, if solved, could enable fast, quasi-deterministic loading.</div></details>
 <p class="src"><span class="au">Yiyi Li, Vernon M. Hughes, Michael Peper, Yicheng Bao, Chenyuan Li, Sanzhar Bissenali, and Jeff D. Thompson</span><br><span class="cite">PRX Quantum 7, 043019 (2026)</span><br><a href="https://doi.org/10.1103/8t3p-x6s7" target="_blank" rel="noopener">10.1103/8t3p-x6s7</a></p>
 </div>
+</div>
+<div class="row">
 <div class="entry">
 <p class="no">No. 11</p><h3>里德堡原子阵列中伊辛临界奇异对称性的介子谱学<span class="en">Meson Spectroscopy of Exotic Symmetries of Ising Criticality in Rydberg Atom Arrays</span></h3>
 
@@ -486,6 +512,8 @@ footer b{color:var(--ink2);font-weight:600}
 <p class="body">我们引入一个称为自由互信息（FMI）的量，它借用自由概率论中的概念，作为量子混沌的一种新的物理度量。该量刻画时间演化后的算符在希尔伯特空间全部可能算符所构成的空间（其维数随自由度数目呈双指数增长）中的扩散，因而给出了比物理空间中已被充分理解的算符增长现象更精细的算符扩散图像。我们推导出适用于任意物理体系的两个核心结果：第一，给出两个可观测量 A(t) 与 B 的自由互信息的显式「库仑气体」公式，用乘积算符 A(t)B 的本征值表示；第二，给出一个一般关系，把自由互信息表示为所有高阶乱序时序关联函数（OTOC）的加权和。第二个结果为高阶 OTOC 提供了精确的信息论解释：它们集体地量化了算符遍历性以及向自由性的趋近。鉴于近期在高阶 OTOC 实验测量方面的进展，这一物理解释尤为有用。我们在多种混沌体系中（包括随机幺正线路与混沌自旋链）识别出自由互信息与高阶 OTOC 的普适行为，表明双指数算符空间中的扩散是量子多体混沌的一般特征。同时，自由互信息在各种非混沌体系（包括某些幺正设计）中的非普适行为表明，存在算符在物理空间中扩散但在算符空间中仍保持局域的情形。因此，自由互信息是比标准四点 OTOC 更敏锐的混沌判据。</p><details><summary>Abstract (English)</summary><div class="en-abs">We introduce a quantity called the free mutual information (FMI), adapted from concepts in free probability theory, as a new physical measure of quantum chaos. This quantity captures the spreading of a time-evolved operator in the space of all possible operators on the Hilbert space, which is doubly exponential in the number of degrees of freedom. It thus provides a finer notion of operator spreading than the well-understood phenomenon of operator growth in physical space. We derive two central results which apply in any physical system: first, an explicit “Coulomb gas” formula for the FMI of two observables A ( t ) and B in terms of the eigenvalues of the product operator A ( t ) B ; and second, a general relation expressing the FMI as a weighted sum of all higher-point out-of-time-ordered correlators (OTOCs). This second result provides a precise information-theoretic interpretation for the higher-point OTOCs as collectively quantifying operator ergodicity and the approach to freeness. This physical interpretation is particularly useful in light of recent progress in experimentally measuring higher-point OTOCs. We identify universal behaviors of the FMI and higher-point OTOCs across a variety of chaotic systems, including random unitary circuits and chaotic spin chains, which indicate that spreading in the doubly exponential operator space is a generic feature of quantum many-body chaos. At the same time, the non-generic behavior of the FMI in various non-chaotic systems, including certain unitary designs, shows that there are cases where an operator spreads in physical space but remains localized in operator space. The FMI is thus a sharper diagnostic of chaos than the standard four-point OTOC. See 17 more figures</div></details>
 <p class="src"><span class="au">Shreya Vardhan and Jinzhao Wang</span><br><span class="cite">PRX Quantum 7, 043017 (2026)</span><br><a href="https://doi.org/10.1103/wt7l-6385" target="_blank" rel="noopener">10.1103/wt7l-6385</a></p>
 </div>
+</div>
+<div class="row">
 <div class="entry">
 <p class="no">No. 13</p><h3>拓扑稳定子码能隙边界的算法构造：低开销平面量子LDPC码<span class="en">Algorithmic Construction of Gapped Boundaries for Topological Stabilizer Codes: A Route to Low-Overhead Planar qLDPC Codes</span></h3>
 
@@ -500,6 +528,8 @@ footer b{color:var(--ink2);font-weight:600}
 <p class="body">量子处理器可扩展的表征对于抑制噪声与不完美至关重要。随机测量协议能够高效获取局域可观测量，但推断多比特过程的全局一致描述仍然困难。这里我们提出一个面向一维多比特态与信道的从局域到全局的重构框架。只要以条件互信息量化的关联呈指数衰减，该方法就是高效的。特别地，我们证明在该假设下，所需样本数随系统尺寸以及所期望的全局重构误差（我们用真实与重构 Choi 态之间的迹范数距离来量化）的倒数呈多项式标度。我们的方法基于把局域影子层析与通过凸优化得到的局域最优恢复映射相结合。除这些严格保证外，我们还数值研究了该协议在局域 Lindblad 演化体系与含噪浅层线路上的性能。借助张量网络表示，我们重构了作用于多达 50 个比特的信道，并准确恢复过程保真度、Choi 态纯度以及按泡利权重分辨的过程矩阵元等全局诊断量。因此，我们的工作把局域影子层析这一强大工具箱扩展到可扩展的信道表征，并能获取全局性质。</p><details><summary>Abstract (English)</summary><div class="en-abs">Scalable characterization of quantum processors is crucial for mitigating noise and imperfections. While randomized measurement protocols enable efficient access to local observables, inferring a globally consistent description of multi-qubit processes remains challenging. Here we introduce a local-to-global reconstruction framework for one-dimensional multi-qubit states and channels. The method is efficient provided that correlations, as quantified by the conditional mutual information, decay exponentially. In particular, we prove that under this assumption, the required number of samples scales polynomially with the system size and the inverse of the desired global reconstruction error, which we quantify by the trace-norm distance between the true and the reconstructed Choi states. Our approach is based on combining local shadow tomography with locally optimal recovery maps obtained by convex optimization. We supplement these rigorous guarantees by studying the performance of the protocol numerically for a system evolving under a local Lindbladian and a noisy, shallow circuit. By employing a tensor network representation, we reconstruct channels acting on up to 50 qubits and accurately recover global diagnostics such as the process fidelity, the Choi state purity, and Pauli-weight-resolved process matrix elements. Our work thus extends the powerful toolbox of local shadow tomography to scalable channel characterization with access to global properties.</div></details>
 <p class="src"><span class="au">Zidu Liu and Dominik S. Wild</span><br><span class="cite">PRX Quantum 7, 043015 (2026)</span><br><a href="https://doi.org/10.1103/51mt-ghpn" target="_blank" rel="noopener">10.1103/51mt-ghpn</a></p>
 </div>
+</div>
+<div class="row">
 <div class="entry">
 <p class="no">No. 15</p><h3>内禀平均力哈密顿量与强耦合量子热力学<span class="en">Intrinsic Hamiltonian of Mean Force and Strong-Coupling Quantum Thermodynamics</span></h3>
 
@@ -515,11 +545,13 @@ footer b{color:var(--ink2);font-weight:600}
 <p class="src"><span class="au">Oliver Diekmann, Enrico Di Benedetto, Nicolas Jungwirth, Daniele De Bernardis, Zeyu Kuang, Francesco Ciccarello, Stefan Rotter, Peter Rabl, Alejandro González-Tudela, and Carlos Gonzalez-Ballestero</span><br><span class="cite">PRX Quantum 7, 043013 (2026)</span><br><a href="https://doi.org/10.1103/6wcb-nj42" target="_blank" rel="noopener">10.1103/6wcb-nj42</a></p>
 </div>
 </div>
+</div>
 </section>
 <section class="section" id="j-nature">
 <h2>Nature<span class="abbr">Nature</span><span class="cnt">1 篇</span></h2>
 <p class="lede">Nature 正刊中的量子信息与量子技术论文</p>
 <div class="entries grid2">
+<div class="row">
 <div class="entry">
 <p class="no">No. 17</p><h3>单分子自旋—光子界面的实现与相干操控<span class="en">A single-molecule spin–photon interface</span></h3>
 
@@ -528,11 +560,13 @@ footer b{color:var(--ink2);font-weight:600}
 <p class="src"><span class="au">Simon Roggors, Thomas Unden, Anna Aubele, Paul Mentzel, Gregor Bayer, Alon Salhov, Jochen Scharpf, Martin B. Plenio, Alex Retzker, Fedor Jelezko, Tim R. Eichhorn, Tobias A. Schaub, Matthias Pfender, Philipp Neumann, Ilai Schwartz</span><br><span class="cite">Nature 658, 1153-1159 (2026)</span><br><a href="https://doi.org/10.1038/s41586-026-11147-6" target="_blank" rel="noopener">10.1038/s41586-026-11147-6</a></p>
 </div>
 </div>
+</div>
 </section>
 <section class="section" id="j-ncomms">
 <h2>Nature Communications<span class="abbr">Nat. Commun.</span><span class="cnt">2 篇</span></h2>
 <p class="lede">Nature Communications 中的量子信息与量子技术论文</p>
 <div class="entries grid2">
+<div class="row">
 <div class="entry">
 <p class="no">No. 18</p><h3>微腔中色心纳米级定位实现硅基明亮纯净单光子源<span class="en">Bright and pure single-photon source in silicon by nanoscale positioning of a color center in a microcavity</span></h3>
 
@@ -546,6 +580,7 @@ footer b{color:var(--ink2);font-weight:600}
 <p class="teaser">把压电光机驱动与 CMOS 代工的低限制氮化硅平台结合，在 780 nm 实现 2.6 dB/m 传输损耗、兆赫兹调制带宽与可忽略迟滞，并演示了深度可重构的可见光量子光子线路。</p>
 <p class="body">实现规模化光子量子计算需要把超低损耗与快速、低功耗、低迟滞、低串扰的可重构性结合起来的集成电路。这些要求在可见光波段尤其具有挑战性，因为许多量子资源态发生器（包括单光子源与量子存储器）天然工作在可见光波段。低限制氮化硅波导提供了所需的损耗性能，但传统热光调制器耗散显著的静态功率，导致热串扰并排除低温运行的可能。可见光波段的压电光机线路避免了这些缺点，但已有的演示要么依赖传输损耗为 35–100 dB/m 的高限制波导，要么依赖使用与代工不兼容的锆钛酸铅（PZT）的低限制平台。这里我们把压电光机驱动与 CMOS 代工制造的低限制氮化硅平台相结合，在 780 nm 处实现 2.6 dB/m 的传输损耗、兆赫兹量级的调制带宽、2.8 V·m 的半波电压–长度积以及可忽略的迟滞。我们演示了每个螺旋相移器损耗为 0.63 dB 的可重构马赫–曾德尔干涉仪，从而实现深度、可主动重构的可见光波段量子光子线路。</p><details><summary>Abstract (English)</summary><div class="en-abs">Realizing photonic quantum computing at scale requires integrated circuits that combine ultra-low loss with fast, low-power, low-hysteresis, and low-crosstalk reconfiguration. These requirements are particularly challenging at visible wavelengths, where many quantum resource-state generators, including single-photon sources and quantum memories, naturally operate. Low-confinement silicon nitride waveguides offer the requisite loss performance, but conventional thermo-optic modulators dissipate significant static power, driving thermal crosstalk and precluding cryogenic operation. Visible-wavelength piezo-optomechanical circuits avoid these drawbacks, but existing demonstrations rely either on high-confinement waveguides with propagation losses of 35-100 dB/m, or on low-confinement platforms using foundry-incompatible lead zirconate titanate (PZT). Here we combine piezo-optomechanical actuation with a CMOS-foundry-fabricated, low-confinement silicon nitride platform, achieving 2.6 dB/m propagation loss at 780 nm, megahertz-scale modulation bandwidth, a half-wave voltage-length product of 2.8 V ⋅ m, and negligible hysteresis. We demonstrate reconfigurable Mach-Zehnder interferometers with 0.63 dB loss per spiral phase shifter, enabling deep, actively reconfigurable visible-wavelength quantum photonic circuits.</div></details>
 <p class="src"><span class="au">Mayank Mishra, Gwangho Choi, Wenhua He, Gina M. Talcott, Katherine Kearney, Michael Gehl, Andrew Leenheer, Daniel Dominguez, Nils T. Otterstrom, Matt Eichenfield</span><br><span class="cite">Nat. Commun. (2026)</span><br><a href="https://doi.org/10.1038/s41467-026-77969-0" target="_blank" rel="noopener">10.1038/s41467-026-77969-0</a></p>
+</div>
 </div>
 </div>
 </section>

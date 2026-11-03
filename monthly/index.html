@@ -167,25 +167,37 @@ body{
 .entries{
   column-count:1;
 }
-/* 双栏**等高拉伸**（行优先 + 同行两卡等高），月报和专题用。
-   同一行的两张卡片顶端齐平，且都被拉到与该行较高的那张等高；
-   较矮的卡片多出来的空间留在它自己内部的下方。
+/* 双栏，默认**同行等高**；任一卡片展开英文摘要后，该行退回「各按自身高度」。
+   月报和专题用。
 
-   为什么不用另外两种：
-   - CSS 多列（column-count:2）：先灌满左列再灌右列，编号与视觉顺序不一致；
-   - align-items:start 的行网格：矮卡保持自身高度，空白落在卡片**外面**，
-     下一行要等较高的卡片结束才开始，看起来像「内容没对齐」的破版。
+   折叠状态下两卡等高最整齐：顶端、底端都齐平，没有横向空白带。较矮的那张
+   多出来的空间留在它**自己内部**的下方，看起来像「这张内容短一点」，
+   而不是像 align-items:start 那样把空白丢到卡片外面、整行像没对齐。
 
-   关键在 align-items:stretch（网格默认值，这里显式写出来表明是有意为之）
-   配合 .entry 的 flex 纵向布局：卡片被撑高后，正文自然停在顶部，
-   剩余空间沉到底部，而不是把段落拉伸变形。 */
+   展开时反过来：展开的那张会突然长高很多（英文摘要动辄一两千字符），
+   若还强行等高，同行另一张会被拉到与展开内容等高，底部多出一大块空白。
+   所以每行是一个独立容器（.row），里面用 :has() 探测,
+   只要本行有任意 <details open>，就把该行的 align-items 切回 start。
+
+   用 :has() 而不是给 <details> 挂 JS：这是纯 CSS 状态，不需要脚本，
+   也不会因为事件绑漏而失效。现代浏览器均支持（Chrome 105+/Safari 15.4+/Firefox 121+）；
+   不支持的旧浏览器只会停留在「始终等高」的降级表现，仍可用。 */
 .entries.grid2{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.row{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:16px 22px;
+  gap:0 22px;
   align-items:stretch;
 }
-.entries.grid2 .entry{
+/* 本行有展开项 → 该行改为各按自身高度 */
+.row:has(details[open]){
+  align-items:start;
+}
+.row .entry{
   margin:0;
   display:flex;
   flex-direction:column;
@@ -361,6 +373,7 @@ footer b{color:var(--ink2);font-weight:600}
   .entries{column-count:1}
   /* 手机上两栏会把每条挤到 300px 以内，摘要没法读，直接退回单栏 */
   .entries.grid2,.entries.two{grid-template-columns:1fr;column-count:1}
+  .row{grid-template-columns:1fr}
 }
 
 @media print{
@@ -379,7 +392,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Monthly Archive · Full Abstracts</p>
 <h1>月度详版</h1>
-<p class="meta"><div>共 <b>1</b> 个月 · <b>19</b> 篇</div><div>本页生成于 2026-11-03 11:16</div></p>
+<p class="meta"><div>共 <b>1</b> 个月 · <b>19</b> 篇</div><div>本页生成于 2026-11-03 11:23</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-03.html">日报</a><a href="../monthly/index.html" class="active" aria-current="page">月报</a><a href="../topic/index.html">专题</a></nav>
