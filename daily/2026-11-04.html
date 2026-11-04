@@ -74,6 +74,43 @@ body{
 }
 .preface p{margin:0;font-size:14px;line-height:1.85;color:var(--ink2)}
 
+/* ---- 最近更新 ---- */
+/* 用户 m10946：「『序言』这一栏下方新增一栏『最近更新』，里面放最近更新的若干篇文章的
+   标题或 doi，其链接到本页面下方对应文章卡片处。」样式与「序言」同一副骨架，
+   这样插在两块之间不会显得是另一个站的东西。 */
+.recent{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;margin:0 0 22px;box-shadow:var(--shadow);
+}
+.recent .h{
+  font-size:12.5px;font-weight:700;letter-spacing:2px;color:var(--purple);
+  margin:0 0 8px;
+}
+.recent ul{list-style:none;margin:0;padding:0}
+.recent li{
+  display:flex;gap:10px;align-items:baseline;
+  padding:7px 0;border-top:1px solid var(--line);
+}
+.recent li:first-child{border-top:0;padding-top:0}
+/* 日期做成定宽小标签：长短不一的标题靠它对齐，一眼能比出新旧。 */
+.recent .d{
+  flex:none;width:76px;font-size:12px;font-weight:700;color:var(--muted);
+  font-variant-numeric:tabular-nums;
+}
+.recent a{
+  color:var(--ink);text-decoration:none;font-size:13.5px;line-height:1.6;
+  border-bottom:1px solid transparent;
+}
+.recent a:hover{color:var(--purple);border-bottom-color:var(--purple-soft)}
+.recent .doi{
+  flex:none;font-size:11.5px;color:var(--muted);
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+@media (max-width:560px){
+  .recent li{flex-wrap:wrap;gap:4px}
+  .recent .doi{width:100%}
+}
+
 /* ---- QRL 喜报卡片 ---- */
 /* 用户 m07802：「用尽可能大的字体（横向铺满目前双栏宽度）写『喜报！QRL发新文章了！』，
    卡片背景主配色为红色与金色……越有这种花哨的土味最好。」
@@ -88,11 +125,13 @@ body{
    只留一层几乎看不见的中性暗化作为**兜底**：.gbg 没加载出来时它是浅灰，
    不会让白字落在纯白底上。 */
 .gongxi{
-  position:relative;margin:0 0 24px;padding:38px 26px 32px;text-align:center;
+  position:relative;margin:0 0 24px;padding:30px 26px;text-align:center;
   border-radius:var(--radius);overflow:hidden;isolation:isolate;
-  background:linear-gradient(180deg,rgba(28,22,22,.10) 0%,rgba(28,22,22,.22) 100%);
-  border:3px solid #f2c94c;
-  box-shadow:0 12px 34px rgba(0,0,0,.22);
+  /* 透明填充：不铺任何底色，背景图就是这一层唯一的内容（用户 m10946） */
+  background:transparent;
+  /* 与旧版同高：换设计不换占位，页面不会因为去掉正文两段而缩短 */
+  min-height:250px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
   color:#fff6da;
 }
 /* 图片层单独做成一个子元素（.gbg），不是塞进 .gongxi 的 background 列表，也不是伪元素：
@@ -127,26 +166,24 @@ body{
 .gongxi .gt{
   margin:0;font-size:clamp(30px,5.4vw,64px);line-height:1.16;font-weight:900;
   letter-spacing:2px;
-  /* 兜底色：万一浏览器不支持 background-clip:text，至少还是金色，不会变透明 */
+  /* 兜底色：万一浏览器不支持下面的彩色写法，至少还是金色，不会变透明 */
   color:#ffe9a8;
+  /* 12 个字要横排在一行里，不能被卡片内边距挤到换行 */
+  display:flex;flex-wrap:nowrap;align-items:baseline;justify-content:center;
 }
-/* 用户 m10591：「『喜报！』这一行文字可采用炫彩配色（多用亮色）」。
-   做法是把一段高饱和彩虹渐变裁进字形里（background-clip:text），
-   再用 2px 深色描边 + drop-shadow 压住背后的插画纹样——
-   不能用 text-shadow：字形填充是透明的，阴影会从字里透出来，糊成一片。 */
-@supports ((-webkit-background-clip:text) or (background-clip:text)){
-  .gongxi .gt{
-    background:linear-gradient(96deg,
-      #fff36a 0%, #ffd93d 13%, #ffa63d 26%, #ff7ab8 40%,
-      #d977ff 54%, #7f8cff 67%, #4fd2ff 79%, #6bffd6 90%, #fff36a 100%);
-    -webkit-background-clip:text;background-clip:text;
-    color:transparent;-webkit-text-fill-color:transparent;
-    -webkit-text-stroke:2.5px rgba(72,16,24,.62);
-    paint-order:stroke fill;
-    filter:
-      drop-shadow(0 3px 0 rgba(88,24,10,.55))
-      drop-shadow(0 0 20px rgba(255,214,110,.62));
-  }
+/* 用户 m10946：「中心填入与此 gif 内容和效果完全一致的文字」。
+   那张效果图是**逐字换色**（一个字一个色相，字间没有过渡带），
+   所以这里每个字一个 <b>、各自带一个 --c 色值；用线性渐变铺整行会在
+   窄字（Q/R/L、叹号）上串色，出来的不是那张图的效果。
+   描边 + drop-shadow 是为了压在插画纹样上仍然读得清：
+   不能用 text-shadow——字形填充透明时阴影会从字里透出来糊成一片。 */
+.gongxi .gt b{
+  color:var(--c,#ffe9a8);
+  -webkit-text-stroke:2.5px rgba(38,10,14,.72);
+  paint-order:stroke fill;
+  filter:
+    drop-shadow(0 3px 0 rgba(60,14,8,.62))
+    drop-shadow(0 0 18px rgba(255,220,130,.5));
 }
 .gongxi .gd{
   margin:16px auto 0;max-width:52em;font-size:14.5px;line-height:1.95;color:#fff6da;
@@ -503,13 +540,14 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Quantum Information Digest · 2026-11-04</p>
 <h1>量子信息速递 · 11 月 4 日</h1>
-<p class="meta"><div>周三 · 本期共 <b>1</b> 篇</div><div>论文发表于 2026-11-03</div><div>生成于 2026-11-04 17:40</div></p>
+<p class="meta"><div>周三 · 本期共 <b>1</b> 篇</div><div>论文发表于 2026-11-03</div><div>生成于 2026-11-04 19:43</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-04.html" class="active" aria-current="page">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a><a href="../qrl/index.html">QRL（测试版）</a></nav>
 <a class="back" href="../index.html">← 返回索引</a>
 
 <div class="preface"><p class="h">序 言</p><p>本刊按 APS、Nature、Science、Optica 四大系列的目标期刊以及 PNAS 检索量子信息与量子技术领域的新发表工作，经学科筛选后按期刊汇总。每一条给出中英文标题、作者、卷页与中文摘要，点击 DOI 可直达原文。中文标题、导读与摘要译文均由模型生成，速度优先、难免有疏漏，欢迎指出。</p></div>
+
 <nav class="nav"><p class="h">阅读导航</p><ul><li><a href="#j-commsphys">Commun. Phys.<i>1</i></a></li></ul></nav>
 <section class="section" id="j-commsphys">
 <h2>Communications Physics<span class="abbr">Commun. Phys.</span><span class="cnt">1 篇</span></h2>
