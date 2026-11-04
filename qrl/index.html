@@ -130,6 +130,18 @@ body{
   /* 兜底色：万一浏览器不支持 background-clip:text，还是有一行实色字，不会变透明 */
   color:#d92b7a;
 }
+/* 用户 m11973：把「QRL」单独换成衬线体（Times New Roman 系），与前后汉字的黑体拉开对比。
+   两条约束：
+   ① 不能给这个 span 自己上 color / background —— 彩虹是父级 background-clip:text 裁出来的，
+      子元素一旦自带实色填充，这三个字母就会从渐变里"掉出来"，变成一块纯色；
+   ② 必须显式 font-weight:700 —— 父级是 900，而 Times New Roman 只有 400/700 两档，
+      不写的话浏览器会做合成加粗，衬线的笔画细节会被糊掉。 */
+.gongxi .gt .qrl{
+  font-family:"Times New Roman",Times,"Nimbus Roman No9 L",Georgia,serif;
+  font-weight:700;
+  letter-spacing:1px;
+  padding:0 .02em;
+}
 /* 用户 m11527：「我需要的是斜向渐变的效果，而不是逐字渐变；并且，作为 gif，
    应当有渐变效果向右流动的动画效果」。
 
@@ -165,7 +177,7 @@ body{
     background-repeat:repeat;
     -webkit-background-clip:text;background-clip:text;
     color:transparent;-webkit-text-fill-color:transparent;
-    animation:gongxi-flow 6s linear infinite;
+    animation:gongxi-flow 3s linear infinite;
   }
 }
 /* 平移量必须与 background-size 的宽完全一致（480px），否则循环处会跳一下。
@@ -529,13 +541,13 @@ body:has(.section[id^="y-"]:target) .section[id^="y-"]:not(:target){display:none
 <header class="hero"><div class="inner">
 <p class="kicker">Quantum Review Letters · Beta</p>
 <h1>QRL（测试版）</h1>
-<p class="meta"><div>共 <b>25</b> 篇</div><div>最近一次检查 2026-11-03</div><div>生成于 2026-11-04 21:26</div></p>
+<p class="meta"><div>共 <b>25</b> 篇</div><div>最近一次检查 2026-11-03</div><div>生成于 2026-11-04 21:32</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-04.html">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a><a href="../qrl/index.html" class="active" aria-current="page">QRL（测试版）</a></nav>
 
 <div class="gongxi" title="本次新增 2 篇（2026-11-03 更新）">
-<p class="gt" aria-label="本次新增 2 篇（2026-11-03 更新）">喜报！QRL发新文章了！</p>
+<p class="gt" aria-label="本次新增 2 篇（2026-11-03 更新）">喜报！<span class="qrl">QRL</span> 发新文章了！</p>
 </div>
 <div class="preface"><p class="h">序 言</p><p>本页是 Quantum Review Letters 的整刊速览（测试版）：该刊每有新文章被 Crossref 收录，次日早上 8 点这里就会更新，并在目录上方挂出喜报。与「日报」「月报」不同，本页不做学科关键词筛选——这刊本身就是量子信息专刊，全收才对。每条给出中英文标题、作者、卷页与中文摘要，点击 DOI 可直达原文。中文标题、导读与摘要译文均由模型生成，仅供快速浏览。</p></div>
 <div class="recent"><p class="h">最近更新</p><ul>
