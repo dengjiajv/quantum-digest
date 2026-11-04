@@ -79,10 +79,10 @@ body{
    卡片背景主配色为红色与金色……越有这种花哨的土味最好。」
    所以这里刻意不跟全站的紫色系走：烫金粗边 + 双层红渐变 + 斜纹底 + 四角金饰 + 灯笼，
    标题用 clamp 吃到容器宽度上限。整块只在 QRL 页、且有新文章时才出现。 */
-/* 背景图由 render 时随机挑一张（见 pickGongxiBg）：--bg 是这个卡片的图片地址，
-   --bgpos 是它的对齐位置。图片本身已经过「压亮度 + 红调化」预处理（tools/make-gongxi-bg.py），
-   所以这里不再需要调透明度，直接把渐变作为兜底垫在图片下面——图没加载出来时
-   仍然是那块红金渐变，不会是白底黑字。 */
+/* 背景图按「喜报是哪天发的」取当天的星期那张（见 pickGongxiBg）：--bg 是这个卡片的
+   图片地址，--bgpos 是它的对齐位置。图片本身已经过「压亮度 + 红调化」预处理
+   （tools/make-gongxi-bg.py），所以这里不再需要调透明度，直接把渐变作为兜底
+   垫在图片下面——图没加载出来时仍然是那块红金渐变，不会是白底黑字。 */
 .gongxi{
   position:relative;margin:0 0 24px;padding:38px 26px 32px;text-align:center;
   border-radius:var(--radius);overflow:hidden;isolation:isolate;
@@ -496,7 +496,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Special Topic · phot</p>
 <h1>专题 · 集成光子学</h1>
-<p class="meta"><div>共 <b>6</b> 篇 · 收录区间 2026-10-20 ~ 2026-11-03</div><div>检索窗口 2026-10-20 ~ 2026-11-03</div><div>生成于 2026-11-04 16:17</div></p>
+<p class="meta"><div>共 <b>6</b> 篇 · 收录区间 2026-10-20 ~ 2026-11-03</div><div>检索窗口 2026-10-20 ~ 2026-11-03</div><div>生成于 2026-11-04 17:18</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-04.html">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html" class="active" aria-current="page">专题</a><a href="../qrl/index.html">QRL（测试版）</a></nav>
