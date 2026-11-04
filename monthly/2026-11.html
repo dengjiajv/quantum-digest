@@ -127,20 +127,14 @@ body{
 .gongxi .gt{
   margin:0;font-size:clamp(30px,5.4vw,64px);line-height:1.16;font-weight:900;
   letter-spacing:2px;
+  /* 用户 m12015：喜报这一行的中英文**统一**用微软雅黑。
+     m11973 曾把「QRL」单独换成 Times New Roman，这条要求把它又收回来了——
+     现在三个字母与前后汉字同族，不再有衬线/无衬线的跳变。
+     中文名「微软雅黑」也列进栈里：某些精简过的 Windows 只认本地化家族名。 */
+  font-family:"Microsoft YaHei","微软雅黑","PingFang SC","Hiragino Sans GB",
+    "Source Han Sans SC","Noto Sans CJK SC",sans-serif;
   /* 兜底色：万一浏览器不支持 background-clip:text，还是有一行实色字，不会变透明 */
   color:#d92b7a;
-}
-/* 用户 m11973：把「QRL」单独换成衬线体（Times New Roman 系），与前后汉字的黑体拉开对比。
-   两条约束：
-   ① 不能给这个 span 自己上 color / background —— 彩虹是父级 background-clip:text 裁出来的，
-      子元素一旦自带实色填充，这三个字母就会从渐变里"掉出来"，变成一块纯色；
-   ② 必须显式 font-weight:700 —— 父级是 900，而 Times New Roman 只有 400/700 两档，
-      不写的话浏览器会做合成加粗，衬线的笔画细节会被糊掉。 */
-.gongxi .gt .qrl{
-  font-family:"Times New Roman",Times,"Nimbus Roman No9 L",Georgia,serif;
-  font-weight:700;
-  letter-spacing:1px;
-  padding:0 .02em;
 }
 /* 用户 m11527：「我需要的是斜向渐变的效果，而不是逐字渐变；并且，作为 gif，
    应当有渐变效果向右流动的动画效果」。
@@ -529,7 +523,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Monthly Archive · 2026-11</p>
 <h1>量子信息速递 · 2026 年 11 月</h1>
-<p class="meta"><div>共 <b>3</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-11-03</div><div>生成于 2026-11-04 21:32</div></p>
+<p class="meta"><div>共 <b>3</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-11-03</div><div>生成于 2026-11-04 21:36</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-04.html">日报</a><a href="../monthly/index.html" class="active" aria-current="page">月报</a><a href="../topic/index.html">专题</a><a href="../qrl/index.html">QRL（测试版）</a></nav>
