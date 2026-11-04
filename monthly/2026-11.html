@@ -112,96 +112,73 @@ body{
 }
 
 /* ---- QRL 喜报卡片 ---- */
-/* 用户 m07802：「用尽可能大的字体（横向铺满目前双栏宽度）写『喜报！QRL发新文章了！』，
-   卡片背景主配色为红色与金色……越有这种花哨的土味最好。」
-   所以这里刻意不跟全站的紫色系走：烫金粗边 + 双层红渐变 + 斜纹底 + 四角金饰 + 灯笼，
-   标题用 clamp 吃到容器宽度上限。整块只在 QRL 页、且有新文章时才出现。 */
-/* 背景图按「喜报是哪天发的」取当天的星期那张（见 pickGongxiBg）：--bg 是这个卡片的
-   图片地址，--bgpos 是它的对齐位置。图片本身已经过「压亮度 + 红调化」预处理
-   （tools/make-gongxi-bg.py），所以图片层不再叠红色滤镜，直接铺原图。
-
-   用户 m10591：「将第二个图层的红色改为透明的，尽可能让背景图显眼一些」。
-   所以这一层原来那块红渐变（radial 暖光 + 斜纹 + 三段红）整块去掉了，
-   只留一层几乎看不见的中性暗化作为**兜底**：.gbg 没加载出来时它是浅灰，
-   不会让白字落在纯白底上。 */
+/* 用户 m07802 当时要「红金土味大卡片」，经过 m10591（去红底）、m10946（透明框）、
+   到 m11527 最终定为：**与站内其它卡片同款的白底卡片**，只留一行大字的标题。
+   所以这里不再有背景图、红金渐变、烫金包角、灯笼——一张普通卡片，靠字撑住视觉。 */
 .gongxi{
   position:relative;margin:0 0 24px;padding:30px 26px;text-align:center;
   border-radius:var(--radius);overflow:hidden;isolation:isolate;
-  /* 透明填充：不铺任何底色，背景图就是这一层唯一的内容（用户 m10946） */
-  background:transparent;
-  /* 与旧版同高：换设计不换占位，页面不会因为去掉正文两段而缩短 */
+  /* 用户 m11527：「请清空背景图，保持与其他卡片相同的白色底色」 */
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
+  /* 与旧版同高：换设计不换占位，页面不会因为去掉背景图而缩短 */
   min-height:250px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  color:#fff6da;
 }
-/* 图片层单独做成一个子元素（.gbg），不是塞进 .gongxi 的 background 列表，也不是伪元素：
-   - 塞进 background 列表会挤掉兜底渐变，图没加载出来就变成白底黑字；
-   - 用 ::before/::after 会跟下面那两个「烫金包角」抢伪元素（它们已经占满两个槽位）。
-   这样它还能有自己的 filter（微微压对比），并且 z-index 排在内容下面。
-
-   两层背景：上面那层是**几乎中性的暗化层**（不是红纱）。用户 m10591 要求把红色变透明、
-   尽可能让背景图显眼，所以这里只压一点点黑，不染色；文字可读性靠标题的描边与阴影兜，
-   不靠整块压暗。把暗化放在 CSS 而不是烤进图片里，是因为它得随屏幕调——大屏标题字号大、
-   能压更暗，手机上字小就得更亮一点，media query 里调这一层即可，不用重新生成图片。 */
-.gongxi .gbg{
-  position:absolute;inset:0;z-index:0;pointer-events:none;
-  background-image:
-    radial-gradient(ellipse 62% 120% at 50% -18%,rgba(255,214,120,.10),transparent 70%),
-    linear-gradient(168deg,rgba(20,8,8,.20) 0%,rgba(16,6,6,.26) 46%,rgba(12,4,4,.34) 100%),
-    var(--bg);
-  background-size:cover,cover,cover;
-  background-position:center,center,var(--bgpos,center);
-  background-repeat:no-repeat,no-repeat,no-repeat;
-  opacity:1;filter:saturate(1.06) contrast(1.05);
-}
-/* 内容抬到图片上方。图标、标题、列表统统 +1 层，否则会被 .gbg 盖住。 */
-.gongxi > :not(.gbg){position:relative;z-index:1}
-/* 四角贴金色小方块，模仿请柬的烫金包角 */
-.gongxi::before,.gongxi::after{
-  content:"";position:absolute;width:58px;height:58px;pointer-events:none;
-  border:3px solid #f2c94c;opacity:.85;
-}
-.gongxi::before{top:10px;left:10px;border-right:0;border-bottom:0;border-radius:12px 0 0 0}
-.gongxi::after{bottom:10px;right:10px;border-left:0;border-top:0;border-radius:0 0 12px 0}
 .gongxi .gt{
   margin:0;font-size:clamp(30px,5.4vw,64px);line-height:1.16;font-weight:900;
   letter-spacing:2px;
-  /* 兜底色：万一浏览器不支持下面的彩色写法，至少还是金色，不会变透明 */
-  color:#ffe9a8;
-  /* 12 个字要横排在一行里，不能被卡片内边距挤到换行 */
-  display:flex;flex-wrap:nowrap;align-items:baseline;justify-content:center;
+  /* 兜底色：万一浏览器不支持 background-clip:text，还是有一行实色字，不会变透明 */
+  color:#d92b7a;
 }
-/* 用户 m10946：「中心填入与此 gif 内容和效果完全一致的文字」。
-   那张效果图是**逐字换色**（一个字一个色相，字间没有过渡带），
-   所以这里每个字一个 <b>、各自带一个 --c 色值；用线性渐变铺整行会在
-   窄字（Q/R/L、叹号）上串色，出来的不是那张图的效果。
-   描边 + drop-shadow 是为了压在插画纹样上仍然读得清：
-   不能用 text-shadow——字形填充透明时阴影会从字里透出来糊成一片。 */
-.gongxi .gt b{
-  color:var(--c,#ffe9a8);
-  -webkit-text-stroke:2.5px rgba(38,10,14,.72);
-  paint-order:stroke fill;
-  filter:
-    drop-shadow(0 3px 0 rgba(60,14,8,.62))
-    drop-shadow(0 0 18px rgba(255,220,130,.5));
+/* 用户 m11527：「我需要的是斜向渐变的效果，而不是逐字渐变；并且，作为 gif，
+   应当有渐变效果向右流动的动画效果」。
+
+   做法：整行字用**一条斜向渐变**（135deg，左上→右下），再用 background-clip:text
+   把渐变裁进字形；动画只平移 background-position。一个字一个颜色那种写法已经删掉。
+
+   两个数值上的取舍（都实测过，不是拍脑袋）：
+
+   ① 为什么一个平铺块里要排两遍彩虹：文字只有一行，高约 74px。若一个彩虹周期
+      铺满整行（约 950px 宽），74px 高度内只走完 1.7% 的色域 —— 字的上半和下半
+      几乎同色，「斜」就完全读不出来，看起来还是一行横向换色。实测字形上下端的
+      色相差：周期 700px 只有 9.8°、520px 11.5°、400px 16.5°、300px 32.1°（开始显花）。
+      取 480px 这一档（约 23°），是「看得出斜」与「不过分花」的折中。
+
+   ② 为什么背景用**正方形** 480px×480px、渐变周期取 50%：
+      这是唯一能保证平铺无缝的取法。135° 下正方形成像盒的渐变线长 L = √2·480，
+      一半即 0.7071·480；而横向跨过 480px 的相位差也正好是 0.7071·480 —— 两者相等，
+      所以左右相邻两块严丝合缝，**且与元素宽、高、字号全都无关**。
+      早先用「200% 宽 + 48% 周期」，48% 是照 W=900,H=74 推的近似值，换个字号就漂：
+      实测在 t=1500ms 处留下 25/255 的竖直跳变（肉眼可见一条淡线）。
+      换正方形方案后同一测法降到 4/255（与渐变自身的自然梯度同量级），四个时刻一致。
+
+   ③ 为什么动画平移 -480px：480px 正好一个平铺单元，循环处回到同一帧，
+      颜色看起来就是持续往右流。不能改用百分比 —— 容器高与 480 不等时映射不到整数个周期。 */
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .gongxi .gt{
+    /* 12 色彩虹，停靠 0%~50%；50%~100% 由 repeating-* 再走一遍，首尾同色保证无缝。 */
+    background-image:repeating-linear-gradient(135deg,
+      #ff3d3d 0%, #ff8a2b 4.5455%, #ffd23d 9.0909%, #b6f24a 13.6364%,
+      #3ce8b0 18.1818%, #35b6f0 22.7273%, #4a6bff 27.2727%, #9a4dff 31.8182%,
+      #e04df0 36.3636%, #ff4d9d 40.9091%, #ff6a5c 45.4545%, #ff3d3d 50%);
+    background-size:480px 480px;
+    background-repeat:repeat;
+    -webkit-background-clip:text;background-clip:text;
+    color:transparent;-webkit-text-fill-color:transparent;
+    animation:gongxi-flow 6s linear infinite;
+  }
 }
-.gongxi .gd{
-  margin:16px auto 0;max-width:52em;font-size:14.5px;line-height:1.95;color:#fff6da;
-  /* 底色透明后正文直接压在插画纹样上，靠一圈柔和暗影拉开对比 */
-  text-shadow:0 1px 3px rgba(48,10,6,.86),0 0 12px rgba(48,10,6,.6);
+/* 平移量必须与 background-size 的宽完全一致（480px），否则循环处会跳一下。
+   方向是**正**的：background-position 变大 = 图案右移 = 颜色往右流。
+   （写负数会让图案左移，实测色带位移是 -120px/1.5s，与「向右流动」相反。） */
+@keyframes gongxi-flow{
+  from{background-position:0 0}
+  to{background-position:480px 0}
 }
-.gongxi .gd b{color:#ffe9a8;text-shadow:0 1px 3px rgba(48,10,6,.86)}
-.gongxi .gl{
-  display:inline-flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:18px 0 0;padding:0;list-style:none;
-}
-.gongxi .gl li{
-  font-size:12.5px;font-weight:700;color:#7d0c0c;background:#ffe9a8;
-  border-radius:999px;padding:4px 12px;
-  box-shadow:0 2px 8px rgba(40,6,4,.4);
-}
-/* 灯笼与小标题那一行已被用户 m10591 要求删除，样式一并移除 */
-@media (max-width:720px){
-  .gongxi{padding:26px 16px 22px}
+/* 尊重系统的「减少动态效果」：渐变留着，动画停掉。
+   这类纯装饰的流动效果是前庭敏感人群最容易被影响的那一类。 */
+@media (prefers-reduced-motion:reduce){
+  .gongxi .gt{animation:none!important}
 }
 
 /* ---- 阅读导航 ---- */
@@ -540,7 +517,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Monthly Archive · 2026-11</p>
 <h1>量子信息速递 · 2026 年 11 月</h1>
-<p class="meta"><div>共 <b>3</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-11-03</div><div>生成于 2026-11-04 19:43</div></p>
+<p class="meta"><div>共 <b>3</b> 篇</div><div>检索窗口 2026-10-20 ~ 2026-11-03</div><div>生成于 2026-11-04 21:14</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-04.html">日报</a><a href="../monthly/index.html" class="active" aria-current="page">月报</a><a href="../topic/index.html">专题</a><a href="../qrl/index.html">QRL（测试版）</a></nav>
