@@ -125,7 +125,19 @@ body{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
 .gongxi .gt{
-  margin:0;font-size:clamp(30px,5.4vw,64px);line-height:1.16;font-weight:900;
+  margin:0;
+  /* 用户 m12053：「字号可以放大，不超过该横栏长度即可」。
+     所以字号不写死，让它跟着**卡片内宽**走。这行字「喜报！QRL 发新文章了！」是
+     12 个字符 + 11 处 2px 字距，宽度模型是 「11.45 × 字号 + 22」（微软雅黑实测，
+     两个字号点 34.24px→415px、90.13px→1050px 反解出来的一致值）。
+     早先写过 11.05 的比值，那是继承 Segoe UI 时代量的，换雅黑后拉丁字母变宽就顶成两行了。
+     卡片内宽 = 视口宽 − 56（.wrap 左右 padding）− 52（卡片左右 padding）− 2（边框）。
+     反解「占内宽 95%」：字号 = (0.95 × 内宽 − 22) ÷ 11.45 ≈ 0.081 × 内宽。
+     公式里减 126 而不是 110，多留 16px 吸收「100vw 含滚动条、innerWidth 不含」的差值。
+     上限 95px 是 .wrap 到 1280 封顶（内宽 1170）后的对应值；下限 14px 兜住 320px 那一档。
+     验收标准：任何宽度下 lines 必须为 1，且文字宽/内宽 ≈ 95%（换行或超过 100% 都算失败）。 */
+  font-size:clamp(14px, calc((100vw - 126px) * .081), 95px);
+  line-height:1.16;font-weight:900;
   letter-spacing:2px;
   /* 用户 m12015：喜报这一行的中英文**统一**用微软雅黑。
      m11973 曾把「QRL」单独换成 Times New Roman，这条要求把它又收回来了——
@@ -523,7 +535,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Quantum Information Digest · 2026-11-04</p>
 <h1>量子信息速递 · 11 月 4 日</h1>
-<p class="meta"><div>周三 · 本期共 <b>1</b> 篇</div><div>论文发表于 2026-11-03</div><div>生成于 2026-11-04 21:36</div></p>
+<p class="meta"><div>周三 · 本期共 <b>1</b> 篇</div><div>论文发表于 2026-11-03</div><div>生成于 2026-11-04 21:47</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-04.html" class="active" aria-current="page">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a><a href="../qrl/index.html">QRL（测试版）</a></nav>
