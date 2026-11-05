@@ -498,13 +498,27 @@ footer b{color:var(--ink2);font-weight:600}
 }
 .back:hover{border-color:var(--purple);background:var(--purple-soft)}
 
+/* 回到顶部：用户 m12919 要求「上箭头左侧加上『回到顶部』文字，交互框改成圆角气泡，
+   必要时加与主题色一致的紫色边框」。所以从圆形图标按钮改成胶囊气泡：
+   · border-radius 用 999px 而不是固定值——文字长短变了也不会露出方角；
+   · 边框用 var(--purple) 而不是 --line，让它在浅灰页面上跳出来，
+     和全站主色是同一个变量，主题换色时它会自己跟上；
+   · z-index 抬到内容之上，避免和小屏下最后一张卡片的阴影叠在一起。
+   · 小屏隐藏（见 @media），那里屏幕本来就窄，浮着一个带字的气泡会挡住正文。 */
 .totop{
-  position:fixed;right:20px;bottom:22px;width:42px;height:42px;border-radius:50%;
-  background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--purple);text-decoration:none;font-size:17px;opacity:.9;
+  position:fixed;right:20px;bottom:22px;z-index:30;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 15px 8px 13px;border-radius:999px;
+  background:var(--card);border:1.5px solid var(--purple);
+  box-shadow:0 4px 16px rgba(127,5,133,.18);
+  color:var(--purple);text-decoration:none;font-size:13px;font-weight:600;
+  opacity:.92;transition:opacity .16s,box-shadow .16s,transform .16s;
 }
-.totop:hover{opacity:1}
+.totop i{font-style:normal;font-size:15px;line-height:1}
+.totop:hover{
+  opacity:1;transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(127,5,133,.26);background:var(--purple-soft);
+}
 
 @media (max-width:560px){
   .hero{padding:30px 18px 26px;border-radius:0}
@@ -535,7 +549,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Quantum Information Digest · Archive</p>
 <h1>量子信息速递</h1>
-<p class="meta"><div>累计 <b>24</b> 篇</div><div>每日 08:00 自动更新</div><div>本页生成于 2026-11-05 21:50</div></p>
+<p class="meta"><div>累计 <b>24</b> 篇</div><div>每日 08:00 自动更新</div><div>本页生成于 2026-11-05 22:03</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="index.html" class="active" aria-current="page">首页</a><a href="daily/2026-11-05.html">日报</a><a href="monthly/index.html">月报</a><a href="topic/index.html">专题</a><a href="qrl/index.html">QRL</a><a href="group/index.html">组内文章（测试版）</a></nav>
@@ -585,6 +599,6 @@ footer b{color:var(--ink2);font-weight:600}
 <b>数据来源</b>　APS 系列（Phys. Rev. Lett.、Phys. Rev. X）、Nature 系列（Nature、Nat. Phys.、Nat. Photon.、Nat. Commun.、Commun. Phys.、Light Sci. Appl.）、Science 系列（Science、Sci. Adv.）、Optica 与 PNAS 官方网站及 Crossref。中文标题、简介与摘要译文由本机模型生成，仅供快速浏览；<b>学术引用请以英文原文为准</b>。<br>本页由脚本自动生成，无需手工维护。按月归档，点月份进入当月总览。
 </footer>
 </div>
-<a class="totop" href="#" aria-label="回到顶部">↑</a>
+<a class="totop" href="#" aria-label="回到顶部">回到顶部<i>↑</i></a>
 </body>
 </html>

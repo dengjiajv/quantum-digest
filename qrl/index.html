@@ -498,13 +498,27 @@ footer b{color:var(--ink2);font-weight:600}
 }
 .back:hover{border-color:var(--purple);background:var(--purple-soft)}
 
+/* 回到顶部：用户 m12919 要求「上箭头左侧加上『回到顶部』文字，交互框改成圆角气泡，
+   必要时加与主题色一致的紫色边框」。所以从圆形图标按钮改成胶囊气泡：
+   · border-radius 用 999px 而不是固定值——文字长短变了也不会露出方角；
+   · 边框用 var(--purple) 而不是 --line，让它在浅灰页面上跳出来，
+     和全站主色是同一个变量，主题换色时它会自己跟上；
+   · z-index 抬到内容之上，避免和小屏下最后一张卡片的阴影叠在一起。
+   · 小屏隐藏（见 @media），那里屏幕本来就窄，浮着一个带字的气泡会挡住正文。 */
 .totop{
-  position:fixed;right:20px;bottom:22px;width:42px;height:42px;border-radius:50%;
-  background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--purple);text-decoration:none;font-size:17px;opacity:.9;
+  position:fixed;right:20px;bottom:22px;z-index:30;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 15px 8px 13px;border-radius:999px;
+  background:var(--card);border:1.5px solid var(--purple);
+  box-shadow:0 4px 16px rgba(127,5,133,.18);
+  color:var(--purple);text-decoration:none;font-size:13px;font-weight:600;
+  opacity:.92;transition:opacity .16s,box-shadow .16s,transform .16s;
 }
-.totop:hover{opacity:1}
+.totop i{font-style:normal;font-size:15px;line-height:1}
+.totop:hover{
+  opacity:1;transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(127,5,133,.26);background:var(--purple-soft);
+}
 
 @media (max-width:560px){
   .hero{padding:30px 18px 26px;border-radius:0}
@@ -529,25 +543,13 @@ footer b{color:var(--ink2);font-weight:600}
   .entry details > summary{display:none}
   .entry details .en-abs{display:block}
 }
-body:has(#y-2026:target) .nav a[href="#y-2026"]{
-  background:var(--purple);border-color:var(--purple);color:#fff;
-  box-shadow:inset 0 2px 5px rgba(0,0,0,.22),0 2px 8px rgba(127,5,133,.28)}
-body:has(#y-2026:target) .nav a[href="#y-2026"] i{color:#fff;background:rgba(255,255,255,.22)}
-body:has(#y-2025:target) .nav a[href="#y-2025"]{
-  background:var(--purple);border-color:var(--purple);color:#fff;
-  box-shadow:inset 0 2px 5px rgba(0,0,0,.22),0 2px 8px rgba(127,5,133,.28)}
-body:has(#y-2025:target) .nav a[href="#y-2025"] i{color:#fff;background:rgba(255,255,255,.22)}
-/* 选了某一年就把其它年份收起来（只在这一年的分节本身被定位时生效） */
-body:has(.section[id^="y-"]:target) .section[id^="y-"]:not(:target){display:none}
-/* 被定位的分节不要顶到屏幕最上沿，留出与导航的呼吸 */
-.section[id^="y-"]{scroll-margin-top:16px}
 </style>
 </head>
 <body>
 <header class="hero"><div class="inner">
 <p class="kicker">Quantum Review Letters · Beta</p>
 <h1>QRL</h1>
-<p class="meta"><div>共 <b>25</b> 篇</div><div>最近一次检查 2026-11-05</div><div>生成于 2026-11-05 21:50</div></p>
+<p class="meta"><div>共 <b>25</b> 篇</div><div>最近一次检查 2026-11-05</div><div>生成于 2026-11-05 22:03</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-05.html">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a><a href="../qrl/index.html" class="active" aria-current="page">QRL</a><a href="../group/index.html">组内文章（测试版）</a></nav>
@@ -780,6 +782,6 @@ body:has(.section[id^="y-"]:target) .section[id^="y-"]:not(:target){display:none
 <b>数据来源</b>　Crossref 公开元数据、OpenAlex 摘要字段与 ScienceDirect 期刊目录。中文标题、简介与摘要译文由本机模型生成，仅供快速浏览；<b>学术引用请以英文原文为准</b>。<br>本页是独立栏目，收录范围与「日报」「月报」「专题」互不影响。
 </footer>
 </div>
-<a class="totop" href="#" aria-label="回到顶部">↑</a>
+<a class="totop" href="#" aria-label="回到顶部">回到顶部<i>↑</i></a>
 </body>
 </html>
