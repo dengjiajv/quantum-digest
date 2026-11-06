@@ -103,8 +103,7 @@ body{
 }
 .recent a:hover{color:var(--purple);border-bottom-color:var(--purple-soft)}
 .recent .doi{
-  flex:none;font-size:11.5px;color:var(--muted);
-  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  flex:none;font-size:11.5px;color:var(--muted);  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
 }
 @media (max-width:560px){
   .recent li{flex-wrap:wrap;gap:4px}
@@ -543,13 +542,30 @@ footer b{color:var(--ink2);font-weight:600}
   .entry details > summary{display:none}
   .entry details .en-abs{display:block}
 }
-</style>
+<style>
+.g-sort{display:flex;align-items:center;gap:10px;margin:0 0 18px;font-size:14px}
+.g-wrap>input{position:absolute;opacity:0;pointer-events:none}
+.g-sort label{cursor:pointer;color:var(--muted);font-weight:600;transition:color .15s}
+.g-sort .g-bar{color:#d6d6dc;user-select:none}
+/* 选中的那项显示黑色，未选显示灰色（用户 m13658） */
+#gsort-time:checked ~ .g-sort label[for="gsort-time"],
+#gsort-author:checked ~ .g-sort label[for="gsort-author"]{color:var(--ink)}
+#gsort-author:checked ~ .g-sort label[for="gsort-time"],
+#gsort-time:checked ~ .g-sort label[for="gsort-author"]{color:var(--muted)}
+/* 两套正文与两套导航互斥：默认显示「按时间」，选中「按作者」时整体互换。 */
+.g-author,.g-nav-author{display:none!important}
+#gsort-author:checked ~ .g-author{display:block!important}
+#gsort-author:checked ~ .nav .g-nav-author{display:flex!important}
+#gsort-author:checked ~ .g-time,
+#gsort-author:checked ~ .nav .g-nav-time{display:none!important}
+.g-note{margin:12px 0 0;font-size:12.5px;line-height:1.7;color:var(--muted)}
+</style></style>
 </head>
 <body>
 <header class="hero"><div class="inner">
 <p class="kicker">Group Articles · Beta</p>
 <h1>组内文章（测试版）</h1>
-<p class="meta"><div>占位页面，内容待补充</div><div>本页生成于 2026-11-06 13:31</div></p>
+<p class="meta"><div>共 <b>15</b> 篇</div><div>3 位导师 · 14 位第一作者</div><div>收录 2026-01-01 起</div><div>本页生成于 2026-11-06 18:57</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/index.html">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a><a href="../qrl/index.html">QRL</a><a href="../group/index.html" class="active" aria-current="page">组内文章（测试版）</a></nav>
@@ -557,12 +573,345 @@ footer b{color:var(--ink2);font-weight:600}
 <div class="gongxi">
 <p class="gt">喜报！李家萱发新文章了！</p>
 </div>
-<div class="preface"><p class="h">序 言</p></div>
 
-<nav class="nav"><p class="h">阅读导航</p><ul></ul></nav>
 
+
+<div class="g-wrap"><div class="preface"><p class="h">序 言</p><p>本栏汇总陈巍、王双、银振强三位老师参与署名的论文，按第一作者整理——也就是组里的学生与博后。栏目的视角始终是「谁做的这篇工作」：一位学生从入学到毕业发表的每一篇，都能在这里按姓名一次找齐。导师本人作为第一作者的文章不在本栏的收录重点之内，除非它同时是学生的成果。每条给出中英文标题、作者、卷页与中文摘要，点击 DOI 可直达原文；中文标题、导读与摘要译文均由模型生成，仅供快速浏览。</p><p class="g-note">本页自 2026-11-06 起首次收录在读研究生文章，至多涵盖 2026-01-01 起发表的文章，此前不再追溯。</p></div><input type="radio" name="gsort" id="gsort-time" checked>
+<input type="radio" name="gsort" id="gsort-author">
+<div class="g-sort"><label for="gsort-time">按时间排序</label><span class="g-bar">|</span><label for="gsort-author">按作者排序</label></div><nav class="nav"><p class="h">阅读导航</p>
+<ul class="g-nav-time"><li><a href="#y-2026">2026 年<i>15</i></a></li></ul>
+<ul class="g-nav-author"><li><a href="#au-fangxiangwang">Fang Xiang Wang<i>1</i></a></li><li><a href="#au-fengyulu">Feng Yu Lu<i>1</i></a></li><li><a href="#au-guanjiefanyuan">Guan Jie Fan Yuan<i>2</i></a></li><li><a href="#au-guanzhonghuang">Guanzhong Huang<i>1</i></a></li><li><a href="#au-haoyuchen">Hao Yu Chen<i>1</i></a></li><li><a href="#au-hongweili">Hong Wei Li<i>1</i></a></li><li><a href="#au-jialinchen">Jia Lin Chen<i>1</i></a></li><li><a href="#au-jianyuma">Jian Yu Ma<i>1</i></a></li><li><a href="#au-jiawenfan">Jia Wen Fan<i>1</i></a></li><li><a href="#au-jiaxuanli">Jia Xuan Li<i>1</i></a></li><li><a href="#au-xiangkang">Xiang Kang<i>1</i></a></li><li><a href="#au-xinglin">Xing Lin<i>1</i></a></li><li><a href="#au-zhenqiuzhong">Zhen Qiu Zhong<i>1</i></a></li><li><a href="#au-zhijianhu">Zhi Jian Hu<i>1</i></a></li></ul>
+</nav><div class="g-time"><section class="section" id="y-2026">
+<h2>2026 年<span class="cnt">15 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1103-w55c-w4pg">
+<p class="no">No. 01</p><h3>测量设备无关量子密钥分发中的光源时间不完美性<span class="en">Source temporal imperfections in measurement-device-independent quantum key distribution</span></h3>
+
+<p class="teaser">分析光源的时间域不完美性如何影响测量设备无关量子密钥分发的成码率与安全性，并给出相应的刻画与抑制办法。</p>
+<p class="body">（APS 未在 Crossref/OpenAlex 提供摘要，此处仅据标题概述）该工作研究测量设备无关量子密钥分发（MDI-QKD）中光源的时间不完美性——包括脉冲时间抖动、发射时刻漂移等与时间相关的非理想因素——如何影响协议的成码率与安全性，并给出对应的建模与抑制方案。</p>
+<p class="src"><span class="au">Zhi Jian Hu, Guan Jie Fan Yuan, Wei Xin Xie, Shuang Wang, Wei Chen, Zhen Qiang Yin, Fang Xiang Wang, De Yong He, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1103/w55c-w4pg" target="_blank" rel="noopener">10.1103/w55c-w4pg</a></p>
+</div>
+<div class="entry" id="a-10-1103-1b8r-r248">
+<p class="no">No. 02</p><h3>强噪声环境下的高速测量设备无关量子密钥分发<span class="en">High-Rate Measurement-Device-Independent Quantum Key Distribution under Intense Noise</span></h3>
+
+<p class="teaser">实现重复频率 2.5 GHz 的测量设备无关量子密钥分发系统，借助优势蒸馏在 425 kHz 噪声计数下仍能生成安全密钥，30 dB 信道衰减下密钥率达 kbps 量级。</p>
+<p class="body">测量设备无关量子密钥分发（MDI-QKD）是通向实用化量子通信的一条有前景的路径，但当前的高性能演示往往伴随高昂的开销，并且只能在孤立的环境中运行。在此，我们展示了一套高速 MDI-QKD 系统，其重复频率达到前所未有的 2.5 GHz，并通过引入优势蒸馏方法验证了其强大的噪声容限。在 425 kHz 的噪声计数下仍能高效生成安全密钥，这比孤立系统高出 4 个数量级。在 30 dB 信道衰减下，无需笨重且资源密集的探测装置即可实现 kbps 量级的安全密钥率。本工作为 QKD 的部署建立了一套完整的实用化方案，解决了在同时具备高安全性、高密钥率、环境鲁棒性和物理紧凑性的条件下实现实用量子安全网络这一长期难题。</p><details><summary>Abstract (English)</summary><div class="en-abs">Measurement-device-independent quantum key distribution (MDI-QKD) is a promising path toward practical quantum communication, but current high-performance demonstrations come at prohibitive overhead and isolated environments. Here, we present a high-speed MDI-QKD system operating at an unprecedented repetition frequency of 2.5 GHz and verify its strong noise tolerance by incorporating the advantage distillation method. The secure key is efficiently generated under 425 kHz noise counts, which is 4 orders of magnitude higher than isolated systems. A secure key rate with a kbps level is achieved under 30 dB channel attenuation without bulky, resource-intensive detection devices. Our Letter establishes a complete practical solution for QKD deployment and resolves the persistent difficulty of realizing practical quantum secure networks with advanced security, a high key rate, environmental robustness, and physical compactness.</div></details>
+<p class="src"><span class="au">Hong Wei Li, Wei Xin Xie, Chun Mei Zhang, Guan Jie Fan Yuan, Yu Long Wang, Yu Xuan Fan, Shuang Wang, Zhen Qiang Yin, Wei Chen, De Yong He, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1103/1b8r-r248" target="_blank" rel="noopener">10.1103/1b8r-r248</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry" id="a-10-1038-s41534-026-01377-x">
+<p class="no">No. 03</p><h3>可扩展量子网络中的全无调制器量子密钥分发架构<span class="en">Fully modulator-free architecture for quantum key distribution in scalable quantum networks</span></h3>
+
+<p class="teaser">提出并实验演示首个全无调制器的直接调制量子密钥分发架构，利用注入锁定与相干干涉同时控制相位和强度，在 30 dB 信道损耗下获得 4.78 kbps 的安全密钥率。</p>
+<p class="body">摘要 量子密钥分发（QKD）网络是迈向未来量子互联网的基础一步，已成为密集研究的焦点。类比经典光网络的架构可以看到，大容量骨干网通常依赖复杂的外调制，而对成本敏感的接入层则更青睐更简单、更紧凑、更经济的直接调制。作为量子网络的基石，当今的 QKD 网络同样具有这种骨干—接入的层级结构，但其实现仍严重依赖外调制器，致使接入层中直接调制 QKD 的生态位明显空缺。在此，我们提出并实验演示了首个全无调制器、全自由度的直接调制 QKD 架构，填补了这一空白。发射端将光注入锁定与相干光干涉相结合，无需外调制器即可同时实现相位与强度控制，从而能够制备任意量子态，同时保持与标准时间Bin（time-bin）编码接收端的天然兼容。我们的实验实现采用相对廉价的激光二极管和无源光学元件，在 30 dB 信道损耗下实现了 4.78 kbps 的安全密钥率，与传统的基于调制器的系统性能相当。通过填补 QKD 生态中长期存在的直接调制空白，本工作为接入层的部署难题提供了实用解决方案，并为紧凑、可扩展的 QKD 实现开辟了一条可行的新方向。</p><details><summary>Abstract (English)</summary><div class="en-abs">Abstract Quantum key distribution (QKD) networks represent a foundational step toward the future quantum internet and have become a focus of intensive research. By analogy with the architecture of classical optical networks, we can observe that the high-capacity backbone typically relies on complex external modulation, while the cost-sensitive access layer prefers simpler, more compact, and more economical direct modulation. As the cornerstone of quantum networks, today’s QKD networks share this backbone-access hierarchy, yet their implementations remain heavily reliant on external modulators, leaving a clear ecological niche unfilled for directly modulated QKD in the access layer. Here, we propose and experimentally demonstrate the first fully modulator-free, full-degree-of-freedom direct-modulation QKD architecture that fills this niche. The transmitter combines optical injection locking with coherent optical interference to achieve simultaneous phase and intensity control without external modulators, enabling arbitrary quantum-state preparation while preserving inherent compatibility with standard time-bin-encoding receivers. Built with relatively inexpensive laser diodes and passive optical components, our experimental implementation achieves a secure key rate of 4.78 kbps at 30 dB channel loss, matching the performance of conventional modulator-based systems. By filling the long-standing direct-modulation niche in the QKD ecosystem, this work delivers a practical solution to the access-layer deployment challenge and opens a viable new direction for compact, scalable QKD implementation.</div></details>
+<p class="src"><span class="au">Feng Yu Lu, Xiao Juan Huang, Yu Xuan Fan, Shuang Wang, Zhen Qiang Yin, Zi Tao Liu, Wei Chen, De Yong He, Guan Jie Fan Yuan, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1038/s41534-026-01377-x" target="_blank" rel="noopener">10.1038/s41534-026-01377-x</a></p>
+</div>
+<div class="entry" id="a-10-1364-optica-596777">
+<p class="no">No. 04</p><h3>具有自适应子空间划分的高维纠缠量子网络<span class="en">High-dimensional entangled quantum networks with adaptive subspace division</span></h3>
+
+<p class="teaser">构建城域尺度高维纠缠网络，采用偏振—时间Bin混合编码与主动子空间划分，传输距离较以往网络级高维实现提升三个数量级，并可与经典信号共存。</p>
+<p class="body">量子通信网络对安全信息传输和分布式量子技术至关重要。高维纠缠是此类网络的一种有前景的资源，因为它能够提升信息容量并提供更大的潜力。然而，其实际优势尚未得到充分探索，现有演示在真实条件下也未显示出相对于二维网络的明显优势。在此，我们展示了一个具有主动子空间划分的城域尺度高维纠缠网络，在密钥率、灵活性和抗噪性方面展现出潜在的实际优势。我们采用偏振—时间Bin混合编码，在单模光纤信道中分发高维纠缠。其传输距离比此前网络级高维实现高出三个数量级，同时主动相位补偿支持长期稳定运行。我们的网络还可与经典信号共存，其可重构的子空间划分提供了实用量子网络所需的适应性。这些结果展示了通往大规模、高性能量子通信网络的一条实用路径。</p><details><summary>Abstract (English)</summary><div class="en-abs">Quantum communication networks are essential for secure information transfer and distributed quantum technologies. High-dimensional entanglement is a promising resource for such networks because it can increase the information capacity and offer greater potential. However, its practical advantages have not been fully explored, and existing demonstrations have not shown clear benefits over two-dimensional networks under realistic conditions. Here, we demonstrate a metropolitan-scale high-dimensional entangled network with active subspace division, showing potential practical benefits in key rate, flexibility, and noise resilience. Using hybrid polarization-time-bin encoding, we distribute high-dimensional entanglement over single-mode fiber channels. The transmission distance exceeds previous network-level high-dimensional implementations by three orders of magnitude, while active phase compensation supports long-term stable operation. Our network can also coexist with classical signals, and its reconfigurable subspace division provides the adaptability needed for practical quantum networks. These results show a practical route toward large-scale, high-performance quantum communication networks.</div></details>
+<p class="src"><span class="au">Zhen Qiu Zhong, Xiao Hai Zhan, Jia Lin Chen, Shuang Wang, Zhen Qiang Yin, De Yong He, Wei Chen, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1364/optica.596777" target="_blank" rel="noopener">10.1364/optica.596777</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry" id="a-10-1038-s41567-026-03439-5">
+<p class="no">No. 05</p><h3>基于相干态的相对论性位置验证协议<span class="en">Relativistic position verification with coherent states</span></h3>
+
+<p class="teaser">在信息论框架下结合量子光学与相对论，利用相位随机化弱相干态，由相距2 km的两个验证者以优于75 m的精度安全验证证明者位置，并完成实验实现。</p>
+<p class="body">安全地确定一个实体的位置，可以支撑基于位置的交易授权和高价值目标追踪等方案。然而，在不可信证明者情形下，经典方法无法提供安全的位置验证，这意味着证明者可能就其实际位置误导验证者。在此，我们在信息论框架内结合量子光学与相对论，提出并实验实现了一种安全的位置验证协议。利用相位随机化弱相干态，相距2 km的两个验证者以优于75 m的精度安全地验证了证明者的位置。这些结果确立了安全的位置基认证作为一种实际可能性，为金融交易、灾害响应和认证安全通信中的应用铺平了道路。</p><details><summary>Abstract (English)</summary><div class="en-abs">Abstract A secure approach to determining the position of an entity can enable schemes such as position-based authorization for transactions and tracking of high-value targets. However, classical methods are incapable of providing secure position verification in the untrusted-prover case, meaning that a prover can mislead verifiers about its actual position. Here we propose and experimentally realize a secure position verification protocol that combines quantum optics and relativity within an information-theoretic framework. Using phase-randomized weak coherent states, two verifiers separated by 2 km securely verify the prover’s position with an accuracy better than 75 m. These results establish secure position-based authentication as a practical possibility, paving the way for applications in financial transactions, disaster response and authenticated secure communications.</div></details>
+<p class="src"><span class="au">Guan Jie Fan Yuan, Yang Guang Shan, Cong Zhang, Yu Long Wang, Yu Xuan Fan, Wei Xin Xie, De Yong He, Shuang Wang, Zhen Qiang Yin, Wei Chen, Song Nian Fu, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1038/s41567-026-03439-5" target="_blank" rel="noopener">10.1038/s41567-026-03439-5</a></p>
+</div>
+<div class="entry" id="a-10-1038-s41467-026-75658-6">
+<p class="no">No. 06</p><h3>微梳驱动的大规模全连接量子网络<span class="en">Microcomb-driven large-scale fully connected quantum network</span></h3>
+
+<p class="teaser">基于双光子Hong-Ou-Mandel干涉构建大规模全连接量子网络，利用集成孤子微梳与光子编码芯片实现高可见度HOM干涉及测量设备无关量子密钥分发，在200 km上实现信息论安全。</p>
+<p class="body">全连接量子网络可使每个用户同时与所有其他用户相连，是一种高度通用且鲁棒的组网架构。然而，此类网络的可扩展性在实际应用中仍是一大挑战。在此，我们构建了一个基于双光子Hong-Ou-Mandel（HOM）干涉的大规模全连接量子网络，即使网络提供商不可信，用户间的安全性也能得到保证。利用集成孤子微梳（SMC）和光子编码芯片，我们实现了精确、大规模并行的频率产生与锁定、高可见度HOM干涉以及测量设备无关（MDI）量子密钥分发。所提出的架构通过不可信的网络提供商，在200 km范围内实现了具有严格信息论安全性的全连接量子网络。该组网架构为跨城域与城际区域的大规模全连接MDI量子网络铺平了道路。</p><details><summary>Abstract (English)</summary><div class="en-abs">Abstract Fully connected quantum networks enable simultaneous connection of every user to every other user and are a highly versatile and robust networking architecture. However, the scalability of such networks remains a great challenge for practical applications. Here we construct a large-scale fully connected quantum network founded on two-photon Hong-Ou-Mandel (HOM) interference, where user-to-user security is guaranteed even with an untrusted network provider. Using integrated soliton microcomb (SMC) and photonic encoding chips, we realize precise, massively parallel frequency generation and locking, high-visibility HOM interference and measurement-device-independent (MDI) quantum key distribution. The proposed architecture enables a fully connected quantum network over 200 kilometers with strict information-theoretic security via an untrusted network provider. The implemented networking architecture paves the way for large-scale fully connected MDI quantum networks across metropolitan and intercity regions.</div></details>
+<p class="src"><span class="au">Fang Xiang Wang, Sheng Teng Zheng, Long Huang, Guo Wei Zhang, Guang Shu Wang, Wen Jing Ding, Ze Hao Wang, Shuang Wang, Zhen Qiang Yin, Chang Ling Zou, Brent E Little, Guochao Wang, Lingxiao Zhu, Guang Can Guo, Weiqiang Wang, Wenfu Zhang, Wei Chen, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1038/s41467-026-75658-6" target="_blank" rel="noopener">10.1038/s41467-026-75658-6</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry" id="a-10-1126-sciadv-aec2555">
+<p class="no">No. 07</p><h3>满足纯度约束的可认证量子随机数生成<span class="en">Certified Quantum Randomness within Purity Constraints</span></h3>
+
+<p class="teaser">提出一种基于测量不确定性的半器件无关量子随机数发生器，在纯度约束下估计条件最小熵，无需对光源与测量装置精确建模，并在商用光纤系统上实现了指数级的安全随机数扩展。</p>
+<p class="body">量子随机数发生器（QRNG）利用量子力学产生真正的随机性，但实际的实现方案会受到器件缺陷的影响，这些缺陷可能危及安全性。我们提出了一种基于纯度约束下测量不确定性的半器件无关 QRNG，用于估计条件最小熵。该协议不需要对二维光源和可数维测量装置进行详细的建模，并且对于测量装置所遭受的量子攻击仍然保持安全。我们揭示了由自然满足的纯度条件所隐含的一种不确定关系，利用测试态定义了随机性参数 C，并借助态与测量的幺正旋转对称性，将其与可提取随机性的解析界联系起来。利用广义熵积累定理，我们把单轮界推广到多轮，并获得了可组合的、能够抵御相干攻击的安全性。在标准商用光纤系统上实现时，这一高容忍度的协议实现了指数级的安全随机数扩展，并且适用于集成光子平台。</p><details><summary>Abstract (English)</summary><div class="en-abs">Quantum random number generators (QRNGs) exploit quantum mechanics to produce true randomness, but practical implementations suffer from device imperfections that can compromise security. We propose a semi–device-independent QRNG based on measurement uncertainty under purity constraints for conditional min-entropy estimation. Our protocol requires no detailed modeling of the two-dimensional source and the countable-dimensional measurement and remains secure against quantum attacks on measurement devices. We uncover an implicit uncertainty relation arising from naturally satisfied purity conditions, define a randomness parameter C using test states, and connect it to an analytical bound on extractable randomness via unitary rotation symmetries of states and measurements. Using the generalized entropy accumulation theorem, we extend the single-round bound to multirounds and obtain composable security against coherent attacks. Implemented on a standard commercial fiber system, our high-tolerance protocol achieves exponential secure randomness expansion and is suitable for integrated-photonic platforms.</div></details>
+<p class="src"><span class="au">Xing Lin, Rong Wang, Zhen Qiang Yin, Shuang Wang</span><br><span class="cite"></span><br><a href="https://doi.org/10.1126/sciadv.aec2555" target="_blank" rel="noopener">10.1126/sciadv.aec2555</a></p>
+</div>
+<div class="entry" id="a-10-1103-gvvj-17xy">
+<p class="no">No. 08</p><h3>基于后处理时域滤波的测量设备无关量子密钥分发<span class="en">Measurement-device-independent quantum key distribution based on postprocessing time-domain filtering</span></h3>
+
+<p class="teaser">在测量设备无关量子密钥分发的后处理环节引入时域滤波，以抑制噪声、提升成码率。</p>
+<p class="body">（APS 未在 Crossref/OpenAlex 提供摘要，此处仅据标题概述）该工作提出在测量设备无关量子密钥分发（MDI-QKD）的后处理阶段采用时域滤波，通过对探测事件做时间域筛选来压低暗计数与串扰带来的误码，从而改善协议的成码表现。</p>
+<p class="src"><span class="au">Hao Yu Chen, Zhen Qiu Zhong, Xiao Hai Zhan, Shuang Wang, Zhen Qiang Yin, De Yong He, Wei Chen, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1103/gvvj-17xy" target="_blank" rel="noopener">10.1103/gvvj-17xy</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry" id="a-10-1073-pnas-2521590123">
+<p class="no">No. 09</p><h3>紧凑态制备与探测的高速量子密钥分发<span class="en">High-rate quantum key distribution with compact state preparation and detection</span></h3>
+
+<p class="teaser">报道一套可部署的量子密钥分发系统，在 10 km 和 100 km 处分别实现 60.33 ± 0.03 Mbps 与 3.08 ± 0.20 Mbps 的安全码率，集成了双平行马赫–曾德尔编码器与 2.5 GHz 的小型化单光子探测器。</p>
+<p class="body">量子密钥分发（QKD）是实现信息论安全通信的一项颇具前景的技术。QKD 系统的实用性对于大规模网络部署至关重要，它既要求高的密钥生成速率，也要求量子态制备与探测模块的小型化。在这里，我们报道了一套可部署的 QKD 系统，其在 10 km 处实现了 60.33 ± 0.03 Mbps、在 100 km 处实现了 3.08 ± 0.20 Mbps 的安全密钥速率。该系统集成了一个双平行马赫–曾德尔编码器，通过紧凑设计中的单步调制实现对偏振态与诱骗态的高保真、统一制备。同时，我们研制了工作在 2.5 GHz 的小型化单光子雪崩探测器，在保持低噪声的同时实现了高计数率。这一高性能且紧凑的方案，为需要高容量和高带宽的城市安全通信网络确立了一条可行的路线。</p><details><summary>Abstract (English)</summary><div class="en-abs">Quantum key distribution (QKD) is a promising technology for information-theoretic secure communications. The practicality of QKD systems is critical for large-scale network deployment, requiring both high key generation rate and miniaturized modules for quantum-state preparation and detection. Here, we report a deployable QKD system that achieves secure key rates of 60.33 ± 0.03 Mbps at 10 km and 3.08 ± 0.20 Mbps at 100 km. The system integrates a dual-parallel Mach–Zehnder encoder to achieve high-fidelity, unified preparation of polarization and decoy states via single-step modulation in a compact design. Meanwhile, we developed miniaturized single-photon avalanche detectors operating at 2.5 GHz, achieving high count rates while maintaining low noise. This high-performance and compact solution establishes a feasible roadmap for urban secure communication networks that require high capacity and bandwidth.</div></details>
+<p class="src"><span class="au">Guan Jie Fan Yuan, Wei Xin Xie, De Yong He, Xiao Juan Huang, Shuang Wang, Zhen Qiang Yin, Wei Chen, Qiong Li, Hao Kun Mao, Guo Wei Zhang, Yu Long Wang, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1073/pnas.2521590123" target="_blank" rel="noopener">10.1073/pnas.2521590123</a></p>
+</div>
+<div class="entry" id="a-10-1364-ol-592502">
+<p class="no">No. 10</p><h3>基于厚氮化硅的宽带偏振无关马赫–曾德尔干涉仪<span class="en">Broadband polarization-insensitive Mach–Zehnder interferometer for quantum manipulation based on thick silicon nitride</span></h3>
+
+<p class="teaser">在厚度 650 nm 的氮化硅平台上设计并制备偏振无关马赫–曾德尔干涉仪，用粒子群优化的多模干涉器与分段变宽波导补偿材料双折射，单光子干涉可见度约 98.7%，偏振相关损耗低于 0.3 dB。</p>
+<p class="body">偏振无关的光子器件对于减轻光子传输过程中随机偏振演化所带来的不利影响、并实现对光的鲁棒量子操控至关重要。该工作在厚度为 650 nm 的氮化物平台上设计并演示了一种偏振无关的马赫–曾德尔干涉仪（MZI）。我们采用具有定制边缘形状和亚波长光栅结构的粒子群优化多模干涉器来设计该器件，并结合干涉仪两臂中分段变宽的波导设计，以补偿其固有的材料双折射。对所制备 MZI 的实验结果表明，即使在主动偏振扰动的情况下，单光子干涉可见度仍保持在约 98.7%，同时在 147 nm 的 1 dB 带宽内实现了小于 0.3 dB 的偏振相关损耗。这些特性使其成为量子密钥分发等集成量子光子系统中颇具前景的元件。</p><details><summary>Abstract (English)</summary><div class="en-abs">Polarization-insensitive photonic devices are essential for mitigating the adverse effects of random polarization evolution during photon transmission and implementing robust quantum manipulation of light. In this work, we design and demonstrate a polarization-insensitive Mach–Zehnder interferometer (MZI) on a nitride platform with the thickness of 650 nm. We design the device by adopting a particle-swarm-optimized multimode interferometer with tailored edge shapes and sub-wavelength grating structures, combined with a segmented width-varied waveguide design in the interferometer arms to compensate for their intrinsic material birefringences. The experimental results of the fabricated MZI maintain a single-photon interference visibility about 98.7% even under active polarization scrambling, while a polarization-dependent loss &lt; 0.3 dB over a 147 nm 1 dB bandwidth has been achieved. These properties make it a promising component for integrated quantum photonic systems such as quantum key distribution.</div></details>
+<p class="src"><span class="au">Guanzhong Huang, Wei Chen, Guowei Zhang, Fangxiang Wang, Shuang Wang, Deyong He, Zhenqiang Yin, Junming An, Guangcan Guo, Zhengfu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1364/ol.592502" target="_blank" rel="noopener">10.1364/ol.592502</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry" id="a-10-1126-sciadv-aed2420">
+<p class="no">No. 11</p><h3>抵抗相关泄漏源的量子密钥分发安全性<span class="en">Secure quantum key distribution against correlated leakage source</span></h3>
+
+<p class="teaser">提出相关光源下量子密钥分发的通用安全框架，借助广义链式法则首次给出有限密钥分析，并设计出可抵抗相关泄漏源的协议；仿真显示其对器件缺陷的容忍度显著优于现有协议。</p>
+<p class="body">量子密钥分发（QKD）基于量子力学提供信息论安全，然而其实际实现受制于光源不完美。其中，传输脉冲之间的相关性对QKD的理论安全性构成关键但研究不足的威胁。我们提出了相关光源下QKD安全性的通用框架，通过扩展和重组QKD轮次并利用广义链式法则，首次实现了有限密钥分析。受侧信道安全QKD的启发，我们设计了一种可抵抗相关泄漏源的协议，仅需相关范围以及所制备态真空分量的下界。我们的框架也适用于其他QKD协议，为解决相关性引发的漏洞提供了通用方法。仿真结果证明了该协议的有效性，并且与现有协议相比，其对不完美因素的容忍度显著更优。这项工作为封堵QKD中的安全漏洞、提升其实用性，并在现实约束下确保远距离、高性能的安全通信迈出了关键一步。</p><details><summary>Abstract (English)</summary><div class="en-abs">Quantum key distribution (QKD) provides information-theoretic security based on quantum mechanics, yet its implementation is hindered by source imperfections. Among these, correlations between transmitted pulses present a critical but underexplored threat to QKD’s theoretical security. We propose a general framework for QKD security under correlated sources, achieving the first finite-key analysis by extending and reorganizing QKD rounds using the generalized chain rule. Inspired by side-channel-secure QKD, we design a protocol secure against correlated leakage sources, requiring only the correlation range and lower bounds on the vacuum component of the prepared states. Our framework also applies to other QKD protocols, providing a general approach to address correlation-induced vulnerabilities. Simulations demonstrate the effectiveness of our protocol and its significantly superior tolerance to imperfections compared to existing protocols. This work provides a crucial step toward closing security loopholes in QKD, enhancing its practicality, and ensuring long-distance, high-performance secure communication under real-world constraints.</div></details>
+<p class="src"><span class="au">Jia Xuan Li, Yang Guang Shan, Rong Wang, Feng Yu Lu, Zhen Qiang Yin, Shuang Wang, Wei Chen, De Yong He, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1126/sciadv.aed2420" target="_blank" rel="noopener">10.1126/sciadv.aed2420</a></p>
+</div>
+<div class="entry" id="a-10-1063-5-0312071">
+<p class="no">No. 12</p><h3>激光洛伦兹与高斯线宽的同步测量<span class="en">Simultaneous measurement of the Lorentzian and Gaussian linewidths of laser</span></h3>
+
+<p class="teaser">利用干涉可见度对数随延时的二次依赖关系，区分白噪声贡献的线性项与闪变噪声贡献的二次项，提出一种同时测量激光洛伦兹线宽和高斯线宽的方法，并降低了对延迟光纤长度的依赖。</p>
+<p class="body">线宽是反映单频激光器相干性的关键参数。白噪声贡献的线宽已被广泛研究，而非白噪声（主要是闪变噪声）的影响却难以评估。然而，闪变噪声可导致远大于洛伦兹分量的线宽展宽。鉴于干涉可见度可作为相位噪声大小的有效指标，本工作将闪变噪声量化为高斯线宽，并分析干涉可见度与激光线宽之间的关系。我们发现可见度的对数与延时呈二次依赖：线性项源于白噪声，二次项源于闪变噪声。基于这一发现，我们提出一种同时测量洛伦兹线宽与高斯线宽的方法。该方法不仅避免了闪变噪声对洛伦兹线宽测量的干扰，还提供了评估闪变噪声大小的便捷途径。此外，该方法有效降低了线宽测量实验对延迟光纤长度的依赖，较短的光纤有助于减小环境扰动。更重要的是，高斯线宽的引入为激光线宽提供了更全面的表征。</p><details><summary>Abstract (English)</summary><div class="en-abs">Linewidth is a key parameter reflecting the coherence of single-frequency lasers. While the linewidth contributed by white noise has been widely studied, the effect of nonwhite noise, mainly flicker noise, is hard to evaluate. However, flicker noise can cause linewidth broadening much larger than the Lorentzian component. Considering that interference visibility can serve as an effective indicator of phase noise magnitude, in this work, we quantify flicker noise as Gaussian linewidth and analyze the relation between interference visibility and laser linewidth. We find that the logarithm of visibility depends quadratically on the delay: the linear term is due to white noise, and the quadratic term arises from flicker noise. Based on this finding, we propose a method to simultaneously measure Lorentzian and Gaussian linewidths. This approach not only avoids flicker noise interference in Lorentzian linewidth measurements but also provides a convenient way to assess the magnitude of flicker noise. In addition, this approach effectively reduces the dependence of the linewidth measurement experiment on the length of the delay fiber, with shorter fibers helping to minimize environmental disturbances. More importantly, the introduction of the Gaussian linewidth provides a more comprehensive characterization of the laser linewidth.</div></details>
+<p class="src"><span class="au">Jian Yu Ma, Jia Lin Chen, Shuang Wang, Zhen Qiang Yin, Wei Chen, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1063/5.0312071" target="_blank" rel="noopener">10.1063/5.0312071</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry" id="a-10-1364-ol-588676">
+<p class="no">No. 13</p><h3>基于薄膜铌酸锂微环谐振腔的全可调光滤波器<span class="en">Fully tunable optical filter based on a thin-film lithium niobate microring resonator</span></h3>
+
+<p class="teaser">基于薄膜铌酸锂微环谐振腔研制出2.5 mm×1.2 mm的全可调光滤波器，利用三个集成电光移相器独立且同时调节消光比、谐振波长和阻带宽度，消光比调谐范围约为0 dB至31 dB。</p>
+<p class="body">演示了一种薄膜铌酸锂平台上的全可调光滤波器，占地面积2.5 mm × 1.2 mm，其中消光比、谐振波长和阻带宽度可通过三个集成电光移相器独立且同时调节。该器件实现的消光比调谐范围约为0 dB至31 dB。在最大消光比下，阻带宽度可在8.8 GHz至9.6 GHz之间变化。此外，阻带中心波长可线性移动，调谐效率为1.95(8) pm/V。这项工作为片上光子系统提供了一种紧凑、电光可重构且具备独立多参数控制能力的滤波器架构。</p><details><summary>Abstract (English)</summary><div class="en-abs">A fully tunable optical filter on a thin-film lithium niobate platform with a footprint of 2.5 mm × 1.2 mm is demonstrated, in which the extinction ratio, resonant wavelength, and stopband width can be independently and simultaneously adjusted via three integrated electro-optic phase shifters. The device achieves an extinction-ratio tuning range from approximately 0 dB to 31 dB. At maximum extinction ratio, the stopband width can be varied between 8.8 GHz and 9.6 GHz. Moreover, the stopband center wavelength can be shifted linearly with a tuning efficiency of 1.95(8) pm/V. This work provides a compact, electro-optically reconfigurable filter architecture with independent multi-parameter control for on-chip photonic systems.</div></details>
+<p class="src"><span class="au">Jia Wen Fan, Jia Lin Chen, Yu Guo, Ji Zhe Zhang, Jia Qi Wang, Yuan Hao Yang, Xin Biao Xu, Chang Ling Zou, Guang Can Guo, Wei Chen, Bi Heng Liu</span><br><span class="cite"></span><br><a href="https://doi.org/10.1364/ol.588676" target="_blank" rel="noopener">10.1364/ol.588676</a></p>
+</div>
+<div class="entry" id="a-10-1103-nqz3-z1zb">
+<p class="no">No. 14</p><h3>通过裁剪致盲脉冲攻击高速量子密钥分发系统<span class="en">Hacking high-speed quantum-key-distribution systems by tailoring the blinding pulse</span></h3>
+
+<p class="teaser">提出一种通过裁剪致盲脉冲实施的高速量子密钥分发系统攻击方式，并分析其可行性与影响。</p>
+<p class="body">（APS 未在 Crossref/OpenAlex 提供摘要，此处仅据标题概述）该工作研究针对高速量子密钥分发系统的致盲攻击：通过裁剪（tailoring）致盲脉冲的波形与时序，诱导探测器进入线性工作模式，从而实施窃听；文中分析该攻击对实际系统的可行性与影响。</p>
+<p class="src"><span class="au">Xiang Kang, Jia Lin Chen, Ze Hao Wang, Shuang Wang, Zhen Qiang Yin, De Yong He, Wei Chen, Guan Jie Fan Yuan, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1103/nqz3-z1zb" target="_blank" rel="noopener">10.1103/nqz3-z1zb</a></p>
+</div>
+</div>
+<div class="row">
+<div class="entry" id="a-10-1364-ol-581722">
+<p class="no">No. 15</p><h3>可见光波段非悬空铌酸锂波导中的前向布里渊散射<span class="en">Forward Brillouin scattering in non-suspended lithium niobate waveguides at visible wavelengths</span></h3>
+
+<p class="teaser">在蓝宝石衬底薄膜铌酸锂平台上，通过周期调制波导宽度实现准相位匹配，克服可见光波段前向布里渊相互作用的难题；仅用 5 mW 声功率，就预测可在 0.36 mm 内获得 69.9% 的模间光转换效率。</p>
+<p class="body">蓝宝石衬底上的薄膜铌酸锂提供了一个极佳的平台，可在无悬空结构的情况下同时约束声学模式与光学模式，从而借助强压电耦合实现高效的声光调制。本文识别出在可见光波段实现前向布里渊相互作用所面临的挑战，并通过引入基于周期性波导宽度调制的准相位匹配方案克服了这一限制。我们预测，仅使用 5 mW 声功率，就可在 0.36 mm 长度上实现 69.9% 的模间光转换效率。本研究为集成平台上的高性能可见光波段声光器件开辟了道路。</p><details><summary>Abstract (English)</summary><div class="en-abs">Thin-film lithium niobate on sapphire provides an excellent platform for simultaneously confining acoustic and optical modes without suspended structures, enabling efficient acousto-optic modulation through strong piezoelectric coupling. Here, we identify the challenges in realizing the forward Brillouin interaction at visible wavelengths and overcome the limitation by introducing a quasi-phase-matching scheme through periodic waveguide width modulation. We predict a 69.9% inter-modal optical conversion efficiency over 0.36 mm using only 5 mW acoustic power. Our study paves the way for high-performance visible-wavelength acousto-optic devices on integrated platforms.</div></details>
+<p class="src"><span class="au">Jia Lin Chen, Yuan Hao Yang, Zheng Xu Zhu, Jia Qi Wang, Xin Biao Xu, Ming Li, Zheng Fu Han, Guang Can Guo, Wei Chen, Chang Ling Zou</span><br><span class="cite"></span><br><a href="https://doi.org/10.1364/ol.581722" target="_blank" rel="noopener">10.1364/ol.581722</a></p>
+</div>
+</div>
+</div>
+</section></div>
+<div class="g-author"><section class="section" id="au-fangxiangwang">
+<h2>Fang Xiang Wang<span class="cnt">1 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1038-s41467-026-75658-6">
+<p class="no">No. 01</p><h3>微梳驱动的大规模全连接量子网络<span class="en">Microcomb-driven large-scale fully connected quantum network</span></h3>
+
+<p class="teaser">基于双光子Hong-Ou-Mandel干涉构建大规模全连接量子网络，利用集成孤子微梳与光子编码芯片实现高可见度HOM干涉及测量设备无关量子密钥分发，在200 km上实现信息论安全。</p>
+<p class="body">全连接量子网络可使每个用户同时与所有其他用户相连，是一种高度通用且鲁棒的组网架构。然而，此类网络的可扩展性在实际应用中仍是一大挑战。在此，我们构建了一个基于双光子Hong-Ou-Mandel（HOM）干涉的大规模全连接量子网络，即使网络提供商不可信，用户间的安全性也能得到保证。利用集成孤子微梳（SMC）和光子编码芯片，我们实现了精确、大规模并行的频率产生与锁定、高可见度HOM干涉以及测量设备无关（MDI）量子密钥分发。所提出的架构通过不可信的网络提供商，在200 km范围内实现了具有严格信息论安全性的全连接量子网络。该组网架构为跨城域与城际区域的大规模全连接MDI量子网络铺平了道路。</p><details><summary>Abstract (English)</summary><div class="en-abs">Abstract Fully connected quantum networks enable simultaneous connection of every user to every other user and are a highly versatile and robust networking architecture. However, the scalability of such networks remains a great challenge for practical applications. Here we construct a large-scale fully connected quantum network founded on two-photon Hong-Ou-Mandel (HOM) interference, where user-to-user security is guaranteed even with an untrusted network provider. Using integrated soliton microcomb (SMC) and photonic encoding chips, we realize precise, massively parallel frequency generation and locking, high-visibility HOM interference and measurement-device-independent (MDI) quantum key distribution. The proposed architecture enables a fully connected quantum network over 200 kilometers with strict information-theoretic security via an untrusted network provider. The implemented networking architecture paves the way for large-scale fully connected MDI quantum networks across metropolitan and intercity regions.</div></details>
+<p class="src"><span class="au">Fang Xiang Wang, Sheng Teng Zheng, Long Huang, Guo Wei Zhang, Guang Shu Wang, Wen Jing Ding, Ze Hao Wang, Shuang Wang, Zhen Qiang Yin, Chang Ling Zou, Brent E Little, Guochao Wang, Lingxiao Zhu, Guang Can Guo, Weiqiang Wang, Wenfu Zhang, Wei Chen, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1038/s41467-026-75658-6" target="_blank" rel="noopener">10.1038/s41467-026-75658-6</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="au-fengyulu">
+<h2>Feng Yu Lu<span class="cnt">1 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1038-s41534-026-01377-x">
+<p class="no">No. 01</p><h3>可扩展量子网络中的全无调制器量子密钥分发架构<span class="en">Fully modulator-free architecture for quantum key distribution in scalable quantum networks</span></h3>
+
+<p class="teaser">提出并实验演示首个全无调制器的直接调制量子密钥分发架构，利用注入锁定与相干干涉同时控制相位和强度，在 30 dB 信道损耗下获得 4.78 kbps 的安全密钥率。</p>
+<p class="body">摘要 量子密钥分发（QKD）网络是迈向未来量子互联网的基础一步，已成为密集研究的焦点。类比经典光网络的架构可以看到，大容量骨干网通常依赖复杂的外调制，而对成本敏感的接入层则更青睐更简单、更紧凑、更经济的直接调制。作为量子网络的基石，当今的 QKD 网络同样具有这种骨干—接入的层级结构，但其实现仍严重依赖外调制器，致使接入层中直接调制 QKD 的生态位明显空缺。在此，我们提出并实验演示了首个全无调制器、全自由度的直接调制 QKD 架构，填补了这一空白。发射端将光注入锁定与相干光干涉相结合，无需外调制器即可同时实现相位与强度控制，从而能够制备任意量子态，同时保持与标准时间Bin（time-bin）编码接收端的天然兼容。我们的实验实现采用相对廉价的激光二极管和无源光学元件，在 30 dB 信道损耗下实现了 4.78 kbps 的安全密钥率，与传统的基于调制器的系统性能相当。通过填补 QKD 生态中长期存在的直接调制空白，本工作为接入层的部署难题提供了实用解决方案，并为紧凑、可扩展的 QKD 实现开辟了一条可行的新方向。</p><details><summary>Abstract (English)</summary><div class="en-abs">Abstract Quantum key distribution (QKD) networks represent a foundational step toward the future quantum internet and have become a focus of intensive research. By analogy with the architecture of classical optical networks, we can observe that the high-capacity backbone typically relies on complex external modulation, while the cost-sensitive access layer prefers simpler, more compact, and more economical direct modulation. As the cornerstone of quantum networks, today’s QKD networks share this backbone-access hierarchy, yet their implementations remain heavily reliant on external modulators, leaving a clear ecological niche unfilled for directly modulated QKD in the access layer. Here, we propose and experimentally demonstrate the first fully modulator-free, full-degree-of-freedom direct-modulation QKD architecture that fills this niche. The transmitter combines optical injection locking with coherent optical interference to achieve simultaneous phase and intensity control without external modulators, enabling arbitrary quantum-state preparation while preserving inherent compatibility with standard time-bin-encoding receivers. Built with relatively inexpensive laser diodes and passive optical components, our experimental implementation achieves a secure key rate of 4.78 kbps at 30 dB channel loss, matching the performance of conventional modulator-based systems. By filling the long-standing direct-modulation niche in the QKD ecosystem, this work delivers a practical solution to the access-layer deployment challenge and opens a viable new direction for compact, scalable QKD implementation.</div></details>
+<p class="src"><span class="au">Feng Yu Lu, Xiao Juan Huang, Yu Xuan Fan, Shuang Wang, Zhen Qiang Yin, Zi Tao Liu, Wei Chen, De Yong He, Guan Jie Fan Yuan, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1038/s41534-026-01377-x" target="_blank" rel="noopener">10.1038/s41534-026-01377-x</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="au-guanjiefanyuan">
+<h2>Guan Jie Fan Yuan<span class="cnt">2 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1038-s41567-026-03439-5">
+<p class="no">No. 01</p><h3>基于相干态的相对论性位置验证协议<span class="en">Relativistic position verification with coherent states</span></h3>
+
+<p class="teaser">在信息论框架下结合量子光学与相对论，利用相位随机化弱相干态，由相距2 km的两个验证者以优于75 m的精度安全验证证明者位置，并完成实验实现。</p>
+<p class="body">安全地确定一个实体的位置，可以支撑基于位置的交易授权和高价值目标追踪等方案。然而，在不可信证明者情形下，经典方法无法提供安全的位置验证，这意味着证明者可能就其实际位置误导验证者。在此，我们在信息论框架内结合量子光学与相对论，提出并实验实现了一种安全的位置验证协议。利用相位随机化弱相干态，相距2 km的两个验证者以优于75 m的精度安全地验证了证明者的位置。这些结果确立了安全的位置基认证作为一种实际可能性，为金融交易、灾害响应和认证安全通信中的应用铺平了道路。</p><details><summary>Abstract (English)</summary><div class="en-abs">Abstract A secure approach to determining the position of an entity can enable schemes such as position-based authorization for transactions and tracking of high-value targets. However, classical methods are incapable of providing secure position verification in the untrusted-prover case, meaning that a prover can mislead verifiers about its actual position. Here we propose and experimentally realize a secure position verification protocol that combines quantum optics and relativity within an information-theoretic framework. Using phase-randomized weak coherent states, two verifiers separated by 2 km securely verify the prover’s position with an accuracy better than 75 m. These results establish secure position-based authentication as a practical possibility, paving the way for applications in financial transactions, disaster response and authenticated secure communications.</div></details>
+<p class="src"><span class="au">Guan Jie Fan Yuan, Yang Guang Shan, Cong Zhang, Yu Long Wang, Yu Xuan Fan, Wei Xin Xie, De Yong He, Shuang Wang, Zhen Qiang Yin, Wei Chen, Song Nian Fu, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1038/s41567-026-03439-5" target="_blank" rel="noopener">10.1038/s41567-026-03439-5</a></p>
+</div>
+<div class="entry" id="a-10-1073-pnas-2521590123">
+<p class="no">No. 02</p><h3>紧凑态制备与探测的高速量子密钥分发<span class="en">High-rate quantum key distribution with compact state preparation and detection</span></h3>
+
+<p class="teaser">报道一套可部署的量子密钥分发系统，在 10 km 和 100 km 处分别实现 60.33 ± 0.03 Mbps 与 3.08 ± 0.20 Mbps 的安全码率，集成了双平行马赫–曾德尔编码器与 2.5 GHz 的小型化单光子探测器。</p>
+<p class="body">量子密钥分发（QKD）是实现信息论安全通信的一项颇具前景的技术。QKD 系统的实用性对于大规模网络部署至关重要，它既要求高的密钥生成速率，也要求量子态制备与探测模块的小型化。在这里，我们报道了一套可部署的 QKD 系统，其在 10 km 处实现了 60.33 ± 0.03 Mbps、在 100 km 处实现了 3.08 ± 0.20 Mbps 的安全密钥速率。该系统集成了一个双平行马赫–曾德尔编码器，通过紧凑设计中的单步调制实现对偏振态与诱骗态的高保真、统一制备。同时，我们研制了工作在 2.5 GHz 的小型化单光子雪崩探测器，在保持低噪声的同时实现了高计数率。这一高性能且紧凑的方案，为需要高容量和高带宽的城市安全通信网络确立了一条可行的路线。</p><details><summary>Abstract (English)</summary><div class="en-abs">Quantum key distribution (QKD) is a promising technology for information-theoretic secure communications. The practicality of QKD systems is critical for large-scale network deployment, requiring both high key generation rate and miniaturized modules for quantum-state preparation and detection. Here, we report a deployable QKD system that achieves secure key rates of 60.33 ± 0.03 Mbps at 10 km and 3.08 ± 0.20 Mbps at 100 km. The system integrates a dual-parallel Mach–Zehnder encoder to achieve high-fidelity, unified preparation of polarization and decoy states via single-step modulation in a compact design. Meanwhile, we developed miniaturized single-photon avalanche detectors operating at 2.5 GHz, achieving high count rates while maintaining low noise. This high-performance and compact solution establishes a feasible roadmap for urban secure communication networks that require high capacity and bandwidth.</div></details>
+<p class="src"><span class="au">Guan Jie Fan Yuan, Wei Xin Xie, De Yong He, Xiao Juan Huang, Shuang Wang, Zhen Qiang Yin, Wei Chen, Qiong Li, Hao Kun Mao, Guo Wei Zhang, Yu Long Wang, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1073/pnas.2521590123" target="_blank" rel="noopener">10.1073/pnas.2521590123</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="au-guanzhonghuang">
+<h2>Guanzhong Huang<span class="cnt">1 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1364-ol-592502">
+<p class="no">No. 01</p><h3>基于厚氮化硅的宽带偏振无关马赫–曾德尔干涉仪<span class="en">Broadband polarization-insensitive Mach–Zehnder interferometer for quantum manipulation based on thick silicon nitride</span></h3>
+
+<p class="teaser">在厚度 650 nm 的氮化硅平台上设计并制备偏振无关马赫–曾德尔干涉仪，用粒子群优化的多模干涉器与分段变宽波导补偿材料双折射，单光子干涉可见度约 98.7%，偏振相关损耗低于 0.3 dB。</p>
+<p class="body">偏振无关的光子器件对于减轻光子传输过程中随机偏振演化所带来的不利影响、并实现对光的鲁棒量子操控至关重要。该工作在厚度为 650 nm 的氮化物平台上设计并演示了一种偏振无关的马赫–曾德尔干涉仪（MZI）。我们采用具有定制边缘形状和亚波长光栅结构的粒子群优化多模干涉器来设计该器件，并结合干涉仪两臂中分段变宽的波导设计，以补偿其固有的材料双折射。对所制备 MZI 的实验结果表明，即使在主动偏振扰动的情况下，单光子干涉可见度仍保持在约 98.7%，同时在 147 nm 的 1 dB 带宽内实现了小于 0.3 dB 的偏振相关损耗。这些特性使其成为量子密钥分发等集成量子光子系统中颇具前景的元件。</p><details><summary>Abstract (English)</summary><div class="en-abs">Polarization-insensitive photonic devices are essential for mitigating the adverse effects of random polarization evolution during photon transmission and implementing robust quantum manipulation of light. In this work, we design and demonstrate a polarization-insensitive Mach–Zehnder interferometer (MZI) on a nitride platform with the thickness of 650 nm. We design the device by adopting a particle-swarm-optimized multimode interferometer with tailored edge shapes and sub-wavelength grating structures, combined with a segmented width-varied waveguide design in the interferometer arms to compensate for their intrinsic material birefringences. The experimental results of the fabricated MZI maintain a single-photon interference visibility about 98.7% even under active polarization scrambling, while a polarization-dependent loss &lt; 0.3 dB over a 147 nm 1 dB bandwidth has been achieved. These properties make it a promising component for integrated quantum photonic systems such as quantum key distribution.</div></details>
+<p class="src"><span class="au">Guanzhong Huang, Wei Chen, Guowei Zhang, Fangxiang Wang, Shuang Wang, Deyong He, Zhenqiang Yin, Junming An, Guangcan Guo, Zhengfu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1364/ol.592502" target="_blank" rel="noopener">10.1364/ol.592502</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="au-haoyuchen">
+<h2>Hao Yu Chen<span class="cnt">1 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1103-gvvj-17xy">
+<p class="no">No. 01</p><h3>基于后处理时域滤波的测量设备无关量子密钥分发<span class="en">Measurement-device-independent quantum key distribution based on postprocessing time-domain filtering</span></h3>
+
+<p class="teaser">在测量设备无关量子密钥分发的后处理环节引入时域滤波，以抑制噪声、提升成码率。</p>
+<p class="body">（APS 未在 Crossref/OpenAlex 提供摘要，此处仅据标题概述）该工作提出在测量设备无关量子密钥分发（MDI-QKD）的后处理阶段采用时域滤波，通过对探测事件做时间域筛选来压低暗计数与串扰带来的误码，从而改善协议的成码表现。</p>
+<p class="src"><span class="au">Hao Yu Chen, Zhen Qiu Zhong, Xiao Hai Zhan, Shuang Wang, Zhen Qiang Yin, De Yong He, Wei Chen, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1103/gvvj-17xy" target="_blank" rel="noopener">10.1103/gvvj-17xy</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="au-hongweili">
+<h2>Hong Wei Li<span class="cnt">1 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1103-1b8r-r248">
+<p class="no">No. 01</p><h3>强噪声环境下的高速测量设备无关量子密钥分发<span class="en">High-Rate Measurement-Device-Independent Quantum Key Distribution under Intense Noise</span></h3>
+
+<p class="teaser">实现重复频率 2.5 GHz 的测量设备无关量子密钥分发系统，借助优势蒸馏在 425 kHz 噪声计数下仍能生成安全密钥，30 dB 信道衰减下密钥率达 kbps 量级。</p>
+<p class="body">测量设备无关量子密钥分发（MDI-QKD）是通向实用化量子通信的一条有前景的路径，但当前的高性能演示往往伴随高昂的开销，并且只能在孤立的环境中运行。在此，我们展示了一套高速 MDI-QKD 系统，其重复频率达到前所未有的 2.5 GHz，并通过引入优势蒸馏方法验证了其强大的噪声容限。在 425 kHz 的噪声计数下仍能高效生成安全密钥，这比孤立系统高出 4 个数量级。在 30 dB 信道衰减下，无需笨重且资源密集的探测装置即可实现 kbps 量级的安全密钥率。本工作为 QKD 的部署建立了一套完整的实用化方案，解决了在同时具备高安全性、高密钥率、环境鲁棒性和物理紧凑性的条件下实现实用量子安全网络这一长期难题。</p><details><summary>Abstract (English)</summary><div class="en-abs">Measurement-device-independent quantum key distribution (MDI-QKD) is a promising path toward practical quantum communication, but current high-performance demonstrations come at prohibitive overhead and isolated environments. Here, we present a high-speed MDI-QKD system operating at an unprecedented repetition frequency of 2.5 GHz and verify its strong noise tolerance by incorporating the advantage distillation method. The secure key is efficiently generated under 425 kHz noise counts, which is 4 orders of magnitude higher than isolated systems. A secure key rate with a kbps level is achieved under 30 dB channel attenuation without bulky, resource-intensive detection devices. Our Letter establishes a complete practical solution for QKD deployment and resolves the persistent difficulty of realizing practical quantum secure networks with advanced security, a high key rate, environmental robustness, and physical compactness.</div></details>
+<p class="src"><span class="au">Hong Wei Li, Wei Xin Xie, Chun Mei Zhang, Guan Jie Fan Yuan, Yu Long Wang, Yu Xuan Fan, Shuang Wang, Zhen Qiang Yin, Wei Chen, De Yong He, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1103/1b8r-r248" target="_blank" rel="noopener">10.1103/1b8r-r248</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="au-jialinchen">
+<h2>Jia Lin Chen<span class="cnt">1 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1364-ol-581722">
+<p class="no">No. 01</p><h3>可见光波段非悬空铌酸锂波导中的前向布里渊散射<span class="en">Forward Brillouin scattering in non-suspended lithium niobate waveguides at visible wavelengths</span></h3>
+
+<p class="teaser">在蓝宝石衬底薄膜铌酸锂平台上，通过周期调制波导宽度实现准相位匹配，克服可见光波段前向布里渊相互作用的难题；仅用 5 mW 声功率，就预测可在 0.36 mm 内获得 69.9% 的模间光转换效率。</p>
+<p class="body">蓝宝石衬底上的薄膜铌酸锂提供了一个极佳的平台，可在无悬空结构的情况下同时约束声学模式与光学模式，从而借助强压电耦合实现高效的声光调制。本文识别出在可见光波段实现前向布里渊相互作用所面临的挑战，并通过引入基于周期性波导宽度调制的准相位匹配方案克服了这一限制。我们预测，仅使用 5 mW 声功率，就可在 0.36 mm 长度上实现 69.9% 的模间光转换效率。本研究为集成平台上的高性能可见光波段声光器件开辟了道路。</p><details><summary>Abstract (English)</summary><div class="en-abs">Thin-film lithium niobate on sapphire provides an excellent platform for simultaneously confining acoustic and optical modes without suspended structures, enabling efficient acousto-optic modulation through strong piezoelectric coupling. Here, we identify the challenges in realizing the forward Brillouin interaction at visible wavelengths and overcome the limitation by introducing a quasi-phase-matching scheme through periodic waveguide width modulation. We predict a 69.9% inter-modal optical conversion efficiency over 0.36 mm using only 5 mW acoustic power. Our study paves the way for high-performance visible-wavelength acousto-optic devices on integrated platforms.</div></details>
+<p class="src"><span class="au">Jia Lin Chen, Yuan Hao Yang, Zheng Xu Zhu, Jia Qi Wang, Xin Biao Xu, Ming Li, Zheng Fu Han, Guang Can Guo, Wei Chen, Chang Ling Zou</span><br><span class="cite"></span><br><a href="https://doi.org/10.1364/ol.581722" target="_blank" rel="noopener">10.1364/ol.581722</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="au-jianyuma">
+<h2>Jian Yu Ma<span class="cnt">1 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1063-5-0312071">
+<p class="no">No. 01</p><h3>激光洛伦兹与高斯线宽的同步测量<span class="en">Simultaneous measurement of the Lorentzian and Gaussian linewidths of laser</span></h3>
+
+<p class="teaser">利用干涉可见度对数随延时的二次依赖关系，区分白噪声贡献的线性项与闪变噪声贡献的二次项，提出一种同时测量激光洛伦兹线宽和高斯线宽的方法，并降低了对延迟光纤长度的依赖。</p>
+<p class="body">线宽是反映单频激光器相干性的关键参数。白噪声贡献的线宽已被广泛研究，而非白噪声（主要是闪变噪声）的影响却难以评估。然而，闪变噪声可导致远大于洛伦兹分量的线宽展宽。鉴于干涉可见度可作为相位噪声大小的有效指标，本工作将闪变噪声量化为高斯线宽，并分析干涉可见度与激光线宽之间的关系。我们发现可见度的对数与延时呈二次依赖：线性项源于白噪声，二次项源于闪变噪声。基于这一发现，我们提出一种同时测量洛伦兹线宽与高斯线宽的方法。该方法不仅避免了闪变噪声对洛伦兹线宽测量的干扰，还提供了评估闪变噪声大小的便捷途径。此外，该方法有效降低了线宽测量实验对延迟光纤长度的依赖，较短的光纤有助于减小环境扰动。更重要的是，高斯线宽的引入为激光线宽提供了更全面的表征。</p><details><summary>Abstract (English)</summary><div class="en-abs">Linewidth is a key parameter reflecting the coherence of single-frequency lasers. While the linewidth contributed by white noise has been widely studied, the effect of nonwhite noise, mainly flicker noise, is hard to evaluate. However, flicker noise can cause linewidth broadening much larger than the Lorentzian component. Considering that interference visibility can serve as an effective indicator of phase noise magnitude, in this work, we quantify flicker noise as Gaussian linewidth and analyze the relation between interference visibility and laser linewidth. We find that the logarithm of visibility depends quadratically on the delay: the linear term is due to white noise, and the quadratic term arises from flicker noise. Based on this finding, we propose a method to simultaneously measure Lorentzian and Gaussian linewidths. This approach not only avoids flicker noise interference in Lorentzian linewidth measurements but also provides a convenient way to assess the magnitude of flicker noise. In addition, this approach effectively reduces the dependence of the linewidth measurement experiment on the length of the delay fiber, with shorter fibers helping to minimize environmental disturbances. More importantly, the introduction of the Gaussian linewidth provides a more comprehensive characterization of the laser linewidth.</div></details>
+<p class="src"><span class="au">Jian Yu Ma, Jia Lin Chen, Shuang Wang, Zhen Qiang Yin, Wei Chen, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1063/5.0312071" target="_blank" rel="noopener">10.1063/5.0312071</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="au-jiawenfan">
+<h2>Jia Wen Fan<span class="cnt">1 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1364-ol-588676">
+<p class="no">No. 01</p><h3>基于薄膜铌酸锂微环谐振腔的全可调光滤波器<span class="en">Fully tunable optical filter based on a thin-film lithium niobate microring resonator</span></h3>
+
+<p class="teaser">基于薄膜铌酸锂微环谐振腔研制出2.5 mm×1.2 mm的全可调光滤波器，利用三个集成电光移相器独立且同时调节消光比、谐振波长和阻带宽度，消光比调谐范围约为0 dB至31 dB。</p>
+<p class="body">演示了一种薄膜铌酸锂平台上的全可调光滤波器，占地面积2.5 mm × 1.2 mm，其中消光比、谐振波长和阻带宽度可通过三个集成电光移相器独立且同时调节。该器件实现的消光比调谐范围约为0 dB至31 dB。在最大消光比下，阻带宽度可在8.8 GHz至9.6 GHz之间变化。此外，阻带中心波长可线性移动，调谐效率为1.95(8) pm/V。这项工作为片上光子系统提供了一种紧凑、电光可重构且具备独立多参数控制能力的滤波器架构。</p><details><summary>Abstract (English)</summary><div class="en-abs">A fully tunable optical filter on a thin-film lithium niobate platform with a footprint of 2.5 mm × 1.2 mm is demonstrated, in which the extinction ratio, resonant wavelength, and stopband width can be independently and simultaneously adjusted via three integrated electro-optic phase shifters. The device achieves an extinction-ratio tuning range from approximately 0 dB to 31 dB. At maximum extinction ratio, the stopband width can be varied between 8.8 GHz and 9.6 GHz. Moreover, the stopband center wavelength can be shifted linearly with a tuning efficiency of 1.95(8) pm/V. This work provides a compact, electro-optically reconfigurable filter architecture with independent multi-parameter control for on-chip photonic systems.</div></details>
+<p class="src"><span class="au">Jia Wen Fan, Jia Lin Chen, Yu Guo, Ji Zhe Zhang, Jia Qi Wang, Yuan Hao Yang, Xin Biao Xu, Chang Ling Zou, Guang Can Guo, Wei Chen, Bi Heng Liu</span><br><span class="cite"></span><br><a href="https://doi.org/10.1364/ol.588676" target="_blank" rel="noopener">10.1364/ol.588676</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="au-jiaxuanli">
+<h2>Jia Xuan Li<span class="cnt">1 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1126-sciadv-aed2420">
+<p class="no">No. 01</p><h3>抵抗相关泄漏源的量子密钥分发安全性<span class="en">Secure quantum key distribution against correlated leakage source</span></h3>
+
+<p class="teaser">提出相关光源下量子密钥分发的通用安全框架，借助广义链式法则首次给出有限密钥分析，并设计出可抵抗相关泄漏源的协议；仿真显示其对器件缺陷的容忍度显著优于现有协议。</p>
+<p class="body">量子密钥分发（QKD）基于量子力学提供信息论安全，然而其实际实现受制于光源不完美。其中，传输脉冲之间的相关性对QKD的理论安全性构成关键但研究不足的威胁。我们提出了相关光源下QKD安全性的通用框架，通过扩展和重组QKD轮次并利用广义链式法则，首次实现了有限密钥分析。受侧信道安全QKD的启发，我们设计了一种可抵抗相关泄漏源的协议，仅需相关范围以及所制备态真空分量的下界。我们的框架也适用于其他QKD协议，为解决相关性引发的漏洞提供了通用方法。仿真结果证明了该协议的有效性，并且与现有协议相比，其对不完美因素的容忍度显著更优。这项工作为封堵QKD中的安全漏洞、提升其实用性，并在现实约束下确保远距离、高性能的安全通信迈出了关键一步。</p><details><summary>Abstract (English)</summary><div class="en-abs">Quantum key distribution (QKD) provides information-theoretic security based on quantum mechanics, yet its implementation is hindered by source imperfections. Among these, correlations between transmitted pulses present a critical but underexplored threat to QKD’s theoretical security. We propose a general framework for QKD security under correlated sources, achieving the first finite-key analysis by extending and reorganizing QKD rounds using the generalized chain rule. Inspired by side-channel-secure QKD, we design a protocol secure against correlated leakage sources, requiring only the correlation range and lower bounds on the vacuum component of the prepared states. Our framework also applies to other QKD protocols, providing a general approach to address correlation-induced vulnerabilities. Simulations demonstrate the effectiveness of our protocol and its significantly superior tolerance to imperfections compared to existing protocols. This work provides a crucial step toward closing security loopholes in QKD, enhancing its practicality, and ensuring long-distance, high-performance secure communication under real-world constraints.</div></details>
+<p class="src"><span class="au">Jia Xuan Li, Yang Guang Shan, Rong Wang, Feng Yu Lu, Zhen Qiang Yin, Shuang Wang, Wei Chen, De Yong He, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1126/sciadv.aed2420" target="_blank" rel="noopener">10.1126/sciadv.aed2420</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="au-xiangkang">
+<h2>Xiang Kang<span class="cnt">1 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1103-nqz3-z1zb">
+<p class="no">No. 01</p><h3>通过裁剪致盲脉冲攻击高速量子密钥分发系统<span class="en">Hacking high-speed quantum-key-distribution systems by tailoring the blinding pulse</span></h3>
+
+<p class="teaser">提出一种通过裁剪致盲脉冲实施的高速量子密钥分发系统攻击方式，并分析其可行性与影响。</p>
+<p class="body">（APS 未在 Crossref/OpenAlex 提供摘要，此处仅据标题概述）该工作研究针对高速量子密钥分发系统的致盲攻击：通过裁剪（tailoring）致盲脉冲的波形与时序，诱导探测器进入线性工作模式，从而实施窃听；文中分析该攻击对实际系统的可行性与影响。</p>
+<p class="src"><span class="au">Xiang Kang, Jia Lin Chen, Ze Hao Wang, Shuang Wang, Zhen Qiang Yin, De Yong He, Wei Chen, Guan Jie Fan Yuan, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1103/nqz3-z1zb" target="_blank" rel="noopener">10.1103/nqz3-z1zb</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="au-xinglin">
+<h2>Xing Lin<span class="cnt">1 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1126-sciadv-aec2555">
+<p class="no">No. 01</p><h3>满足纯度约束的可认证量子随机数生成<span class="en">Certified Quantum Randomness within Purity Constraints</span></h3>
+
+<p class="teaser">提出一种基于测量不确定性的半器件无关量子随机数发生器，在纯度约束下估计条件最小熵，无需对光源与测量装置精确建模，并在商用光纤系统上实现了指数级的安全随机数扩展。</p>
+<p class="body">量子随机数发生器（QRNG）利用量子力学产生真正的随机性，但实际的实现方案会受到器件缺陷的影响，这些缺陷可能危及安全性。我们提出了一种基于纯度约束下测量不确定性的半器件无关 QRNG，用于估计条件最小熵。该协议不需要对二维光源和可数维测量装置进行详细的建模，并且对于测量装置所遭受的量子攻击仍然保持安全。我们揭示了由自然满足的纯度条件所隐含的一种不确定关系，利用测试态定义了随机性参数 C，并借助态与测量的幺正旋转对称性，将其与可提取随机性的解析界联系起来。利用广义熵积累定理，我们把单轮界推广到多轮，并获得了可组合的、能够抵御相干攻击的安全性。在标准商用光纤系统上实现时，这一高容忍度的协议实现了指数级的安全随机数扩展，并且适用于集成光子平台。</p><details><summary>Abstract (English)</summary><div class="en-abs">Quantum random number generators (QRNGs) exploit quantum mechanics to produce true randomness, but practical implementations suffer from device imperfections that can compromise security. We propose a semi–device-independent QRNG based on measurement uncertainty under purity constraints for conditional min-entropy estimation. Our protocol requires no detailed modeling of the two-dimensional source and the countable-dimensional measurement and remains secure against quantum attacks on measurement devices. We uncover an implicit uncertainty relation arising from naturally satisfied purity conditions, define a randomness parameter C using test states, and connect it to an analytical bound on extractable randomness via unitary rotation symmetries of states and measurements. Using the generalized entropy accumulation theorem, we extend the single-round bound to multirounds and obtain composable security against coherent attacks. Implemented on a standard commercial fiber system, our high-tolerance protocol achieves exponential secure randomness expansion and is suitable for integrated-photonic platforms.</div></details>
+<p class="src"><span class="au">Xing Lin, Rong Wang, Zhen Qiang Yin, Shuang Wang</span><br><span class="cite"></span><br><a href="https://doi.org/10.1126/sciadv.aec2555" target="_blank" rel="noopener">10.1126/sciadv.aec2555</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="au-zhenqiuzhong">
+<h2>Zhen Qiu Zhong<span class="cnt">1 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1364-optica-596777">
+<p class="no">No. 01</p><h3>具有自适应子空间划分的高维纠缠量子网络<span class="en">High-dimensional entangled quantum networks with adaptive subspace division</span></h3>
+
+<p class="teaser">构建城域尺度高维纠缠网络，采用偏振—时间Bin混合编码与主动子空间划分，传输距离较以往网络级高维实现提升三个数量级，并可与经典信号共存。</p>
+<p class="body">量子通信网络对安全信息传输和分布式量子技术至关重要。高维纠缠是此类网络的一种有前景的资源，因为它能够提升信息容量并提供更大的潜力。然而，其实际优势尚未得到充分探索，现有演示在真实条件下也未显示出相对于二维网络的明显优势。在此，我们展示了一个具有主动子空间划分的城域尺度高维纠缠网络，在密钥率、灵活性和抗噪性方面展现出潜在的实际优势。我们采用偏振—时间Bin混合编码，在单模光纤信道中分发高维纠缠。其传输距离比此前网络级高维实现高出三个数量级，同时主动相位补偿支持长期稳定运行。我们的网络还可与经典信号共存，其可重构的子空间划分提供了实用量子网络所需的适应性。这些结果展示了通往大规模、高性能量子通信网络的一条实用路径。</p><details><summary>Abstract (English)</summary><div class="en-abs">Quantum communication networks are essential for secure information transfer and distributed quantum technologies. High-dimensional entanglement is a promising resource for such networks because it can increase the information capacity and offer greater potential. However, its practical advantages have not been fully explored, and existing demonstrations have not shown clear benefits over two-dimensional networks under realistic conditions. Here, we demonstrate a metropolitan-scale high-dimensional entangled network with active subspace division, showing potential practical benefits in key rate, flexibility, and noise resilience. Using hybrid polarization-time-bin encoding, we distribute high-dimensional entanglement over single-mode fiber channels. The transmission distance exceeds previous network-level high-dimensional implementations by three orders of magnitude, while active phase compensation supports long-term stable operation. Our network can also coexist with classical signals, and its reconfigurable subspace division provides the adaptability needed for practical quantum networks. These results show a practical route toward large-scale, high-performance quantum communication networks.</div></details>
+<p class="src"><span class="au">Zhen Qiu Zhong, Xiao Hai Zhan, Jia Lin Chen, Shuang Wang, Zhen Qiang Yin, De Yong He, Wei Chen, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1364/optica.596777" target="_blank" rel="noopener">10.1364/optica.596777</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="au-zhijianhu">
+<h2>Zhi Jian Hu<span class="cnt">1 篇</span></h2>
+<div class="entries grid2">
+<div class="row">
+<div class="entry" id="a-10-1103-w55c-w4pg">
+<p class="no">No. 01</p><h3>测量设备无关量子密钥分发中的光源时间不完美性<span class="en">Source temporal imperfections in measurement-device-independent quantum key distribution</span></h3>
+
+<p class="teaser">分析光源的时间域不完美性如何影响测量设备无关量子密钥分发的成码率与安全性，并给出相应的刻画与抑制办法。</p>
+<p class="body">（APS 未在 Crossref/OpenAlex 提供摘要，此处仅据标题概述）该工作研究测量设备无关量子密钥分发（MDI-QKD）中光源的时间不完美性——包括脉冲时间抖动、发射时刻漂移等与时间相关的非理想因素——如何影响协议的成码率与安全性，并给出对应的建模与抑制方案。</p>
+<p class="src"><span class="au">Zhi Jian Hu, Guan Jie Fan Yuan, Wei Xin Xie, Shuang Wang, Wei Chen, Zhen Qiang Yin, Fang Xiang Wang, De Yong He, Guang Can Guo, Zheng Fu Han</span><br><span class="cite"></span><br><a href="https://doi.org/10.1103/w55c-w4pg" target="_blank" rel="noopener">10.1103/w55c-w4pg</a></p>
+</div>
+</div>
+</div>
+</section></div></div>
 <footer>
-<b>数据来源</b>　APS 系列（Phys. Rev. Lett.、Phys. Rev. X）、Nature 系列（Nature、Nat. Phys.、Nat. Photon.、Nat. Commun.、Commun. Phys.、Light Sci. Appl.）、Science 系列（Science、Sci. Adv.）、Optica 与 PNAS 官方网站及 Crossref。中文标题、简介与摘要译文由本机模型生成，仅供快速浏览；<b>学术引用请以英文原文为准</b>。<br>本页是预留栏目，作者与分类尚未填写。
+<b>数据来源</b>　APS 系列（Phys. Rev. Lett.、Phys. Rev. X）、Nature 系列（Nature、Nat. Phys.、Nat. Photon.、Nat. Commun.、Commun. Phys.、Light Sci. Appl.）、Science 系列（Science、Sci. Adv.）、Optica 与 PNAS 官方网站及 Crossref。中文标题、简介与摘要译文由本机模型生成，仅供快速浏览；<b>学术引用请以英文原文为准</b>。<br>本栏与「日报」「月报」「专题」「QRL」互不影响，只按第一作者收录本组工作。
 </footer>
 </div>
 <a class="totop" href="#" aria-label="回到顶部">回到顶部<i>↑</i></a>
