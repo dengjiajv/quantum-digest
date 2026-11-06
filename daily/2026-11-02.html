@@ -359,6 +359,16 @@ body{
 .tag.ph{background:#eaf1fb;color:#2563a8;border-color:#cfdff4}
 .tag.fb{background:#fdf3e0;color:#8a5a12;border-color:#f0dfba}
 .tag.cover{background:#fdecec;color:#a32626;border-color:#f3cccc}
+/* 组内文章页的期刊角标（用户 m13953）：圆角框 + 实心五角星 + 刊名缩写。
+   只在「日报/月报也收录的那 12 本重点刊」上出现，其余刊不挂，避免满页都是框。 */
+.jtag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11.5px;font-weight:700;line-height:1.5;
+  color:#8a5a12;background:#fdf3e0;border:1px solid #eddcb8;
+  border-radius:7px;padding:2px 9px 2px 8px;
+}
+.jtag i{font-style:normal;color:#c8901c;font-size:12px}
+.jtags{margin:0 0 10px;display:flex;flex-wrap:wrap;gap:6px}
 
 .entry .teaser{
   margin:0 0 12px;padding:11px 14px;border-radius:9px;
@@ -548,7 +558,7 @@ footer b{color:var(--ink2);font-weight:600}
 <header class="hero"><div class="inner">
 <p class="kicker">Quantum Information Digest · 2026-11-02</p>
 <h1>量子信息速递 · 11 月 2 日</h1>
-<p class="meta"><div>周一 · 本期共 <b>1</b> 篇</div><div>论文发表于 2026-11-02</div><div>生成于 2026-11-06 18:57</div></p>
+<p class="meta"><div>周一 · 本期共 <b>1</b> 篇</div><div>论文发表于 2026-11-02</div><div>生成于 2026-11-06 19:34</div></p>
 </div></header>
 <div class="wrap">
 <nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-06.html" class="active" aria-current="page">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a><a href="../qrl/index.html">QRL</a><a href="../group/index.html">组内文章（测试版）</a></nav>
