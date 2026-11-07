@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="format-detection" content="telephone=no">
+<title>量子信息速递 · 11 月 8 日</title>
+<style>
+:root{
+  --ink:#1d1d1f; --ink2:#3c3c43; --muted:#86868b; --line:#e6e6eb;
+  --bg:#f6f6f8; --card:#ffffff;
+  --purple:#7f0585; --purple-soft:#f7ecf8;
+  --teal:#176b73; --teal-soft:#eaf4f4;
+  --gold:#a8741a; --gold-soft:#fdf3e0;
+  --radius:14px;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;padding:0 0 72px;background:var(--bg);color:var(--ink);
+  font:16px/1.8 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+       "Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+
+/* ---- 头部 ---- */
+/* 头部通栏直角：圆角会在下方左右两角留出缺口（底色透出来），
+   与下面内容区的直角卡片放在一起显得没对齐，所以这里是矩形。 */
+.hero{
+  background:linear-gradient(135deg,var(--purple) 0%,#5c1a86 58%,var(--teal) 100%);
+  color:#fff;padding:40px 28px 34px;margin-bottom:26px;
+  border-radius:0;
+}
+.hero .inner{max-width:1280px;margin:0 auto}
+.hero .kicker{
+  font-size:12px;letter-spacing:3px;text-transform:uppercase;opacity:.72;
+  margin:0 0 10px;font-weight:600;
+}
+.hero h1{margin:0 0 10px;font-size:27px;line-height:1.35;font-weight:700;letter-spacing:.4px}
+.hero .meta{margin:0;font-size:13.5px;opacity:.86;line-height:1.9}
+.hero .meta b{font-weight:600;opacity:1}
+
+/* ---- 版块切换 ---- */
+/* 当前所在版块用「实心紫底 + 内阴影」强调：实心底色在一排白胶囊里最抓眼，
+   和内阴影一起构成轻微的「按下去」感，和头部渐变同色系。
+   不用边框颜色是因为边框在浅色背景上对比度不足，远看分不出来。 */
+.tabs{
+  display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;
+}
+.tabs a{
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  box-shadow:var(--shadow);padding:8px 20px;text-decoration:none;
+  font-size:14px;font-weight:700;color:var(--ink2);
+  transition:border-color .15s,color .15s,background .15s,box-shadow .15s;
+}
+.tabs a:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-soft)}
+.tabs a.active{
+  background:var(--purple);border-color:var(--purple);color:#fff;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.22),0 2px 8px rgba(127,5,133,.28);
+}
+.tabs a.active:hover{background:#6d0472;color:#fff}
+
+/* ---- 序言 ---- */
+.preface{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;margin:0 0 22px;box-shadow:var(--shadow);
+}
+.preface .h{
+  font-size:12.5px;font-weight:700;letter-spacing:2px;color:var(--purple);
+  margin:0 0 8px;
+}
+.preface p{margin:0;font-size:14px;line-height:1.85;color:var(--ink2)}
+
+/* ---- 最近更新 ---- */
+/* 用户 m10946：「『序言』这一栏下方新增一栏『最近更新』，里面放最近更新的若干篇文章的
+   标题或 doi，其链接到本页面下方对应文章卡片处。」样式与「序言」同一副骨架，
+   这样插在两块之间不会显得是另一个站的东西。 */
+.recent{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;margin:0 0 22px;box-shadow:var(--shadow);
+}
+.recent .h{
+  font-size:12.5px;font-weight:700;letter-spacing:2px;color:var(--purple);
+  margin:0 0 8px;
+}
+.recent ul{list-style:none;margin:0;padding:0}
+.recent li{
+  display:flex;gap:10px;align-items:baseline;
+  padding:7px 0;border-top:1px solid var(--line);
+}
+.recent li:first-child{border-top:0;padding-top:0}
+/* 日期做成定宽小标签：长短不一的标题靠它对齐，一眼能比出新旧。 */
+.recent .d{
+  flex:none;width:76px;font-size:12px;font-weight:700;color:var(--muted);
+  font-variant-numeric:tabular-nums;
+}
+.recent a{
+  color:var(--ink);text-decoration:none;font-size:13.5px;line-height:1.6;
+  border-bottom:1px solid transparent;
+}
+.recent a:hover{color:var(--purple);border-bottom-color:var(--purple-soft)}
+.recent .doi{
+  flex:none;font-size:11.5px;color:var(--muted);  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+@media (max-width:560px){
+  .recent li{flex-wrap:wrap;gap:4px}
+  .recent .doi{width:100%}
+}
+
+/* ---- QRL 喜报卡片 ---- */
+/* 用户 m07802 当时要「红金土味大卡片」，经过 m10591（去红底）、m10946（透明框）、
+   到 m11527 最终定为：**与站内其它卡片同款的白底卡片**，只留一行大字的标题。
+   所以这里不再有背景图、红金渐变、烫金包角、灯笼——一张普通卡片，靠字撑住视觉。 */
+.gongxi{
+  position:relative;margin:0 0 24px;padding:30px 26px;text-align:center;
+  border-radius:var(--radius);overflow:hidden;isolation:isolate;
+  /* 用户 m11527：「请清空背景图，保持与其他卡片相同的白色底色」 */
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
+  /* 与旧版同高：换设计不换占位，页面不会因为去掉背景图而缩短 */
+  min-height:250px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.gongxi .gt{
+  margin:0;
+  /* 用户 m12053：「字号可以放大，不超过该横栏长度即可」。
+     所以字号不写死，让它跟着**卡片内宽**走。这行字「喜报！QRL 发新文章了！」是
+     12 个字符 + 11 处 2px 字距，宽度模型是 「11.45 × 字号 + 22」（微软雅黑实测，
+     两个字号点 34.24px→415px、90.13px→1050px 反解出来的一致值）。
+     早先写过 11.05 的比值，那是继承 Segoe UI 时代量的，换雅黑后拉丁字母变宽就顶成两行了。
+     卡片内宽 = 视口宽 − 56（.wrap 左右 padding）− 52（卡片左右 padding）− 2（边框）。
+     反解「占内宽 95%」：字号 = (0.95 × 内宽 − 22) ÷ 11.45 ≈ 0.081 × 内宽。
+     公式里减 126 而不是 110，多留 16px 吸收「100vw 含滚动条、innerWidth 不含」的差值。
+     上限 95px 是 .wrap 到 1280 封顶（内宽 1170）后的对应值；下限 14px 兜住 320px 那一档。
+     验收标准：任何宽度下 lines 必须为 1，且文字宽/内宽 ≈ 95%（换行或超过 100% 都算失败）。 */
+  font-size:clamp(14px, calc((100vw - 126px) * .081), 95px);
+  line-height:1.16;font-weight:900;
+  letter-spacing:2px;
+  /* 用户 m12015：喜报这一行的中英文**统一**用微软雅黑。
+     m11973 曾把「QRL」单独换成 Times New Roman，这条要求把它又收回来了——
+     现在三个字母与前后汉字同族，不再有衬线/无衬线的跳变。
+     中文名「微软雅黑」也列进栈里：某些精简过的 Windows 只认本地化家族名。 */
+  font-family:"Microsoft YaHei","微软雅黑","PingFang SC","Hiragino Sans GB",
+    "Source Han Sans SC","Noto Sans CJK SC",sans-serif;
+  /* 兜底色：万一浏览器不支持 background-clip:text，还是有一行实色字，不会变透明 */
+  color:#d92b7a;
+}
+/* 用户 m11527：「我需要的是斜向渐变的效果，而不是逐字渐变；并且，作为 gif，
+   应当有渐变效果向右流动的动画效果」。
+
+   做法：整行字用**一条斜向渐变**（135deg，左上→右下），再用 background-clip:text
+   把渐变裁进字形；动画只平移 background-position。一个字一个颜色那种写法已经删掉。
+
+   两个数值上的取舍（都实测过，不是拍脑袋）：
+
+   ① 为什么一个平铺块里要排两遍彩虹：文字只有一行，高约 74px。若一个彩虹周期
+      铺满整行（约 950px 宽），74px 高度内只走完 1.7% 的色域 —— 字的上半和下半
+      几乎同色，「斜」就完全读不出来，看起来还是一行横向换色。实测字形上下端的
+      色相差：周期 700px 只有 9.8°、520px 11.5°、400px 16.5°、300px 32.1°（开始显花）。
+      取 480px 这一档（约 23°），是「看得出斜」与「不过分花」的折中。
+
+   ② 为什么背景用**正方形** 480px×480px、渐变周期取 50%：
+      这是唯一能保证平铺无缝的取法。135° 下正方形成像盒的渐变线长 L = √2·480，
+      一半即 0.7071·480；而横向跨过 480px 的相位差也正好是 0.7071·480 —— 两者相等，
+      所以左右相邻两块严丝合缝，**且与元素宽、高、字号全都无关**。
+      早先用「200% 宽 + 48% 周期」，48% 是照 W=900,H=74 推的近似值，换个字号就漂：
+      实测在 t=1500ms 处留下 25/255 的竖直跳变（肉眼可见一条淡线）。
+      换正方形方案后同一测法降到 4/255（与渐变自身的自然梯度同量级），四个时刻一致。
+
+   ③ 为什么动画平移 -480px：480px 正好一个平铺单元，循环处回到同一帧，
+      颜色看起来就是持续往右流。不能改用百分比 —— 容器高与 480 不等时映射不到整数个周期。 */
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .gongxi .gt{
+    /* 12 色彩虹，停靠 0%~50%；50%~100% 由 repeating-* 再走一遍，首尾同色保证无缝。 */
+    background-image:repeating-linear-gradient(135deg,
+      #ff3d3d 0%, #ff8a2b 4.5455%, #ffd23d 9.0909%, #b6f24a 13.6364%,
+      #3ce8b0 18.1818%, #35b6f0 22.7273%, #4a6bff 27.2727%, #9a4dff 31.8182%,
+      #e04df0 36.3636%, #ff4d9d 40.9091%, #ff6a5c 45.4545%, #ff3d3d 50%);
+    background-size:480px 480px;
+    background-repeat:repeat;
+    -webkit-background-clip:text;background-clip:text;
+    color:transparent;-webkit-text-fill-color:transparent;
+    animation:gongxi-flow 3s linear infinite;
+  }
+}
+/* 平移量必须与 background-size 的宽完全一致（480px），否则循环处会跳一下。
+   方向是**正**的：background-position 变大 = 图案右移 = 颜色往右流。
+   （写负数会让图案左移，实测色带位移是 -120px/1.5s，与「向右流动」相反。） */
+@keyframes gongxi-flow{
+  from{background-position:0 0}
+  to{background-position:480px 0}
+}
+/* 尊重系统的「减少动态效果」：渐变留着，动画停掉。
+   这类纯装饰的流动效果是前庭敏感人群最容易被影响的那一类。 */
+@media (prefers-reduced-motion:reduce){
+  .gongxi .gt{animation:none!important}
+}
+
+/* ---- 阅读导航 ---- */
+.nav{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 20px 12px;margin:0 0 30px;box-shadow:var(--shadow);
+}
+.nav .h{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1.5px;margin:0 0 12px}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.nav a{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 13px;border-radius:999px;background:#f2f2f5;
+  color:var(--ink2);text-decoration:none;font-size:13.5px;
+  transition:background .16s,color .16s;
+}
+.nav a:hover{background:var(--purple-soft);color:var(--purple)}
+.nav a i{
+  font-style:normal;font-size:11.5px;font-weight:700;color:var(--purple);
+  background:#fff;border-radius:999px;padding:0 7px;line-height:18px;min-width:20px;text-align:center;
+}
+
+/* ---- 期刊分节 ---- */
+.section{margin:0 0 40px}
+.section > h2{
+  display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  font-size:19px;font-weight:700;margin:0 0 4px;padding:0 0 0 13px;
+  border-left:4px solid var(--purple);line-height:1.5;
+}
+.section > h2 .abbr{
+  font-size:12px;font-weight:600;color:var(--muted);
+  letter-spacing:.6px;text-transform:uppercase;
+}
+.section > h2 .cnt{
+  font-size:12.5px;font-weight:600;color:var(--purple);
+  background:var(--purple-soft);border-radius:999px;padding:2px 10px;
+}
+.section > .lede{
+  margin:0 0 18px 15px;font-size:13px;color:var(--muted);line-height:1.7;
+}
+
+/* ---- 最近更新：固定三栏 ----
+   三栏位置本身表达新旧顺序：左＝最新，中＝上一轮，右＝再上一轮。
+   所以这里**刻意**写死 repeat(3,1fr) 而不是 auto-fit——期数不够时宁可留空槽，
+   也不让卡片撑满整行；否则「只有一期」和「有三期」的版面看起来一样，
+   位置就不再携带「这是第几新」的信息了。 */
+.recent3{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+}
+@media (max-width:820px){.recent3{grid-template-columns:1fr}}
+.recent3 .cardlink{
+  display:flex;flex-direction:column;gap:10px;height:100%;margin:0;min-height:140px;
+}
+/* 角标：比卡片区其它标签大一档，圆角收敛成方框而不是胶囊
+   （方框在卡片右上角更像印章，胶囊太圆会显得软）。
+   选择器要写成 .recent3 .cardlink .cl-b 三级——通用的 .cardlink .cl-b 定义在下面，
+   权重相同而位置更靠后，两级选择器会被它盖掉。 */
+.recent3 .cardlink .cl-b{
+  position:absolute;right:14px;top:14px;
+  font-size:12.5px;padding:5px 12px;border-radius:7px;letter-spacing:.3px;
+}
+/* 日期：三栏统一成「11 月 3 日」这种中文写法，同一个字号、同一个字重，不再加粗。
+   Times New Roman 是等宽数字、字形偏瘦，和下方「11 月」那一栏的观感更接近；
+   中文回退到系统字体，避免 Times 缺字时行高跳变。 */
+/* 字体与「2026」栏里的月份卡片标题（.mtxt b）保持一致：同一套无衬线字体、
+   同为 700 加粗，免得同一个页面里两种笔触打架。字号仍比正文大一号，用来
+   承担「这是个日期」的视觉重量。 */
+.recent3 .cardlink .cl-d{
+  order:1;display:block;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+    "Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:24px;font-weight:700;color:var(--ink);
+  letter-spacing:0;line-height:1.25;
+  font-variant-numeric:lining-nums tabular-nums;
+}
+.recent3 .cardlink .cl-d small{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+    "Microsoft YaHei",sans-serif;
+  font-size:12.5px;font-weight:400;margin-left:8px;color:var(--muted);
+  letter-spacing:0;
+}
+/* 补录批次用区间，字符多一倍，行高放松一点，字号与单日保持一致 */
+.recent3 .cardlink .cl-d.range{line-height:1.35}
+.recent3 .cardlink .cl-s{order:3;margin-top:auto;font-size:12.5px}
+.recent3 .slot-empty{
+  border:1px dashed var(--line);border-radius:var(--radius);min-height:140px;
+  display:flex;align-items:center;justify-content:center;
+  color:#c6c6cc;font-size:12.5px;background:transparent;
+}
+
+/* ---- 条目容器 ----
+   默认单栏：日报一期通常只有几篇，双栏会把每条挤窄、读摘要时视线来回跳。
+   月报/专题一次几十篇，才用双栏（由 .entries.two 开启）。 */
+.entries{
+  column-count:1;
+}
+/* 双栏，默认**同行等高**；任一卡片展开英文摘要后，该行退回「各按自身高度」。
+   月报和专题用。
+
+   折叠状态下两卡等高最整齐：顶端、底端都齐平，没有横向空白带。较矮的那张
+   多出来的空间留在它**自己内部**的下方，看起来像「这张内容短一点」，
+   而不是像 align-items:start 那样把空白丢到卡片外面、整行像没对齐。
+
+   展开时反过来：展开的那张会突然长高很多（英文摘要动辄一两千字符），
+   若还强行等高，同行另一张会被拉到与展开内容等高，底部多出一大块空白。
+   所以每行是一个独立容器（.row），里面用 :has() 探测,
+   只要本行有任意 <details open>，就把该行的 align-items 切回 start。
+
+   用 :has() 而不是给 <details> 挂 JS：这是纯 CSS 状态，不需要脚本，
+   也不会因为事件绑漏而失效。现代浏览器均支持（Chrome 105+/Safari 15.4+/Firefox 121+）；
+   不支持的旧浏览器只会停留在「始终等高」的降级表现，仍可用。 */
+.entries.grid2{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.row{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:0 22px;
+  align-items:stretch;
+}
+/* 本行有展开项 → 该行改为各按自身高度 */
+.row:has(details[open]){
+  align-items:start;
+}
+.row .entry{
+  margin:0;
+  display:flex;
+  flex-direction:column;
+}
+.entries.two{
+  column-count:2;
+  column-gap:22px;
+}
+.entry{
+  break-inside:avoid;
+  -webkit-column-break-inside:avoid;
+  page-break-inside:avoid;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 22px;margin:0 0 16px;box-shadow:var(--shadow);position:relative;
+}
+.entry .no{
+  font-size:11.5px;font-weight:700;color:var(--muted);
+  letter-spacing:1.2px;margin:0 0 6px;font-variant-numeric:tabular-nums;
+}
+.entry h3{
+  margin:0 0 10px;font-size:17.5px;line-height:1.55;font-weight:700;color:var(--ink);
+}
+.entry h3 .en{
+  display:block;margin-top:6px;font-size:13px;font-weight:400;
+  color:var(--muted);line-height:1.6;font-family:Georgia,"Times New Roman",serif;
+}
+.tags{margin:0 0 12px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{
+  display:inline-block;font-size:11.5px;font-weight:600;line-height:1;
+  padding:5px 9px;border-radius:6px;
+  background:var(--gold-soft);color:var(--gold);border:1px solid #f0e0c0;
+}
+.tag.ky{background:var(--purple-soft);color:var(--purple);border-color:#eddcf0}
+.tag.jc{background:var(--teal-soft);color:var(--teal);border-color:#cfe6e6}
+.tag.ph{background:#eaf1fb;color:#2563a8;border-color:#cfdff4}
+.tag.fb{background:#fdf3e0;color:#8a5a12;border-color:#f0dfba}
+.tag.cover{background:#fdecec;color:#a32626;border-color:#f3cccc}
+/* 组内文章页的期刊角标（用户 m13953）：圆角框 + 实心五角星 + 刊名缩写。
+   只在「日报/月报也收录的那 12 本重点刊」上出现，其余刊不挂，避免满页都是框。 */
+.jtag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11.5px;font-weight:700;line-height:1.5;
+  color:#8a5a12;background:#fdf3e0;border:1px solid #eddcb8;
+  border-radius:7px;padding:2px 9px 2px 8px;
+}
+.jtag i{font-style:normal;color:#c8901c;font-size:12px}
+.jtags{margin:0 0 10px;display:flex;flex-wrap:wrap;gap:6px}
+
+.entry .teaser{
+  margin:0 0 12px;padding:11px 14px;border-radius:9px;
+  background:linear-gradient(180deg,#fafafc,#f5f5f8);
+  border-left:3px solid var(--teal);
+  font-size:14.5px;line-height:1.85;color:var(--ink2);
+}
+.entry .body{
+  margin:0;font-size:15px;line-height:1.9;color:var(--ink2);
+  text-align:justify;text-justify:inter-ideograph;
+}
+.entry .body + .body{margin-top:10px}
+
+.entry details{
+  margin:14px 0 0;border-top:1px dashed var(--line);padding-top:12px;
+}
+.entry details summary{
+  cursor:pointer;font-size:12.5px;font-weight:600;color:var(--muted);
+  letter-spacing:.6px;list-style:none;outline:none;user-select:none;
+}
+.entry details summary::-webkit-details-marker{display:none}
+.entry details summary::before{content:"▸ ";color:var(--purple)}
+.entry details[open] summary::before{content:"▾ "}
+.entry details summary:hover{color:var(--purple)}
+.entry details .en-abs{
+  margin:10px 0 0;font-size:13.5px;line-height:1.85;color:#4a4a52;
+  font-family:Georgia,"Times New Roman",serif;text-align:justify;
+}
+
+.entry .src{
+  margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);
+  font-size:12.8px;line-height:1.85;color:var(--muted);
+}
+.entry .src .au{color:var(--ink2)}
+.entry .src .cite{
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:12.2px;color:var(--ink2);
+}
+.entry .src a{
+  color:var(--purple);text-decoration:none;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:12.2px;word-break:break-all;
+}
+.entry .src a:hover{text-decoration:underline}
+
+/* ---- 空状态 / 页脚 ---- */
+.empty{
+  background:var(--card);border:1px dashed var(--line);border-radius:var(--radius);
+  padding:40px 20px;text-align:center;color:var(--muted);font-size:14.5px;
+}
+
+/* ---- 首页卡片链接 ---- */
+.cardlink{
+  display:block;position:relative;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:16px 18px;margin:0 0 10px;
+  text-decoration:none;transition:border-color .15s,transform .15s;
+}
+.cardlink:hover{border-color:var(--purple);transform:translateY(-1px)}
+.cardlink .cl-t{display:block;font-size:16px;font-weight:700;color:var(--ink);letter-spacing:.2px}
+.cardlink .cl-s{display:block;margin-top:5px;font-size:13px;color:var(--muted)}
+.cardlink .cl-b{
+  position:absolute;right:16px;top:16px;
+  background:var(--purple-soft);color:var(--purple);
+  font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;
+}
+/* ---- 首页年份块 ---- */
+.years{margin:0}
+.yearblock{margin:0 0 34px}
+.yhead{
+  display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+  border-bottom:2px solid var(--purple);padding:0 0 10px;margin:0 0 16px;
+}
+.yhead h2{
+  margin:0;font-size:44px;font-weight:800;letter-spacing:-1.5px;
+  color:var(--purple);line-height:1;font-variant-numeric:tabular-nums;
+}
+.ysum{font-size:13.5px;color:var(--muted);font-weight:600}
+.mlist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+@media (min-width:760px){ .mlist{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1180px){ .mlist{grid-template-columns:repeat(3,1fr)} }
+/* 栏数变体：由索引页自己指定，不再全站一套。
+   - .two 月报索引用：三栏时每张卡只剩二百来像素，卡片标题那行（期刊构成）
+     会被挤成两行，反而比两栏更难扫。
+   - .one 专题索引用：大标题是专题名，下面每年一条入口，单栏读起来是
+     一份「一年一行」的清单，多栏会把四个专题块切得零碎。 */
+@media (min-width:760px){ .mlist.two{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1180px){ .mlist.two{grid-template-columns:repeat(2,1fr)} }
+.mlist.one{grid-template-columns:1fr}
+@media (min-width:760px){ .mlist.one{grid-template-columns:1fr} }
+@media (min-width:1180px){ .mlist.one{grid-template-columns:1fr} }
+/* 专题索引卡左侧写年份，四位数比两位月份宽不少，
+   默认的 min-width:42px 会把右边的文字挤歪，这里单独放宽。 */
+.mnum.wide{min-width:76px;font-size:22px;letter-spacing:-.5px}
+/* 专题块内的方向说明：.section > .lede 的左缩进是为分节标题准备的，
+   这里的大标题是年份块的样式，说明文字要贴左对齐。 */
+.yearblock .tsnote{margin:-4px 0 14px;font-size:13px;color:var(--muted);line-height:1.7}
+.mlist li{display:flex;align-items:stretch;gap:8px}
+.mrow{
+  flex:1;display:flex;align-items:center;gap:14px;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:13px 16px;text-decoration:none;
+  transition:border-color .15s,transform .15s;
+}
+.mrow:hover{border-color:var(--purple);transform:translateY(-1px)}
+.mnum{
+  font-size:26px;font-weight:800;color:var(--purple);opacity:.32;
+  font-variant-numeric:tabular-nums;line-height:1;min-width:42px;
+}
+.mtxt b{display:block;font-size:15.5px;color:var(--ink);font-weight:700}
+.mtxt i{display:block;margin-top:3px;font-size:12.5px;color:var(--muted);font-style:normal}
+.mextra{display:flex;flex-direction:column;gap:6px;justify-content:center}
+.mini{
+  font-size:11.5px;font-weight:700;color:var(--teal);text-decoration:none;
+  background:var(--teal-soft);border:1px solid #cfe6e6;border-radius:6px;
+  padding:4px 9px;white-space:nowrap;
+}
+.mini:hover{background:var(--teal);color:#fff}
+.biglink{
+  display:block;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:16px 18px;margin:0 0 10px;text-decoration:none;
+  font-size:16px;font-weight:700;color:var(--ink);
+}
+.biglink:hover{border-color:var(--purple)}
+.biglink span{display:block;margin-top:5px;font-size:13px;font-weight:400;color:var(--muted)}
+
+footer{
+  margin-top:52px;padding:22px 0 0;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;line-height:1.9;
+}
+footer b{color:var(--ink2);font-weight:600}
+
+.back{
+  display:inline-block;margin:0 0 16px;padding:7px 15px;
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  color:var(--purple);text-decoration:none;font-size:13px;font-weight:600;
+}
+.back:hover{border-color:var(--purple);background:var(--purple-soft)}
+
+/* 回到顶部：用户 m12919 要求「上箭头左侧加上『回到顶部』文字，交互框改成圆角气泡，
+   必要时加与主题色一致的紫色边框」。所以从圆形图标按钮改成胶囊气泡：
+   · border-radius 用 999px 而不是固定值——文字长短变了也不会露出方角；
+   · 边框用 var(--purple) 而不是 --line，让它在浅灰页面上跳出来，
+     和全站主色是同一个变量，主题换色时它会自己跟上；
+   · z-index 抬到内容之上，避免和小屏下最后一张卡片的阴影叠在一起。
+   · 小屏隐藏（见 @media），那里屏幕本来就窄，浮着一个带字的气泡会挡住正文。 */
+.totop{
+  position:fixed;right:20px;bottom:22px;z-index:30;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 15px 8px 13px;border-radius:999px;
+  background:var(--card);border:1.5px solid var(--purple);
+  box-shadow:0 4px 16px rgba(127,5,133,.18);
+  color:var(--purple);text-decoration:none;font-size:13px;font-weight:600;
+  opacity:.92;transition:opacity .16s,box-shadow .16s,transform .16s;
+}
+.totop i{font-style:normal;font-size:15px;line-height:1}
+.totop:hover{
+  opacity:1;transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(127,5,133,.26);background:var(--purple-soft);
+}
+
+@media (max-width:560px){
+  .hero{padding:30px 18px 26px;border-radius:0}
+  .hero h1{font-size:22px}
+  .entry{padding:16px 16px}
+  .entry h3{font-size:16.5px}
+  .entry .body{font-size:14.5px;line-height:1.85}
+  .wrap{padding:0 14px}
+  .entries{column-count:1}
+  /* 手机上两栏会把每条挤到 300px 以内，摘要没法读，直接退回单栏 */
+  .entries.grid2,.entries.two{grid-template-columns:1fr;column-count:1}
+  .row{grid-template-columns:1fr}
+}
+
+@media print{
+  body{background:#fff}
+  .hero{background:none;color:#000;border-bottom:2px solid #000;padding:0 0 16px}
+  .hero .kicker,.hero .meta{opacity:1;color:#444}
+  .nav,.totop{display:none}
+  .entry,.preface{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+  .entry details{display:block}
+  .entry details > summary{display:none}
+  .entry details .en-abs{display:block}
+}
+</style>
+</head>
+<body>
+<header class="hero"><div class="inner">
+<p class="kicker">Quantum Information Digest · 2026-11-08</p>
+<h1>量子信息速递 · 11 月 8 日</h1>
+<p class="meta"><div>周日 · 本期共 <b>2</b> 篇</div><div>论文发表于 2026-11-07</div><div>生成于 2026-11-08 07:09</div></p>
+</div></header>
+<div class="wrap">
+<nav class="tabs"><a href="../index.html">首页</a><a href="../daily/2026-11-08.html" class="active" aria-current="page">日报</a><a href="../monthly/index.html">月报</a><a href="../topic/index.html">专题</a><a href="../qrl/index.html">QRL</a><a href="../group/index.html">组内文章（测试版）</a></nav>
+<a class="back" href="../index.html">← 返回索引</a>
+
+<div class="preface"><p class="h">序 言</p><p>本刊按 APS、Nature、Science、Optica 四大系列的目标期刊以及 PNAS 检索量子信息与量子技术领域的新发表工作，经学科筛选后按期刊汇总。每一条给出中英文标题、作者、卷页与中文摘要，点击 DOI 可直达原文。中文标题、导读与摘要译文均由模型生成，速度优先、难免有疏漏，欢迎指出。</p></div>
+
+<nav class="nav"><p class="h">阅读导航</p><ul><li><a href="#j-ncomms">Nat. Commun.<i>2</i></a></li></ul></nav>
+<section class="section" id="j-ncomms">
+<h2>Nature Communications<span class="abbr">Nat. Commun.</span><span class="cnt">2 篇</span></h2>
+<p class="lede">Nature Communications 中的量子信息与量子技术论文</p>
+<div class="entries">
+<div class="entry">
+<p class="no">No. 01</p><h3>作为马约拉纳源与传输通路的拓扑约瑟夫森三结<span class="en">Topological Josephson trijunctions as a Majorana source and path</span></h3>
+
+<p class="teaser">在垂直磁场下的拓扑绝缘体上构建三个约瑟夫森结交汇的三结，其超导相位跨越拓扑与非拓扑相边界时可实现马约拉纳束缚态的成对产生、弹射湮灭与定向输运，从而支持融合与编织操作。</p>
+<p class="body">马约拉纳束缚态（MBSs）是拓扑超导体中的零能局域态，服从非阿贝尔编织统计。对可移动 MBSs 的操控，包括其按需产生、传播与融合，是编织 MBSs 和操作拓扑量子比特的关键。我们证明，这种操控可由垂直磁场中拓扑绝缘体上形成的三结实现，那里有三个约瑟夫森结交汇。当三结中心的超导相位演化并跨越拓扑相畴与非拓扑相畴之间的边界时，三结会依据相边界表现出两种截然不同的动力学行为：源/漏与通路。在源/漏边界上，两个 MBSs 在中心成对产生，其中一个被弹射到约瑟夫森结中。其逆过程，即两个 MBSs 碰撞导致的成对湮灭，也可以发生。在通路边界上，一个 MBS 从一个约瑟夫森结移动到三结中心，反之亦然，而不涉及其他 MBSs。利用这两种动力学，可在三结网络中实现 MBSs 的融合与编织操作。我们以一个双三结装置为例加以说明，其中与 MBSs 相关的非阿贝尔态演化无需对装置进行动态控制即可被操控，并可通过约瑟夫森辐射谱学检测。</p><details><summary>Abstract (English)</summary><div class="en-abs">Majorana bound states (MBSs) are zero-energy localized states in topological superconductors, obeying non-Abelian braiding statistics. Manipulation of mobile MBSs, encompassing their on-demand generation, propagation, and fusion, is essential for braiding MBSs and operating topological qubits. We show that the manipulation is enabled by a trijunction formed on a topological insulator in a perpendicular magnetic field, where three Josephson junctions meet. While the superconducting phases at the trijunction center evolve to cross a boundary between topological and non-topological phase domains, the trijunction offers two distinct dynamics, source/sink and path, depending on the phase boundaries. At a source/sink boundary, two MBSs are pairwise generated at the center, and one of them is ejected to a Josephson junction. The reverse, pair annihilation by collision of two MBSs, can also happen. At a path boundary, an MBS moves from a Josephson junction to the trijunction center or vice versa, without involving other MBSs. Exploiting the two dynamics, fusion and braiding of MBSs can be operated in a trijunction network. We illustrate this with a double trijunction setup, where non-Abelian state evolutions associated with MBSs can be manipulated without dynamical control of the setup and detected by Josephson emission spectroscopy.</div></details>
+<p class="src"><span class="au">Kyungtae Kim, June-Young M. Lee, Hyeongseop Kim, H.-S. Sim</span><br><span class="cite">Nat. Commun. (2026)</span><br><a href="https://doi.org/10.1038/s41467-026-79077-5" target="_blank" rel="noopener">10.1038/s41467-026-79077-5</a></p>
+</div>
+<div class="entry">
+<p class="no">No. 02</p><h3>伯纳尔四层石墨烯中的分数量子霍尔态与振荡的朗道电荷压缩<span class="en">Fractional quantum Hall states and oscillatory Landau charge squeezing in Bernal tetralayer graphene</span></h3>
+
+<p class="teaser">在伯纳尔堆叠的四层石墨烯中研究分数量子霍尔态，并报道了随参数振荡的朗道电荷压缩现象，为多层石墨烯中的强关联拓扑物态提供了新的实验平台。</p>
+<p class="body">在伯纳尔堆叠的四层石墨烯中研究分数量子霍尔态，并报道了随参数振荡的朗道电荷压缩现象，为多层石墨烯中的强关联拓扑物态提供了新的实验平台。</p>
+<p class="src"><span class="au">Yinghai Xu, Yiwei Chen, Yanbo Wang, Xiao-Kai Yue, Dongdong An, Junwei Song, Qingxin Li, Kenji Watanabe, Takashi Taniguchi, Fu-Chun Zhang, Ying-Hai Wu, Wei Chen, Lei Wang</span><br><span class="cite">Nat. Commun. (2026)</span><br><a href="https://doi.org/10.1038/s41467-026-79149-6" target="_blank" rel="noopener">10.1038/s41467-026-79149-6</a></p>
+</div>
+</div>
+</section>
+<footer>
+<b>数据来源</b>　APS 系列（Phys. Rev. Lett.、Phys. Rev. X）、Nature 系列（Nature、Nat. Phys.、Nat. Photon.、Nat. Commun.、Commun. Phys.、Light Sci. Appl.）、Science 系列（Science、Sci. Adv.）、Optica 与 PNAS 官方网站及 Crossref。中文标题、简介与摘要译文由本机模型生成，仅供快速浏览；<b>学术引用请以英文原文为准</b>。<br>展开每条下方的 <b>Abstract (English)</b> 可查看英文原摘要。往期与整月视图请到「月报」「专题」查看。
+</footer>
+</div>
+<a class="totop" href="#" aria-label="回到顶部">回到顶部<i>↑</i></a>
+</body>
+</html>
